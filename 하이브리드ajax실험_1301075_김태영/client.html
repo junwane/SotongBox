@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<script>
+	$(document).ready(function(){
+		$('.BtnRequest').click(function(){
+			var output = $('.output').empty();
+			$.ajax({
+				url: 'http://localhost:8080/homework/server.jsp',
+				callback: "AhnHouse",
+				data:{},
+				dataType: 'jsonp',
+				success: function(data){
+					var cnt = data.length;
+					for(var i=0;i<cnt;i++){
+						$('<p>이름 : '+ data[i].pname + '</p>').appendTo(output);
+						$('<p>나이 : '+ data[i].age + '</p>').appendTo(output);
+					}
+				},
+				error: function(){
+					$('.output').text('오류가 발생하였습니다.');
+				}
+			});
+		});
+	});
+</script>
+<body>
+	<input type="button" class="BtnRequest" value="데이터 불러오기"/>
+	<div class="output"></div>
+</body>
+</html>
