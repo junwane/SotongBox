@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+  body
+    h1
+      a(href='/topic') server side javascript
+    ul
+      each topic in topics
+        li
+          a(href='/topic/'+topic.id)= topic.title
+    artcle
+      if topic
+        h2= topic.title
+        h2= topic.description
+        div='by '+topic.author
+      else
+        h2 welcome
+        | This is sparta
+    ul
+      li
+        a(href='/topic/add') add
+      if topic
+        li
+          a(href='/topic/'+topic.id+'/edit') edit
+        li
+          a(href='/topic/'+topic.id+'/delete') delete
