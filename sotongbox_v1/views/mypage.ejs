@@ -1,0 +1,251 @@
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<!-- Header -->
+
+<!-- ... end Header -->
+
+<div class="container">
+  <div class="profile_pane">
+    <div class="row">
+      <div class="author-thumb profile">
+        <img alt="author" src="/static/images/users/<%=user.m_img%>" class="avatar" width="220px" height="220px">
+      </div>
+    </div>
+        <div class="profile_display">
+          <h2 class="profile_displayName"><%= user.m_nickname %></h2>
+        </div>
+        <div class="profile_display">
+          <h2 class="profile_email"><%= user.username %></h2>
+        </div>
+        <div class="text-center">
+          <a class="col-sm-1" href="#profile_name">프로필</a>
+          <a class="col-sm-1" href="#profile_id">계정 정보</a>
+          <a class="col-sm-2" href="#profile_social">소셜 네트워크 연결</a>
+          <a class="col-sm-1" href="#profile_app">앱</a>
+        </div>
+        <hr/>
+        <form class="" action="/???" method="post">
+          <div class="profile_tab container-fluid" id="profile_name">
+            <h2 class="profile_name">프로필</h2>
+            <div class="form-group label-floating is-empty">
+                <label class="control-label">닉네임</label>
+                <input class="form-control" type="text" name="displayName" value="<%=user.m_nickname%>">
+            </div>
+            <div class="">
+              나의 주소
+            </div>
+            <div class="">
+              www.sotongbox.com/ <input class="form-control" type="text" name="" value="<%=user.username%>">
+            </div>
+            <div class="form-group label-floating is-empty">
+              <label class="control-label">자기소개</label>
+              <textarea name="m_introduce" rows="8" cols="80" class="form-control"></textarea>
+
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="profile_id container-fluid" id="profile_id">
+            <h2 class="profile_name">계정 정보</h2>
+            <div class="">
+                <label class="control-label">이메일 주소</label>
+                <input class="form-control" type="text" name="username" value="<%=user.username%>">
+            </div>
+            <div class="">
+              비밀번호
+            </div>
+            <div class="">
+              <button type="button" name="button" class="btn">비밀번호 변경</button>
+            </div>
+
+            <div class="">
+              <label class="control-label">언어</label>
+              <select class="form-group" name="">
+                <option value="">한국어</option>
+              </select>
+            </div>
+
+            <div class="">
+              <label class="control-label">국가</label>
+              <select class="form-group" name="">
+                <option value="">대한민국</option>
+              </select>
+            </div>
+
+            <div class="">
+              <label class="control-label">성별</label>
+              <div class="radio">
+                <label for="">
+                  <input type="radio" name="gender" value="m" id="man" readonly>
+                  <span class="circle"></span>
+                  <span class="check"></span>
+                  남자
+                </label>
+                <label for="">
+                  <input type="radio" name="gender" value="f" id="woman" readonly>
+                  <span class="circle"></span>
+                  <span class="check"></span>
+                  여자
+                </label>
+                <input type="hidden" name="" id="genderCheck" value="<%= user.m_gender %>">
+                <input type="hidden" name="m_no id="id" value="<%= user.m_no %>">
+              </div>
+              <script src="/static/js/login/userProfile.js"></script>
+            </div>
+
+            <div class="">
+              <label class="control-label">계정</label>
+            </div>
+            <div class="">
+              <button type="button" name="button" class="btn">계정 비활성화</button>
+            </div>
+          </div>
+          <hr/>
+
+          <div class="profile_social container-fluid" id="profile_social">
+            <h2 class="profile_name">소셜 네트워크 연결</h2>
+            <div class="">
+              <img src="/static/images/social/facebook.png" alt="">
+              facebook에 연결되지 않음
+            </div>
+            <div class="social_pane">
+              facebook에 로그인
+              <div class="togglebutton">
+                <label>
+                  <input type="checkbox" onclick="location.href='/connect/facebook'">
+                  사용자의 Facebook 계정을 로그인에 사용
+                </label>
+              </div>
+            </div>
+
+            <div class="">
+              <img src="/static/images/social/twitter.png" alt="">
+              twitter에 연결되지 않음
+            </div>
+            <div class="social_pane">
+              twitter에 로그인
+              <div class="togglebutton">
+                <label>
+                  <input type="checkbox" onclick="location.href='/connect/twitter'">
+                  사용자의 Twitter 계정을 로그인에 사용
+                </label>
+              </div>
+
+              <!-- <script type="text/javascript">
+                var toggleOn = $('.togglebutton label input[type=checkbox]:checked + .toggle');
+
+                if(toggleOn.css('background-color: #ff5e3a')){
+                  $('#x').html("zzz");
+                } else {
+                  $('#x').html("bbb");
+                }
+              </script> -->
+            </div>
+
+            <div class="">
+              <img src="/static/images/social/google.png" alt="">
+              google에 연결되지 않음
+            </div>
+            <div class="social_pane">
+              google에 로그인
+              <div class="togglebutton">
+                <label>
+                  <input type="checkbox" onclick="location.href='/connect/google'">
+                  사용자의 google 계정을 로그인에 사용
+                </label>
+              </div>
+            </div>
+
+            <div class="">
+              <img src="/static/images/social/naver.png" alt="" width="48px" height="48px">
+              naver에 연결되지 않음
+            </div>
+            <div class="social_pane">
+              naver에 로그인
+              <div class="togglebutton">
+                <label>
+                  <input type="checkbox" onclick="location.href='/connect/naver'">
+                  사용자의 naver 계정을 로그인에 사용
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <hr/>
+
+          <div class="profile_app container-fluid" id="profile_app">
+            <div class="profile_name">
+              APPS
+              <div class="">
+                <img src="/static/images/social/gp.ico" alt="" width="48px" height="48px">
+                <span class="ifttt">IFTTT</span>
+                <div class="ifttt_pane">
+                    <h4 class="ifttt_font">IFTTT empowers you with creative control over the products and apps you love.</h4>
+                    <b><h4 class="app_font">이 앱은 다음과 같은 권한을 갖게 됩니다.</h4></b>
+                    <ul class="app_font2">
+                      <li>   •    내 공개 정보(프로필, 핀, 보드 등) 액세스: 회원님의 핀, 보드, 좋아요 및 공개 프로필 정보</li>
+                      <li>   •    보드를 만들거나 핀을 저장: 회원님의 동의를 받은 경우에 한해</li>
+                      <li>  •    비밀 보드와 핀 액세스: 회원님에게 보여드리기 위한 목적에 한해</li>
+                      <li>   •    회원님을 위한 비밀 보드와 핀 만들기: 회원님의 동의를 받은 경우에 한해</li>
+                      <li>   •    내가 팔로우하는 사람들과 나를 팔로우하는 사람들 액세스: 회원님이 팔로우하는 사용자, <br/> 보드 및 관심사와 회원님을 팔로우하는 사용자</li>
+                      <li>   •    나를 위한 것들 팔로우: 회원님의 동의를 받은 경우에 한해</li>
+                    </ul>
+
+                    <div class="app_font3">
+                      승인됨 2016 5월 6일
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn_pane">
+            <div class="row">
+              <div class="col-lg-6 col-sm-12">
+                <a href="/" class="btn btn-smoke btn-md btn-light-bg full-width">취소</a>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                <input type="submit" name="" value="설정저장" class="btn btn-primary btn-md full-width">
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+  </div>
+</div>
+
+<!-- Friends -->
+
+<!-- ... end Friends -->
+
+
+<!-- ... end Window-popup Update Header Photo -->
+
+
+<!-- Window-popup Choose from my Photo -->
+
+
+<!-- jQuery first, then Other JS. -->
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+<!-- Js effects for material design. + Tooltips -->
+<script src="/static/js/material.min.js"></script>
+<!-- Helper scripts (Tabs, Equal height, Scrollbar, etc) -->
+<script src="/static/js/theme-plugins.js"></script>
+<!-- Init functions -->
+<script src="/static/js/main.js"></script>
+
+<!-- Select / Sorting script -->
+<script src="/static/js/selectize.min.js"></script>
+
+<!-- Swiper / Sliders -->
+<script src="/static/js/swiper.jquery.min.js"></script>
+
+<script src="/static/js/mediaelement-and-player.min.js"></script>
+<script src="/static/js/mediaelement-playlist-plugin.min.js"></script>
+
+</body>
+</html>

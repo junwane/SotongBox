@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="/static/js/login/addRegister.js"></script>
+    <script src="/static/js/login/parentSubmit.js"></script>
+  </head>
+  <body>
+    <div class="">
+      <h2>내 정보 입력하기</h2>
+      <form class="" action="/addRegister" method="post" enctype="multipart/form-data" name="reg">
+        <div id="image_preview">
+          <img src="#" width="200" alt="">
+
+        </div>
+        <p>
+          <label for="">사진 찾기</label>
+          <input type="file" name="userImage" id="userImage" value="">
+        </p>
+        <p><input type="text" name="displayName" value="" id="displayNameVal" placeholder="닉네임">
+        <button type="button" name="button" id="displayNameConfirm">중복확인</button>
+        <span id="resultDisplayName"></span>
+        </p>
+        <p><label for="">성별</label>
+           남<input type="radio" name="gender" value="m">
+           여<input type="radio" name="gender" value="f"></p>
+        <p><label for="">생년월일</label><input type="date" name="birthDay" value=""></p>
+        <p><input type="submit" name="" value="완료" id="save" onclick="parentSubmit();"></p>
+      </form>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>로그인</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="/static/js/login/parentSubmit.js"></script>
+  </head>
+  <body>
+      <div id="login">
+        <h1>로그인</h1>
+        <form name="login" action="/auth/login" method="post">
+          <p>
+            <input type="text" name="username" placeholder="username">
+          </p>
+          <p>
+            <input type="password" name="password" placeholder="password">
+          </p>
+            <button type="button" name="button"><a href="/auth/reg">회원가입</a></button>
+            <input type="submit" value="로그인" onclick="parentSubmit()"><a href="/findpass">비밀번호 찾기</a>
+          </p>
+        </form>
+
+        <a href="/welcome">Welcome</a>
+        <button type="button" name="button"><a href="/auth/facebook">facebook</a></button>
+        <button type="button" name="button"><a href="/auth/twitter" class="twitter">twitter</a></button>
+        <button type="button" name="button"><a href="/auth/google">google</a></button>
+        <button type="button" name="button"><a href="/auth/naver">naver</a></button>
+      </div>
+
+  </body>
+</html>

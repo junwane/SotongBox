@@ -1,0 +1,113 @@
+.header {
+  background-color: #ffffff;
+}
+
+.logo {
+  background-color: transparent;
+  display: block;
+  padding: 1px;
+}
+
+.header {
+  color: #515365;
+}
+
+.control-icon.has-items {
+  fill: #481b1b;
+}
+
+.header .page-title > * {
+  margin: -18px;
+  margin-left: 59px;
+}
+
+.author-title {
+  color: #515365;
+}
+
+.link-find-friend {
+  color: #515365;
+}
+
+.ui-block-title .more {
+  width: 110px; !important;
+}
+
+.comments-shared {
+  text-align: center;
+  font-size: 17px;
+  margin-top: -28px;
+}
+
+.notification-list .selectize-dropdown-content > *, .notification-list li {
+  margin-left: -29px;
+
+}
+
+.post-add-icon {
+  margin-right: 40px;
+}
+
+.link-find-friend {
+  font-size: 17px;
+}
+
+.more-custom {
+
+}
+
+.author-page {
+  margin-left: 0;
+}
+
+.control-block {
+  padding-right: 41px;
+}
+
+.container {
+  margin-top: -35px;
+}
+
+.control-block-button {
+  z-index: 1;
+  right: 0;
+  top: 20px;
+}
+
+.post-additional-info.inline-items {
+  text-align: center;
+  border-top: 0;
+  padding: 16px 0 17px;
+
+}
+
+.ui-block-content {
+  padding: 23px 23px 8px;
+}
+
+.ui-block-content2 {
+  padding: 23px 23px 0px;
+}
+
+.ribbon {
+  position: absolute;
+  z-index: 1;
+}
+
+.video-player img {
+  height: 200px;
+}
+
+.ui-block-title .title {
+  font-size: 20px;
+}
+
+.profile-section {
+  padding: 25px 0;
+}
+
+.sotong-join-btn {
+  margin-left: 24px;
+  margin-top: 8px;
+  font-size: 16px;
+}
