@@ -1,0 +1,72 @@
+일간 랭킹
+select  p1.m_no, 
+        sum(p1.p_point) as point, 
+        ( select count(*)+1
+          from point as p2 
+          where p2.p_date = '2017-04-03'  
+          and p2.p_point > p1.p_point ) Ranking
+from point as p1
+where p1.p_date = '2017-04-03'
+group by p1.m_no
+order by Ranking;
+
+
+주간 랭킹
+select p1.m_no,
+       p1.wpoint,
+       (select count(*)+1
+        from (select m_no, sum(p_point) as wpoint
+              from point
+              where p_date between DATE_FORMAT(DATE_SUB('2017-04-20', INTERVAL (DAYOFWEEK('2017-04-20')-1) DAY), '%Y/%m/%d')
+                           and DATE_FORMAT(DATE_SUB('2017-04-20', INTERVAL (DAYOFWEEK('2017-04-20')-7) DAY), '%Y/%m/%d')
+              group by m_no) as p2
+         where p2.wpoint > p1.wpoint)Ranking
+from (select m_no, sum(p_point) as wpoint
+      from point
+      where p_date between DATE_FORMAT(DATE_SUB('2017-04-20', INTERVAL (DAYOFWEEK('2017-04-20')-1) DAY), '%Y/%m/%d')
+                       and DATE_FORMAT(DATE_SUB('2017-04-20', INTERVAL (DAYOFWEEK('2017-04-20')-7) DAY), '%Y/%m/%d')
+      group by m_no) as p1
+group by p1.m_no
+order by Ranking;
+
+
+월간 랭킹
+select p1.m_no as m_no,
+       p1.mpoint,
+       (select count(*) + 1
+        from (select m_no, p_date, sum(p_point) as mpoint
+              from point
+              where month(p_date) = month('2017-04-28')
+              group by m_no) as p2
+        where p2.mpoint > p1.mpoint)Ranking
+from (select m_no, p_date, sum(p_point) as mpoint
+      from point
+      where month(p_date) = month('2017-04-28')
+      group by m_no) as p1
+group by p1.m_no
+order by Ranking;
+
+
+회원별 일간 점수
+select  p1.m_no, 
+        sum(p1.p_point) as point
+from point as p1
+where p1.p_date = '2017-04-03'
+group by p1.m_no;
+
+
+회원별 주간 점수
+SELECT p1.m_no,
+       sum(p1.p_point) as point
+FROM point as p1
+where p1.p_date between DATE_FORMAT(DATE_SUB('2017-04-03', INTERVAL (DAYOFWEEK('2017-04-03')-1) DAY), '%Y/%m/%d')
+             and DATE_FORMAT(DATE_SUB('2017-04-03', INTERVAL (DAYOFWEEK('2017-04-03')-7) DAY), '%Y/%m/%d')  
+GROUP BY p1.m_no;
+
+
+회원별 월간 점수
+select p1.m_no, 
+       sum(p1.p_point) as point
+from point as p1
+where month(p_date) = month('2017-04-28')
+group by p1.m_no;
