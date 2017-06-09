@@ -1,3 +1,4 @@
+erwerewr
 ¿œ∞£ ∑©≈∑
 select  p1.m_no, 
         sum(p1.p_point) as point, 
