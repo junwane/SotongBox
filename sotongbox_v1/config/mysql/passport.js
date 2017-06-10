@@ -1,5 +1,6 @@
 module.exports = function(app){
   var pool = require('./db')();
+  var auto_incre = require('../../routes/auto_incre.js');
   var bkfd2Password = require('pbkdf2-password');
   var passport = require('passport');
   var TwitterStrategy = require('passport-twitter').Strategy;
@@ -31,14 +32,6 @@ module.exports = function(app){
       });
     });
 
-
-    // for(var i=0; i< users.length; i++){
-    //   var user = users[i];
-    //   if(user.authId === id){
-    //      done(null, user);
-    //   }
-    // }
-    // done('There is no user');
   });
   passport.use(new LocalStrategy(
     function(username, password, done){
@@ -56,15 +49,10 @@ module.exports = function(app){
             console.log(user);
             return hasher({password:pwd, salt:user.m_sort}, function(err, pass, salt, hash){
               console.log(hash);
-                if(hash == user.password){
+                if(hash === user.password){
                   console.log('LocalStrategy', user);
                   connection.release();
                   done(null, user);
-                  //done() 로그인 절차가 끝났을 때
-                  // req.session.displayName = user.displayName;
-                  // req.session.save(function(){
-                  //   res.redirect('/welcome');
-                  // });
 
                 } else{
                   console.log("false");
@@ -72,37 +60,11 @@ module.exports = function(app){
                   done(null, false);
                 }
 
-
             }); // end of hasher
           } //end of else
         }); //end of connection
       }); //end of pool`
 
-
-      // for(var i=0; i< users.length; i++){
-      //   var user = users[i];
-      //   if(uname === user.username){
-      //   return  hasher({password:pwd, salt:user.salt}, function(err, pass, salt, hash){
-      //       if(hash === user.password){
-      //         console.log('LocalStrategy', user);
-      //         done(null, user); //done() 로그인 절차가 끝났을 때
-      //         // req.session.displayName = user.displayName;
-      //         // req.session.save(function(){
-      //         //   res.redirect('/welcome');
-      //         // });
-      //       } else{
-      //         done(null, false);
-      //       }
-      //     });
-      //   }
-      //   // if(uname === user.username && md5(pwd+salt) === user.password){ //입력한 값이 맞다면
-      //   //   req.session.displayName = user.displayName; //user 객체의 닉네임을 세션에 저장
-      //   //   return req.session.save(function(){
-      //   //     res.redirect('/welcome');
-      //   //   });
-      //   // }
-      // }
-      // done(null, false); //for문의 맞는 사용자가 없을 때
     }// end of LocalStrategy function
   )); // end of LocalStrategy
   passport.use(new TwitterStrategy({
@@ -113,38 +75,70 @@ module.exports = function(app){
   },
   function(token, tokenSecret, profile, done) {
     console.log(profile);
-    var authId = 'twitter:'+profile.id;
+    var s_l_id = 'twitter:'+profile.id;
     pool.getConnection(function(err, connection){
-      var sql = 'select * from users where authId=?';
-      connection.query(sql, [authId], function(err, results){
+      var sql = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+      connection.query(sql, [s_l_id], function(err, results){
         if(results.length > 0){ //사용자가 존재한다면
           connection.release();
           done(null, results[0]);
         } else {
           var newuser = {
-            'authId':authId,
-            'username':profile.emails[0].value,
-            'displayName':profile.displayName
+            's_l_id':s_l_id,
+            'username': profile.emails[0].value,
+            'm_nickname':profile.displayName
           };
+          var username = profile.emails[0].value;
+          var m_nickname = profile.displayName;
+
         pool.getConnection(function(err, connection){
-          var sql = 'insert into users set ?';
-          connection.query(sql, newuser, function(err, resutls){
-            if(err){
-              console.log(err);
-              done('Error');
-              connection.release();
-            } else {
-              done(null, newuser);
-              connection.release();
-            }
+          var sql1 = 'select count(*) as id from member';
+          connection.query(sql1, function(err, no){
+            var id = ""+no[0].id;
+            var name = 'm';
+            var m_no = auto_incre(id,name);
+            console.log(m_no);
+            //회원번호 구함
+
+              var sql2 = 'insert into member(m_no) values(?)';
+              connection.query(sql2, [m_no], function(err, no){
+                console.log(no);
+              });
+
+              var sql3 = 'insert into s_link(m_no, s_no) values(?, 3)';
+              //3은 트위터
+              connection.query(sql3, [m_no], function(err, no){
+                console.log(no);
+              });
+
+              var sql4 = 'UPDATE member SET username = ?, m_nickname = ? where m_no = ?';
+              connection.query(sql4, [username, m_nickname, m_no], function(err, update2){
+                console.log('4' +update2);
+              });
+
+              var sql5 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
+              connection.query(sql5, [s_l_id, m_no], function(err, update1){
+                console.log('3' +update1);
+              });
+
+              var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+              connection.query(sql6, [s_l_id], function(err, resutls){
+              if(err){
+                console.log(err);
+                done('Error');
+                connection.release();
+              } else {
+                done(null, newuser);
+                connection.release();
+              }
+            });
           });
         });
       }
-      });
     });
-
+  });
   }
-  ));
+));
   passport.use(new FacebookStrategy({
       clientID: '1840733199510901',
       clientSecret: 'ad245cb56ba5a1e2f7f8e07af2538235',
@@ -168,23 +162,58 @@ module.exports = function(app){
               'username': profile.emails[0].value,
               'm_nickname':profile.displayName
             };
+            var username = profile.emails[0].value;
+            var m_nickname = profile.displayName;
+
           pool.getConnection(function(err, connection){
-            var sql = 'insert into users set ?';
-            connection.query(sql, newuser, function(err, resutls){
-              if(err){
-                console.log(err);
-                done('Error');
-                connection.release();
-              } else {
-                done(null, newuser);
-                connection.release();
-              }
+            var sql1 = 'select count(*) as id from member';
+            connection.query(sql1, function(err, no){
+              var id = ""+no[0].id;
+              var name = 'm';
+              var m_no = auto_incre(id,name);
+              console.log(m_no);
+              //회원번호 구함
+
+                var sql2 = 'insert into member(m_no) values(?)';
+                connection.query(sql2, [m_no], function(err, no){
+                  console.log(no);
+                });
+
+                var sql3 = 'insert into s_link(m_no, s_no) values(?, 2)';
+                //2는 페북
+                connection.query(sql3, [m_no], function(err, no){
+                  console.log(no);
+                });
+
+                var sql4 = 'UPDATE member SET username = ?, m_nickname = ? where m_no = ?';
+                connection.query(sql4, [username, m_nickname, m_no], function(err, update2){
+                  console.log('4' +update2);
+                });
+
+                var sql5 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
+                connection.query(sql5, [s_l_id, m_no], function(err, update1){
+                  console.log('3' +update1);
+                });
+
+                var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+                connection.query(sql6, [s_l_id], function(err, resutls){
+                if(err){
+                  console.log(err);
+                  done('Error');
+                  connection.release();
+                } else {
+                  done(null, newuser);
+                  connection.release();
+                }
+              });
             });
           });
         }
-        });
       });
-    }
+    });
+  }
+
+
   ));
   passport.use(new GoogleStrategy({
       clientID: '777905994972-3a9e6a0j500t5dfurqe17a411i0i34rd.apps.googleusercontent.com',
@@ -193,38 +222,70 @@ module.exports = function(app){
     },
     function(accessToken, refreshToken, profile, done) {
       console.log(profile);
-      var authId = 'google:'+profile.id;
+      var s_l_id = 'google:'+profile.id;
       pool.getConnection(function(err, connection){
-        var sql = 'select * from users where authId=?';
-        connection.query(sql, [authId], function(err, results){
+        var sql = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+        connection.query(sql, [s_l_id], function(err, results){
           if(results.length > 0){ //사용자가 존재한다면
             connection.release();
             done(null, results[0]);
           } else {
             var newuser = {
-              'authId':authId,
-              'username':profile.emails[0].value,
-              'displayName':profile.displayName
+              's_l_id':s_l_id,
+              'username': profile.emails[0].value,
+              'm_nickname':profile.displayName
             };
+            var username = profile.emails[0].value;
+            var m_nickname = profile.displayName;
+
           pool.getConnection(function(err, connection){
-            var sql = 'insert into users set ?';
-            connection.query(sql, newuser, function(err, resutls){
-              if(err){
-                console.log(err);
-                done('Error');
-                connection.release();
-              } else {
-                done(null, newuser);
-                connection.release();
-              }
+            var sql1 = 'select count(*) as id from member';
+            connection.query(sql1, function(err, no){
+              var id = ""+no[0].id;
+              var name = 'm';
+              var m_no = auto_incre(id,name);
+              console.log(m_no);
+              //회원번호 구함
+
+                var sql2 = 'insert into member(m_no) values(?)';
+                connection.query(sql2, [m_no], function(err, no){
+                  console.log(no);
+                });
+
+                var sql3 = 'insert into s_link(m_no, s_no) values(?, 4)';
+                //4는 구글
+                connection.query(sql3, [m_no], function(err, no){
+                  console.log(no);
+                });
+
+                var sql4 = 'UPDATE member SET username = ?, m_nickname = ? where m_no = ?';
+                connection.query(sql4, [username, m_nickname, m_no], function(err, update2){
+                  console.log('4' +update2);
+                });
+
+                var sql5 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
+                connection.query(sql5, [s_l_id, m_no], function(err, update1){
+                  console.log('3' +update1);
+                });
+
+                var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+                connection.query(sql6, [s_l_id], function(err, resutls){
+                if(err){
+                  console.log(err);
+                  done('Error');
+                  connection.release();
+                } else {
+                  done(null, newuser);
+                  connection.release();
+                }
+              });
             });
           });
         }
-        });
       });
-
-    }
-  ));
+    });
+  }
+));
 
   //NaverStrategy
   passport.use(new NaverStrategy({
@@ -234,39 +295,71 @@ module.exports = function(app){
     },
       function(accessToken, refreshToken, profile, done) {
         console.log(profile);
-
-        var authId = 'naver:'+profile.id;
+        var s_l_id = 'naver:'+profile.id;
         pool.getConnection(function(err, connection){
-          var sql = 'select * from users where authId=?';
-          connection.query(sql, [authId], function(err, results){
+          var sql = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+          connection.query(sql, [s_l_id], function(err, results){
             if(results.length > 0){ //사용자가 존재한다면
               connection.release();
               done(null, results[0]);
             } else {
               var newuser = {
-                'authId':authId,
-                'username':profile.emails[0].value,
-                'displayName':profile.displayName
+                's_l_id':s_l_id,
+                'username': profile.emails[0].value,
+                'm_nickname':profile.displayName
               };
-            pool.getConnection(function(err, connection){
-              var sql = 'insert into users set ?';
-              connection.query(sql, newuser, function(err, resutls){
-                if(err){
-                  console.log(err);
-                  done('Error');
-                  connection.release();
-                } else {
-                  done(null, newuser);
-                  connection.release();
+              var username = profile.emails[0].value;
+              var m_nickname = profile.displayName;
 
-                }
-              });
+            pool.getConnection(function(err, connection){
+              var sql1 = 'select count(*) as id from member';
+              connection.query(sql1, function(err, no){
+                var id = ""+no[0].id;
+                var name = 'm';
+                var m_no = auto_incre(id,name);
+                console.log(m_no);
+                //회원번호 구함
+
+                  var sql2 = 'insert into member(m_no) values(?)';
+                  connection.query(sql2, [m_no], function(err, no){
+                    console.log(no);
+                  });
+
+                  var sql3 = 'insert into s_link(m_no, s_no) values(?, 5)';
+                  //5는 네이버
+                  connection.query(sql3, [m_no], function(err, no){
+                    console.log(no);
+                  });
+
+                  var sql4 = 'UPDATE member SET username = ?, m_nickname = ? where m_no = ?';
+                  connection.query(sql4, [username, m_nickname, m_no], function(err, update2){
+                    console.log('4' +update2);
+                  });
+
+                  var sql5 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
+                  connection.query(sql5, [s_l_id, m_no], function(err, update1){
+                    console.log('3' +update1);
+                  });
+
+                  var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+                  connection.query(sql6, [s_l_id], function(err, resutls){
+                  if(err){
+                    console.log(err);
+                    done('Error');
+                    connection.release();
+                  } else {
+                    done(null, newuser);
+                    connection.release();
+                  }
+                });
             });
-          }
-          });
         });
       }
-  ));
+    });
+  });
+}
+
+));
 
   // 트위터 계정연결 위한 패스포트
   passport.use('twitter-authz', new TwitterStrategy({
@@ -328,13 +421,6 @@ function(token, tokenSecret, profile, done) {
           return done(null, account);
         }
     });
-    // var account = new Account();
-    // console.log(account);
-    // account.domain = 'twitter.com';
-    // account.uid = profile.id;
-    // var t = { kind: 'oauth', token: token, attributes: { tokenSecret: tokenSecret } };
-    // account.tokens.push(t);
-    // return done(null, account);
   });
 
 
@@ -365,13 +451,6 @@ function(token, tokenSecret, profile, done) {
           return done(null, account);
         }
     });
-    // var account = new Account();
-    // console.log(account);
-    // account.domain = 'twitter.com';
-    // account.uid = profile.id;
-    // var t = { kind: 'oauth', token: token, attributes: { tokenSecret: tokenSecret } };
-    // account.tokens.push(t);
-    // return done(null, account);
   });
 
 
@@ -404,13 +483,6 @@ function(token, tokenSecret, profile, done) {
           return done(null, account);
         }
     });
-    // var account = new Account();
-    // console.log(account);
-    // account.domain = 'twitter.com';
-    // account.uid = profile.id;
-    // var t = { kind: 'oauth', token: token, attributes: { tokenSecret: tokenSecret } };
-    // account.tokens.push(t);
-    // return done(null, account);
   });
 
 }

@@ -481,6 +481,8 @@ var CRUMINA = {};
                resultEmail.html("이메일 형식이 올바르지 않습니다.");
              } else {
              resultEmail.html("이미 있는 아이디입니다.");
+              $("#save").prop('disabled', true);
+
              }
 
            } else {
@@ -489,6 +491,7 @@ var CRUMINA = {};
                resultEmail.html("이메일 형식이 올바르지 않습니다.");
              } else {
                resultEmail.html("사용 가능 합니다.");
+               $("#save").prop('disabled', false);
              }
 
            }

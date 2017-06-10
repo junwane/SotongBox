@@ -149,71 +149,91 @@ route.get('/auth/logout', function(req, res){
     res.render('login/findpass1');
   });
 
+
+  //비밀번호 찾기
+  var randPass = parseInt(Math.random() * 1000000)+"";
+  console.log(randPass);
+
   route.post('/findpass', function(req, res){
     var uname = req.body.username;
 
+      if(uname){
+        var mailOpts, smtpTrans;
+
+      let transporter = nodemailer.createTransport({
+          port : 587,
+          host : 'smtp.naver.com',
+          service: 'naver',
+          auth: {
+              user: 'fkam12@naver.com',
+              pass: 'zoavn125'
+          },
+            tls: {
+                ciphers: 'SSLv3'
+            }
+      });
+
+        let mailOptions = {
+          from: 'fkam12@naver.com',
+          to: req.body.username,
+          subject: '[소통박스] 임시비밀번호가 발송되었습니다!',
+          html :"<h1>안녕하세요! "+req.body.username+" 님!</h1>"+"<br>"
+          + "임시비밀번호는 : <h1>"+ randPass +"</h1> 입니다!" +"<br>"
+          + "<form action='http://localhost:3003/pass/"+req.body.username+"' method='post'><input type='submit' value='임시 비밀번호로 수정'/></form>"
+
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          //Email not sent
+          if (error) {
+            console.log(error);
+          }
+          //Email sent
+          else {
+            console.log(info);
+            transporter.close();
+            setTimeout(function (){
+              res.redirect('/');
+            }, 1000);
+          }
+        });
+
+      } else {
+        res.redirect('/');
+      }
+  });
+
+  route.post("/pass/:uname", function(req, res){
+    var uname = req.params.uname;
+
     pool.getConnection(function(err, connection){
-      var sql = "select username, password from users where username =? ";
+      var sql = "select username, password from member where username =? ";
       connection.query(sql, [uname], function(err, result){
         if(err){
           console.log(err);
         } else {
-            hasher({password:rand}, function(err, pass, salt, hash){
-                var passModify = {
-                  password : hash,
-                  salt: salt
-            };
-          pool.getConnection(function(err, connection){
-            var sql = "update users set ? where username = ?";
-            connection.query(sql, [passModify, uname], function(err, result){
+            hasher({password:randPass}, function(err, pass, salt, hash){
+              var passModify = hash;
+              var m_sort = salt;
+            var sql1 = "update member set password=?, m_sort=? where username = ?";
+            connection.query(sql1, [passModify, m_sort, uname], function(err, pass){
               if(err){
                 console.log(err);
               } else {
+                console.log("해쉬"+hash);
+                console.log("바뀐패스"+randPass);
                 res.redirect('/');
               }
             });
-          });
         });
-          if(result[0].username === req.body.username && uname === result[0].username){
-            var mailOpts, smtpTrans;
 
-            let transporter = nodemailer.createTransport({
-                port : 465,
-                host : 'smtp.naver.com',
-                service: 'naver',
-                auth: {
-                    user: 'fkam12@naver.com',
-                    pass: 'zoavn125'
-                },
-                  tls: {
-                      ciphers: 'SSLv3'
-                  }
-            });
 
-              let mailOptions = {
-                from: 'fkam12@naver.com',
-                to: req.body.username,
-                subject: '[소통박스] 임시비밀번호가 발송되었습니다!',
-                html :"<h1>안녕하세요! "+req.body.username+" 님!</h1>"+"<br>"
-                + "임시비밀번호는 : <h1>"+ rand +"</h1> 입니다!"
-              };
-
-              transporter.sendMail(mailOptions, (error, info) => {
-                //Email not sent
-                if (error) {
-                  console.log(error);
-                }
-                //Email sent
-                else {
-                  console.log(info);
-                }
-              });
-              connection.release();
-          } // end of if
         }  //end of else
       }); //end of connection
-    });
+    }); // end of pool
   });
+
+  // 비밀번호 찾기
 
   route.get('/auth/reg', function(req, res){
     res.render('login/reg');
@@ -554,7 +574,7 @@ route.get('/connect/facebook/callback',
   }
 );
 
-route.get('/:mypage', function(req, res){
+route.get('/profile/:mypage', function(req, res){
   res.render('index', {user: req.user, page : "./mypage.ejs"});
 });
   return route;

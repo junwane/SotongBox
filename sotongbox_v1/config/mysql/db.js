@@ -1,6 +1,7 @@
 module.exports = function(){
   var mysql = require('mysql');
   var pool = mysql.createPool({
+    connectionLimit : 5,
     host:'localhost',
     user :'root',
     password : '111111',
