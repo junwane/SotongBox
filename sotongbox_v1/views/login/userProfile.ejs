@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- <script type="text/javascript" src="/static/javascripts/hello.all.js"></script> -->
+    <script src="/static/js/login/userProfile.js"></script>
+  </head>
+  <body>
+
+    <div class="">
+
+      <a href="/">메인으로</a>
+      <h2>프로필</h2>
+      <p>
+        <label for="">닉네임</label>
+        <input type="text" name="" value="<%= result.displayName%>" >
+      </p>
+      <p>
+        <label for="">이메일 주소</label>
+        <input type="text" name="" value="<%= result.username %>">
+      </p>
+      <p>
+        <label for="">성별</label>
+      </p>
+      <p>
+        <input type="radio" name="gender" value="m" id="man" readonly>남
+        <input type="radio" name="gender" value="f" id="woman" readonly>여
+      </p>
+      <p>
+        <a href="/connect/facebook">facebook으로 로그인</a>
+        <a href="/connect/twitter">twitter로 로그인</a>
+        <a href="/connect/google">google+로 로그인</a>
+        <a href="/connect/naver">NAVER로 로그인</a>
+      </p>
+      <p>
+        <a href="#" onclick="openfacebook()">facebook</a></button>
+        <a href="#" onclick="opentwitter()">tweet</a>
+      </p>
+    </div>
+    <input type="hidden" name="" id="genderCheck" value="<%= result.gender %>">
+    <input type="hidden" name="" id="id" value="<%= result.id %>">
+  </body>
+</html>

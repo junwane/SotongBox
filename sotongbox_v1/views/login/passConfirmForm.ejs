@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>비밀번호 수정</title>
+  </head>
+  <body>
+    <div class="">
+      <h1>비밀번호 수정</h1>
+      <form class="" action="/findpass/<%=result[0].username%>/confirm" method="post">
+        <label for="">새로운 비밀번호: </label>
+        <input type="password" name="password" value=""><br>
+
+        <label for="">새로운 비밀번호 확인: </label>
+        <input type="password" name="passwordConfirm" value="">
+
+        <input type="submit" name="submit" value="변경">
+      </form>
+      <a href="/auth/login">로그인으로</a>
+    </div>
+  </body>
+</html>

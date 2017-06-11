@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>비밀번호 수정</title>
+  </head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+   if($("#pass").val() == ""){
+     alert("패스워드를 입력하세요");
+     $("#pass").focus();
+     $("#pass").val() = "";
+     return false;
+   }
+    else if($("#passConfirm")){
+     alert("패스워드확인을 입력하세요");
+     $("#passConfirm").focus();
+     $("#passConfirm").val() = "";
+     return false;
+   }
+    else if(!$("#pass").val().match(/\d+/g) || ! $("#pass").val().match(/[a-z]+/gi)){
+     alert("패스워드는 반드시 영문과 숫자를 1개 이상 조합하여 사용하십시오.");
+     $("#pass").focus();
+     $("#pass").val() = "";
+     return false;
+   } else if($("#pass").val() !== $("#passConfirm").val()){
+     alert("비밀번호가 서로 맞지 않습니다.");
+     $("#pass").val() = "";
+     $("#passConfirm").val() = "";
+     $("#pass").focus();
+     return false;
+   }
+    </script>
+  <body>
+    <div class="">
+      <h1>비밀번호 수정</h1>
+      <form class="" action="/findpass/<%=result[0].username%>/confirm" method="post">
+        <label for="">새로운 비밀번호: </label>
+        <input type="password" name="password" id="pass" value=""><br>
+
+        <label for="">새로운 비밀번호 확인: </label>
+        <input type="password" name="passwordConfirm" id="passConfirm" value="">
+
+        <input type="submit" name="submit" value="변경">
+      </form>
+      <a href="/auth/login">로그인으로</a>
+    </div>
+  </body>
+</html>
