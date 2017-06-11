@@ -29,17 +29,22 @@
           </div>
           <div class="profile-section">
             <div class="row">
-              <div class="col-md-8 col-md-push-4" style="padding-left: 50px;">
+              <div class="col-md-8" style="padding-left: 50px;">
                 <a href="#" class="h3 author-name"><%=result[0].sb_name%></a>
                 <a href="#" class="h6"><i class="fa fa-cog" aria-hidden="true"></i></a>
 
                 <div class="country"><%=result[0].sb_resiger%></div>
               </div>
 
-              <div class="col-md-4 col-md-pull-8" style="font-size: 30px;">
-                <i class="fa fa-file-text-o" aria-hidden="true" style=""> <%= result[0].cardnum %> </i>
-                <i class="fa fa-smile-o" aria-hidden="true"> <%= result[0].subscribenum %> </i>
-                <button class="btn btn-primary btn-md-2 sotong-join-btn js-open-popup">소통상자 만들기<div class="ripple-container" ></div></button>
+              <div class="col-md-1 " style="font-size: 30px;">
+                <i class="fa fa-file-text-o" aria-hidden="true" style=""> <%= result[0].cardnum %></i>
+                <i class="fa fa-smile-o" aria-hidden="true"> <%= result[0].subscribenum %></i>
+              </div>
+
+              <div class="col-md-2 boxState" style="font-size: 55px;">
+                <button class="btn btn-primary btn-md-2 sotong-join-btn js-open-popup stateValue">상자 구독하기</button>
+                <input type = 'hidden' id = 'subscribe' value = '<%= check[0].subscribe %>' />
+                <input type = 'hidden' id = 'sb_no' value = '<%= result[0].sb_open %>' />
               </div>
 
             </div>
@@ -423,3 +428,5 @@
       <span class="material-input"></span></div>
   </div>
 </div>
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+<script src="/static/js/wan/subscribe.js"></script>

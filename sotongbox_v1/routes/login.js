@@ -551,7 +551,22 @@ route.get('/connect/facebook/callback',
 );
 
 route.get('/profile/:mypage', function(req, res){
-  res.render('index', {user: req.user, page : "./mypage.ejs"});
+  pool.getConnection(function(err, connection){
+    if(err) console.log("커넥션 객체 얻어오기 에러 : ",err);
+    else{
+      var username = req.params.mypage;
+      var sql = "select m_img, m_nickname, username, m_introduce, m_langage, m_nation, m_gender"
+                +" from member"
+                +" where username = ?;"
+      connection.query(sql, [username], function(err, result){
+        if(err) console.log("해당 사용자 프로필 select 에러 : ", err);
+        else{
+            res.render('index', {user: req.user, page : "./mypage.ejs", result : result[0]} );
+        }
+      });
+    }
+  });
 });
+
   return route;
 };

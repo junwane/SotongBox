@@ -51,7 +51,7 @@
                               <img src="/static/images/users/<%= results[i].m_img %>" alt="author" class="avatar" width="40px" height="40px">
                           </div>
                           <div class="notification-event">
-                              <a href="#" class="h6 notification-friend"><%= results[i].m_nickname %></a>
+                              <a href='/profile/<%= results[i].username %>' class="h6 notification-friend"><%= results[i].m_nickname %></a>
                               <span class="chat-message-item">레벨<%= results[i].m_level %></span>
                           </div>
                       </li>

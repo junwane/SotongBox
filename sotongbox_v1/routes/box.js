@@ -23,8 +23,9 @@ module.exports = function(multer, passport) {
       else{
         var sb_no = req.params.id;
         sb_no = sb_no.substring(1,13);
-        console.log(sb_no);
-        var sql = "select  sb_img,"
+        var m_no = req.user.m_no;
+        var sql = "select sb_open,"
+                          +"sb_img,"
                           +"sb_name,"
                           +"DATE_FORMAT(sb_register, '%Y %m %d')as sb_resiger,"
                           +"(select count(*) from sotongcard where sb_no = ?) as cardnum,"
@@ -34,12 +35,23 @@ module.exports = function(multer, passport) {
         connection.query(sql, [sb_no,sb_no,sb_no], function(err,result){
           if(err) console.log("해당 소통상자 select 에러 : ",err);
           else{
-            res.render('index', {
-              result : result,
-              page: './boxInner.ejs',
-              user: req.user
+            var sql2 = "select sb_s_check as subscribe"
+                      +" from sb_subscribe"
+                      +" where sb_no = ? and m_no = (select m_no from member where m_no = ?);"
+            connection.query(sql2, [sb_no, m_no], function(err, check){
+              if(err) console.log("구독 체크 에러 : ",err);
+              else{
+                if( check == ''){
+                  check[0] = {subscribe : 2};
+                }
+                res.render('index', {
+                  result : result,
+                  check : check,
+                  page: './boxInner.ejs',
+                  user: req.user
+                });
+              }
             });
-
             connection.release();
           }
         });
@@ -64,6 +76,7 @@ module.exports = function(multer, passport) {
                           +"(select m_img from member where m_no = sb.m_no) as m_img,"
                           +"(select m_nickname from member where m_no = sb.m_no) as m_nickname,"
                           +"(select m_level from member where m_no = sb.m_no) as m_level,"
+                          +"(select username from member  where m_no = sb.m_no) as username,"
                           +"(select count(*) from sotongcard where sb_no = sb.sb_no) as cardnum,"
                           +"(select count(*) from sb_subscribe where sb_no = sb.sb_no) as subscribenum"
                 +" from sotongbox as sb"
@@ -102,7 +115,7 @@ module.exports = function(multer, passport) {
         var sb_no = "" + result[0].sb_no;
         var name = 'sb';
         var sb_no = auto_incre(sb_no, name);
-        var datas = [sb_no, cate_no, m_no, sb_name, sb_img, sb_open];
+        var m_no = req.user.m_no;
 
         var second_sql = "INSERT INTO sotongbox(sb_no, cate_no, m_no, sb_name, sb_img, sb_open) VALUES (?,?,?,?,?,?);";
         connection.query(second_sql, [sb_no, cate_no, m_no, sb_name, sb_img, sb_open], function(err, result) {
@@ -110,7 +123,8 @@ module.exports = function(multer, passport) {
           console.log(result);
           if (err) console.error("상자 만드는 중 에러 발생 err : ", err);
 
-          var third_sql = "select  sb_img,"
+          var third_sql = "select sb_open,"
+                                  +"sb_img,"
                                   +"sb_name,"
                                   +"DATE_FORMAT(sb_register, '%Y %m %d')as sb_resiger,"
                                   +"(select count(*) from sotongcard where sb_no = ?) as cardnum,"
@@ -118,14 +132,27 @@ module.exports = function(multer, passport) {
                           +" from  sotongbox as sb"
                           +" where sb_no = ?;"
           connection.query(third_sql, [sb_no,sb_no,sb_no], function(err, result) {
-            console.log("이너페이지로 넘기는 값", result);
-
-            res.render('index', {
-              page: './boxInner.ejs',
-              user: req.user,
-              result: result,
-            });
-            connection.release();
+            if(err) console.log('상자 생성 후 해당 상자 내부 페이지 이동 시 에러 : ',err);
+            else{
+              var sql2 = "select sb_s_check as subscribe"
+                        +" from sb_subscribe"
+                        +" where sb_no = ? and m_no = (select m_no from member where m_no = ?);"
+              connection.query(sql2, [sb_no, m_no], function(err, check){
+                if(err) console.log("구독 체크 에러 : ",err);
+                else{
+                  if( check == ''){
+                    check[0] = {subscribe : 2};
+                  }
+                  res.render('index', {
+                    result : result,
+                    check : check,
+                    page: './boxInner.ejs',
+                    user: req.user
+                  });
+                }
+              });
+              connection.release();
+            }
           });
         });
       });
