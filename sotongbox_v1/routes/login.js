@@ -29,12 +29,6 @@ route.get('/auth/logout', function(req, res){
   //-----------------------------------------------로컬, SNS 인증 부분 -------------
   route.post('/auth/register', function(req, res){
     hasher({password:req.body.password}, function(err, pass, salt, hash){
-      var user = {
-        s_l_id : 'local:' + req.body.username,
-        username : req.body.username,
-        password : hash,
-        m_sort: salt
-      };
       var s_l_id = 'local:' + req.body.username;
       var username = req.body.username;
       var password = hash;
@@ -49,24 +43,14 @@ route.get('/auth/logout', function(req, res){
           var m_no = auto_incre(id,name);
           console.log(m_no);
 
-            var sql1 = 'insert into member(m_no) values(?)';
-            connection.query(sql1, [m_no], function(err, no){
+            var sql1 = 'insert into member(m_no, username, password, m_sort, m_nickname) values(?,?,?,?,?)';
+            connection.query(sql1, [m_no, username, password, m_sort, username], function(err, no){
               console.log(no);
             });
 
-            var sql2 = 'insert into s_link(m_no, s_no) values(?, 1)';
-            connection.query(sql2, [m_no], function(err, no){
+            var sql2 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 1, ?)';
+            connection.query(sql2, [m_no, s_l_id], function(err, no){
               console.log(no);
-            });
-
-            var sql3 = 'UPDATE member SET username = ?, password = ?, m_sort = ?, m_nickname = ?  where m_no = ?';
-            connection.query(sql3, [username, password, m_sort, username, m_no], function(err, update2){
-              console.log('4' +update2);
-            });
-
-            var sql4 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
-            connection.query(sql4, [s_l_id, m_no], function(err, update1){
-              console.log('3' +update1);
             });
 
             var sql5 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
@@ -78,11 +62,6 @@ route.get('/auth/logout', function(req, res){
               } else{
                 console.log(results);
                 connection.release();
-                // req.login(user, function(err){
-                //    req.session.save(function(){
-                //     // res.redirect('/sendEmail');
-                //   });
-                // });
               }
             }); // close connection
           }); // close pool
@@ -100,10 +79,6 @@ route.get('/auth/logout', function(req, res){
               user: 'fkam12@naver.com',
               pass: 'zoavn125'
           }
-          // ,
-          // tls: {
-          //     ciphers: 'SSLv3'
-          // }
       }); // close transporter
 
 
@@ -151,10 +126,11 @@ route.get('/auth/logout', function(req, res){
 
 
   //비밀번호 찾기
-  var randPass = parseInt(Math.random() * 1000000)+"";
-  console.log(randPass);
-
+  var randPass;
   route.post('/findpass', function(req, res){
+    randPass = parseInt(Math.random() * 1000000)+"";
+    console.log(randPass);
+
     var uname = req.body.username;
 
       if(uname){

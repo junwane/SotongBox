@@ -71,7 +71,7 @@ module.exports = function(app){
       consumerKey: '3B7AG1uxos0XHOuEgtVDcOBsL',
       consumerSecret: '21GZRLpisDFGT6EZqWWapEzcg2aynAL0XvmDnMIw2yV8gLmVsp',
       callbackURL: "/auth/twitter/callback",
-      userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true"//트위터에서 이메일 받는 법 와씌바 존나어렵네
+      userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true"
   },
   function(token, tokenSecret, profile, done) {
     console.log(profile);
@@ -100,25 +100,15 @@ module.exports = function(app){
             console.log(m_no);
             //회원번호 구함
 
-              var sql2 = 'insert into member(m_no) values(?)';
-              connection.query(sql2, [m_no], function(err, no){
+              var sql2 = 'insert into member(m_no, username, m_nickname) values(?,?,?)';
+              connection.query(sql2, [m_no, username, m_nickname], function(err, no){
                 console.log(no);
               });
 
-              var sql3 = 'insert into s_link(m_no, s_no) values(?, 3)';
+              var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 3, ?)';
               //3은 트위터
-              connection.query(sql3, [m_no], function(err, no){
+              connection.query(sql3, [m_no, s_l_id], function(err, no){
                 console.log(no);
-              });
-
-              var sql4 = 'UPDATE member SET username = ?, m_nickname = ? where m_no = ?';
-              connection.query(sql4, [username, m_nickname, m_no], function(err, update2){
-                console.log('4' +update2);
-              });
-
-              var sql5 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
-              connection.query(sql5, [s_l_id, m_no], function(err, update1){
-                console.log('3' +update1);
               });
 
               var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
@@ -139,6 +129,7 @@ module.exports = function(app){
   });
   }
 ));
+
   passport.use(new FacebookStrategy({
       clientID: '1840733199510901',
       clientSecret: 'ad245cb56ba5a1e2f7f8e07af2538235',
@@ -174,25 +165,15 @@ module.exports = function(app){
               console.log(m_no);
               //회원번호 구함
 
-                var sql2 = 'insert into member(m_no) values(?)';
-                connection.query(sql2, [m_no], function(err, no){
+                var sql2 = 'insert into member(m_no, username, m_nickname) values(?,?,?)';
+                connection.query(sql2, [m_no, username, m_nickname], function(err, no){
                   console.log(no);
                 });
 
-                var sql3 = 'insert into s_link(m_no, s_no) values(?, 2)';
+                var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 2, ?)';
                 //2는 페북
-                connection.query(sql3, [m_no], function(err, no){
+                connection.query(sql3, [m_no, s_l_id], function(err, no){
                   console.log(no);
-                });
-
-                var sql4 = 'UPDATE member SET username = ?, m_nickname = ? where m_no = ?';
-                connection.query(sql4, [username, m_nickname, m_no], function(err, update2){
-                  console.log('4' +update2);
-                });
-
-                var sql5 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
-                connection.query(sql5, [s_l_id, m_no], function(err, update1){
-                  console.log('3' +update1);
                 });
 
                 var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
@@ -212,9 +193,8 @@ module.exports = function(app){
       });
     });
   }
+));
 
-
-  ));
   passport.use(new GoogleStrategy({
       clientID: '777905994972-3a9e6a0j500t5dfurqe17a411i0i34rd.apps.googleusercontent.com',
       clientSecret: 'vIbzliejJPAmlDg9MqXC-aBN',
@@ -247,26 +227,17 @@ module.exports = function(app){
               console.log(m_no);
               //회원번호 구함
 
-                var sql2 = 'insert into member(m_no) values(?)';
-                connection.query(sql2, [m_no], function(err, no){
+                var sql2 = 'insert into member(m_no, username, m_nickname) values(?,?,?)';
+                connection.query(sql2, [m_no, username, m_nickname], function(err, no){
                   console.log(no);
                 });
 
-                var sql3 = 'insert into s_link(m_no, s_no) values(?, 4)';
+                var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 4, ?)';
                 //4는 구글
-                connection.query(sql3, [m_no], function(err, no){
+                connection.query(sql3, [m_no, s_l_id], function(err, no){
                   console.log(no);
                 });
 
-                var sql4 = 'UPDATE member SET username = ?, m_nickname = ? where m_no = ?';
-                connection.query(sql4, [username, m_nickname, m_no], function(err, update2){
-                  console.log('4' +update2);
-                });
-
-                var sql5 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
-                connection.query(sql5, [s_l_id, m_no], function(err, update1){
-                  console.log('3' +update1);
-                });
 
                 var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
                 connection.query(sql6, [s_l_id], function(err, resutls){
@@ -320,25 +291,15 @@ module.exports = function(app){
                 console.log(m_no);
                 //회원번호 구함
 
-                  var sql2 = 'insert into member(m_no) values(?)';
-                  connection.query(sql2, [m_no], function(err, no){
+                  var sql2 = 'insert into member(m_no,username, m_nickname) values(?,?,?)';
+                  connection.query(sql2, [m_no, username, m_nickname], function(err, no){
                     console.log(no);
                   });
 
-                  var sql3 = 'insert into s_link(m_no, s_no) values(?, 5)';
+                  var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 5, ?)';
                   //5는 네이버
-                  connection.query(sql3, [m_no], function(err, no){
+                  connection.query(sql3, [m_no, s_l_id], function(err, no){
                     console.log(no);
-                  });
-
-                  var sql4 = 'UPDATE member SET username = ?, m_nickname = ? where m_no = ?';
-                  connection.query(sql4, [username, m_nickname, m_no], function(err, update2){
-                    console.log('4' +update2);
-                  });
-
-                  var sql5 = 'UPDATE s_link SET s_l_id = ? where m_no = ?';
-                  connection.query(sql5, [s_l_id, m_no], function(err, update1){
-                    console.log('3' +update1);
                   });
 
                   var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
@@ -384,13 +345,6 @@ module.exports = function(app){
             return done(null, account);
           }
       });
-      // var account = new Account();
-      // console.log(account);
-      // account.domain = 'twitter.com';
-      // account.uid = profile.id;
-      // var t = { kind: 'oauth', token: token, attributes: { tokenSecret: tokenSecret } };
-      // account.tokens.push(t);
-      // return done(null, account);
     });
 
 
@@ -422,10 +376,6 @@ function(token, tokenSecret, profile, done) {
         }
     });
   });
-
-
-
-
 }
 ));
 
