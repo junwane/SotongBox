@@ -2,6 +2,7 @@ module.exports = function(multer, passport) {
 
   var express = require('express');
   var pool = require('../config/mysql/db')();
+  var auto_incre = require('./auto_incre.js');
   var router = express.Router();
   var _storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -15,57 +16,70 @@ module.exports = function(multer, passport) {
     storage: _storage
   })
 
-  function auto_incre(id, name) {
-    var time = new Date();
-    var y = time.getFullYear();
-    var m = time.getMonth() + 1;
-    if (m < 10) {
-      m = '0' + m;
-    }
-    var d = time.getDate();
-    if (d < 10) {
-      d = '0' + d;
-    }
-    time = y + m + d;
-    var t = time.substring(2, 8);
-
-
-    var seq = '0000';
-    var a = name + t;
-    if (id.length == 1) {
-      seq = seq.substring(0, 3);
-      seq += id;
-    } else if (id.length == 2) {
-      seq = seq.substring(1, 3);
-      seq += id;
-    } else if (id.length == 3) {
-      seq = seq.substring(2, 3);
-      seq += id;
-    } else if (id.length == 4) {
-      seq = id;
-    }
-    var m_no = a + seq;
-    return m_no;
-  }
-
-
   /* GET home page. */
-  router.get('/boxInner', function(req, res, next) {
-    res.render('index', {
-      page: './boxInner.ejs',
-      user: req.user
+  router.get('/Inner:id', function(req, res, next) {
+    pool.getConnection(function(err, connection){
+      if(err) console.log("커넥션 객체 얻어오기 에러 : ",err);
+      else{
+        var sb_no = req.params.id;
+        sb_no = sb_no.substring(1,13);
+        console.log(sb_no);
+        var sql = "select  sb_img,"
+                          +"sb_name,"
+                          +"DATE_FORMAT(sb_register, '%Y %m %d')as sb_resiger,"
+                          +"(select count(*) from sotongcard where sb_no = ?) as cardnum,"
+                          +"(select count(*) from sb_subscribe where sb_no = ? and sb_s_check = 1) as subscribenum"
+                  +" from  sotongbox as sb"
+                  +" where sb_no = ?;"
+        connection.query(sql, [sb_no,sb_no,sb_no], function(err,result){
+          if(err) console.log("해당 소통상자 select 에러 : ",err);
+          else{
+            res.render('index', {
+              result : result,
+              page: './boxInner.ejs',
+              user: req.user
+            });
+
+            connection.release();
+          }
+        });
+      }
     });
   });
+
   router.get('/boxInnerTest', function(req, res, next) {
     res.render('index', {
       page: './boxInnerTest.ejs',
       user: req.user
     });
   });
+
   router.get('/', function(req, res, next) {
-    res.render('index', {
-      page: './box.ejs',
-      user: req.user
+    pool.getConnection(function(err, connection){
+      if(err) console.error("커넥션 객체 얻어오기 에러 : ", err);
+      else {
+        var sql = "select  sb_no, "
+                          +"sb_img, "
+                          +"sb_name,"
+                          +"(select m_img from member where m_no = sb.m_no) as m_img,"
+                          +"(select m_nickname from member where m_no = sb.m_no) as m_nickname,"
+                          +"(select m_level from member where m_no = sb.m_no) as m_level,"
+                          +"(select count(*) from sotongcard where sb_no = sb.sb_no) as cardnum,"
+                          +"(select count(*) from sb_subscribe where sb_no = sb.sb_no) as subscribenum"
+                +" from sotongbox as sb"
+                +" where sb_no != '0'"
+                +" group by sb_no"
+                +" order by sb_register desc;"
+        connection.query(sql, function(err, results){
+          res.render('index', {
+            results : results,
+            page: './box.ejs',
+            user: req.user
+          });
+
+          connection.release();
+        });
+      }
     });
   });
   router.post('/newBox', upload.single('userfile'), function(req, res, next) {
@@ -96,27 +110,20 @@ module.exports = function(multer, passport) {
           console.log(result);
           if (err) console.error("상자 만드는 중 에러 발생 err : ", err);
 
-          var third_sql = "select * from sotongbox where sb_no=?";
-          connection.query(third_sql, [sb_no], function(err, rows) {
-            console.log("이너페이지로 넘기는 값", rows);
-
-            var y = rows[0].sb_register.getFullYear();
-            var m = rows[0].sb_register.getMonth()+1;
-            if (m < 10) {
-              m = '0' + m;
-            }
-            var d = rows[0].sb_register.getDate();
-            if (d < 10) {
-              d = '0' + d;
-            }
-            var day = String(y+' '+m+' '+d);
+          var third_sql = "select  sb_img,"
+                                  +"sb_name,"
+                                  +"DATE_FORMAT(sb_register, '%Y %m %d')as sb_resiger,"
+                                  +"(select count(*) from sotongcard where sb_no = ?) as cardnum,"
+                                  +"(select count(*) from sb_subscribe where sb_no = ? and sb_s_check = 1) as subscribenum"
+                          +" from  sotongbox as sb"
+                          +" where sb_no = ?;"
+          connection.query(third_sql, [sb_no,sb_no,sb_no], function(err, result) {
+            console.log("이너페이지로 넘기는 값", result);
 
             res.render('index', {
               page: './boxInner.ejs',
               user: req.user,
-              rows: rows[0],
-              register : day
-
+              result: result,
             });
             connection.release();
           });
@@ -124,5 +131,6 @@ module.exports = function(multer, passport) {
       });
     });
   });
+
   return router;
 }

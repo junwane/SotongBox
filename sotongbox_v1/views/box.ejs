@@ -1,24 +1,3 @@
-<header class="header header-responsive" id="site-header-responsive">
-
-  <div class="header-content-wrapper">
-    <a href="#" class="link-find-friend">소통카드</a>
-    <a href="#" class="link-find-friend">소통상자</a>
-  </div>
-
-  <!-- Tab panes -->
-
-  <!-- ... end  Tab panes -->
-
-</header>
-
-
-<!-- ... end Responsive Header -->
-
-
-<!-- Top Header -->
-
-<!-- ... end Top Header -->
-
 <div class="container">
 
   <div class="jin-ui-block responsive-flex" style="margin-top:120px;">
@@ -29,8 +8,8 @@
          <option value="C">웹디자인</option>
     </select>
       <select name="list" class="selectpicker form-control col-sm-2">
-         <option value="A">인기순</option>
-         <option value="B">최신순</option>
+         <option value="A">최신순</option>
+         <option value="B">인기순</option>
          <option value="C">기간설정</option>
     </select>
       <div class="checkbox" style="float:right; margin-top:20px;">
@@ -41,7 +20,9 @@
     </div>
   </div>
 
+
   <div class="photo-album-wrapper">
+
     <div class="photo-album-item-wrap col-4-width">
       <div class="photo-album-item create-album" data-mh="album-item">
         <div class="content">
@@ -54,290 +35,47 @@
       </div>
     </div>
 
-    <div class="photo-album-item-wrap col-4-width">
-      <div class="photo-album-item" data-mh="album-item">
-        <div class="form-group">
-          <img src="/static/images/photo-album6.jpg" alt="photo">
-          <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
+    <% for(var i = 0 ; i < results.length ; i++){ %>
+      <div class="photo-album-item-wrap col-4-width">
+        <div class="photo-album-item" data-mh="album-item">
+          <div class="ui-block video-item">
+              <div class="video-player boxlistimg" id = '<%= results[i].sb_no %>' >
+                  <img src=<%= results[i].sb_img %> alt="photo">
+              </div>
+
+              <div class="ui-block-content video-content">
+                  <a href="box/Inner:<%= results[i].sb_no %>" class="h6"><%= results[i].sb_name %></a>
+                  <ul class="widget w-friend-pages-added notification-list friend-requests">
+                      <li class="inline-items">
+                          <div class="author-thumb">
+                              <img src="/static/images/users/<%= results[i].m_img %>" alt="author" class="avatar" width="40px" height="40px">
+                          </div>
+                          <div class="notification-event">
+                              <a href="#" class="h6 notification-friend"><%= results[i].m_nickname %></a>
+                              <span class="chat-message-item">레벨<%= results[i].m_level %></span>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+
+              <div class="ui-block-content video-content">
+                  <div class="comments-shared">
+                      <a class="post-add-icon inline-items">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          <span><%= results[i].cardnum %></span>
+                      </a>
+
+                      <a class="post-add-icon inline-items">
+                          <i class="fa fa-smile-o" aria-hidden="true"></i>
+                          <span><%= results[i].subscribenum %></span>
+                      </a>
+                  </div>
+              </div>
+          </div>
         </div>
-
-        <form class="form-group label-floating is-select">
-          <svg class="olymp-happy-face-icon"><use xlink:href="/static/icons/icons.svg#olymp-happy-face-icon"></use></svg>
-
-          <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-  							<option title="Green Goo Rock" data-content='<div class="inline-items">
-                  <div class="author-thumb">
-  											<img src="/static/images/avatar52-sm.jpg" alt="author">
-  										</div>
-  											<div class="h6 author-title">Green Goo Rock</div>
-
-  										</div>'>
-  							</option>
-
-  							<option title="Mathilda Brinker" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar74-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Mathilda Brinker</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Marina Valentine" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar48-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Marina Valentine</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Dave Marinara" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar75-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Dave Marinara</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Rachel Howlett" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar76-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Rachel Howlett</div>
-  										</div>'>
-  							</option>
-
-  						</select>
-        </form>
       </div>
-    </div>
+    <% } %>
 
-    <div class="photo-album-item-wrap col-4-width">
-      <div class="photo-album-item" data-mh="album-item">
-        <div class="form-group">
-          <img src="/static/images/photo-album7.jpg" alt="photo">
-          <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-        </div>
-        <form class="form-group label-floating is-select">
-          <svg class="olymp-happy-face-icon"><use xlink:href="/static/icons/icons.svg#olymp-happy-face-icon"></use></svg>
-
-          <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-  							<option title="Green Goo Rock" data-content='<div class="inline-items">
-  										<div class="author-thumb">
-  											<img src="/static/images/avatar52-sm.jpg" alt="author">
-  										</div>
-  											<div class="h6 author-title">Green Goo Rock</div>
-
-  										</div>'>
-  							</option>
-
-  							<option title="Mathilda Brinker" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar74-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Mathilda Brinker</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Marina Valentine" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar48-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Marina Valentine</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Dave Marinara" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar75-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Dave Marinara</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Rachel Howlett" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar76-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Rachel Howlett</div>
-  										</div>'>
-  							</option>
-
-  						</select>
-        </form>
-      </div>
-    </div>
-
-    <div class="photo-album-item-wrap col-4-width">
-      <div class="photo-album-item" data-mh="album-item">
-        <div class="form-group">
-          <img src="/static/images/photo-album8.jpg" alt="photo">
-          <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-        </div>
-
-        <form class="form-group label-floating is-select">
-          <svg class="olymp-happy-face-icon"><use xlink:href="/static/icons/icons.svg#olymp-happy-face-icon"></use></svg>
-
-          <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-  							<option title="Green Goo Rock" data-content='<div class="inline-items">
-  										<div class="author-thumb">
-  											<img src="/static/images/avatar52-sm.jpg" alt="author">
-  										</div>
-  											<div class="h6 author-title">Green Goo Rock</div>
-
-  										</div>'>
-  							</option>
-
-  							<option title="Mathilda Brinker" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar74-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Mathilda Brinker</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Marina Valentine" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar48-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Marina Valentine</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Dave Marinara" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar75-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Dave Marinara</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Rachel Howlett" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar76-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Rachel Howlett</div>
-  										</div>'>
-  							</option>
-
-  						</select>
-        </form>
-      </div>
-    </div>
-
-    <div class="photo-album-item-wrap col-4-width">
-      <div class="photo-album-item" data-mh="album-item">
-        <div class="form-group">
-          <img src="/static/images/photo-album9.jpg" alt="photo">
-          <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-        </div>
-
-        <form class="form-group label-floating is-select">
-          <svg class="olymp-happy-face-icon"><use xlink:href="/static/icons/icons.svg#olymp-happy-face-icon"></use></svg>
-
-          <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-  							<option title="Green Goo Rock" data-content='<div class="inline-items">
-  										<div class="author-thumb">
-  											<img src="/static/images/avatar52-sm.jpg" alt="author">
-  										</div>
-  											<div class="h6 author-title">Green Goo Rock</div>
-
-  										</div>'>
-  							</option>
-
-  							<option title="Mathilda Brinker" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar74-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Mathilda Brinker</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Marina Valentine" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar48-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Marina Valentine</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Dave Marinara" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar75-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Dave Marinara</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Rachel Howlett" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar76-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Rachel Howlett</div>
-  										</div>'>
-  							</option>
-
-  						</select>
-        </form>
-      </div>
-    </div>
-
-    <div class="photo-album-item-wrap col-4-width">
-      <div class="photo-album-item" data-mh="album-item">
-        <div class="form-group">
-          <img src="/static/images/photo-album10.jpg" alt="photo">
-          <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-        </div>
-
-        <form class="form-group label-floating is-select">
-          <svg class="olymp-happy-face-icon"><use xlink:href="/static/icons/icons.svg#olymp-happy-face-icon"></use></svg>
-
-          <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-  							<option title="Green Goo Rock" data-content='<div class="inline-items">
-  										<div class="author-thumb">
-  											<img src="/static/images/avatar52-sm.jpg" alt="author">
-  										</div>
-  											<div class="h6 author-title">Green Goo Rock</div>
-
-  										</div>'>
-  							</option>
-
-  							<option title="Mathilda Brinker" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar74-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Mathilda Brinker</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Marina Valentine" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar48-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Marina Valentine</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Dave Marinara" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar75-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Dave Marinara</div>
-  										</div>'>
-  							</option>
-
-  							<option title="Rachel Howlett" data-content='<div class="inline-items">
-  											<div class="author-thumb">
-  												<img src="/static/images/avatar76-sm.jpg" alt="author">
-  											</div>
-  											<div class="h6 author-title">Rachel Howlett</div>
-  										</div>'>
-  							</option>
-
-  						</select>
-        </form>
-
-      </div>
-    </div>
   </div>
 </div>
 <!-- Window-popup Create Friends Group -->
