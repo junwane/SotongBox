@@ -1,7 +1,5 @@
 $('#userfile').on('change', function() {
 
-  window.alert("실행됨");
-
   ext = $(this).val().split('.').pop().toLowerCase(); //확장자
 
   //배열에 추출한 확장자가 존재하는지 체크
@@ -35,3 +33,32 @@ function resetFormElement(e) {
   //DOM에서 제공하는 초기화 메서드 reset()을 호출
   e.unwrap(); //감싼 <form> 태그를 제거
 }
+
+$('#keyword').focus(function() {
+  $('#keyword').on('keypress', function(event) {
+    if (event.keyCode == 32) {
+      event.preventDefault();
+      var input = document.getElementById("keyword").value;
+      var temp = input;
+      if (document.getElementById("tag").value == "") {
+        var tag = "#" + temp;
+      } else {
+        var tag = document.getElementById("tag").value + "#" + temp;
+      }
+      document.getElementById("tag").value = tag;
+      document.getElementById("keyword").value = "";
+    }
+
+    if (event.keyCode == 45 && document.getElementById("keyword").value == "") {
+      event.preventDefault();
+      var tag = document.getElementById("tag").value;
+      var index1 = tag.lastIndexOf('#');
+      var index2 = tag.length;
+
+      var tag2 = tag.substr(index1, index2);
+      var result = tag.replace(tag2, '');
+
+      document.getElementById("tag").value = result;
+    }
+  });
+});

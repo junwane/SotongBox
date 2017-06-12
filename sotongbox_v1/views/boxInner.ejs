@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/static/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <header class="header header-responsive" id="site-header-responsive">
 
   <div class="header-content-wrapper">
@@ -42,7 +43,7 @@
               </div>
 
               <div class="col-md-2 boxState" style="font-size: 55px;">
-                <button class="btn btn-primary btn-md-2 sotong-join-btn js-open-popup stateValue">상자 구독하기</button>
+                <button class="btn btn-primary btn-md-2 sotong-join-btn jin-js-open-popup" data-popup-target=".make-card">소통카드 만들기<div class="ripple-container" ></div></button>
                 <input type = 'hidden' id = 'subscribe' value = '<%= check[0].subscribe %>' />
                 <input type = 'hidden' id = 'sb_no' value = '<%= result[0].sb_open %>' />
               </div>
@@ -347,70 +348,59 @@
 
 <!-- Window-popup Create Friends Group -->
 
-<form class="uploadForm" action="/newBox" method="post" enctype="multipart/form-data">
-  <div class="ui-block window-popup make-box ">
+<form class="uploadForm" action="/box/newCard" method="post">
+  <div class="ui-block window-popup make-card ">
     <a class="icon-close js-close-popup">
       <svg class="olymp-close-icon"><use xlink:href="/static/icons/icons.svg#olymp-close-icon"></use></svg>
     </a>
-
     <div class="ui-block-title bg-primary">
-      <h6 class="align-center">소통상자 생성</h6>
-    </div>
-    <div class="form-group label-floating is-select newBox-ui-block-content">
-      <div class="form-group label-floating is-empty">
-        <label class="control-label">카테고리</label>
-        <select name="category" class="selectpicker form-control">
-			       <option value="A">융합교육</option>
-			       <option value="B">코딩교육</option>
-             <option value="C">웹디자인</option>
-		    </select>
-      </div>
+      <h6 class="align-center" style="color:white;">소통카드 생성</h6>
     </div>
     <div class="newBox-ui-block-content">
       <div class="form-group label-floating is-empty">
-        <label class="control-label">소통상자 제목</label>
-        <input name="boxname" class="form-control" type="text" placeholder="">
+        <label class="control-label">소통카드 제목</label>
+        <input name="cardname" class="form-control" type="text" placeholder="">
+        <span class="material-input"></span>
+      </div>
+    <input id="randomImg" type="hidden" name="unsplash" value="">
+    <input type="hidden" name="sb_no" value="<%=sb_no%>">
+    </div>
+    <div class="ui-block" style="width:670px;height:300px;">
+      <textarea class="ui-block" name="ir1" id="ir1" rows="14" cols="100"></textarea>
+      <script type="text/javascript">
+        var oEditors = [];
+        nhn.husky.EZCreator.createInIFrame({
+          oAppRef: oEditors,
+          elPlaceHolder: "ir1",
+          sSkinURI: "/static/se2/SmartEditor2Skin.html",
+          fCreator: "createSEditor2"
+        });
+        function submitContents(elClickedObj) {
+          oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+          try {
+            elClickedObj.form.submit();
+          } catch (e) {}
+        }
+      </script>
+    </div>
+    <div class="newBox-ui-block-content">
+      <div class="form-group label-floating is-empty">
+        <label class="control-label">태그 입력</label>
+        <input name="keyword" class="form-control" id="keyword" type="text" placeholder="">
+        <span class="material-input"></span>
+      </div>
+      <div class="form-group label-floating is-empty">
+        <label class="control-label" style="font-size:4px">태그 목록</label>
+        <input name="tag" class="form-control" id="tag" type=text readonly="readonly">
         <span class="material-input"></span>
       </div>
     </div>
-    <div class="ui-block-content">
-      <span class="buttonWrap ui-block-content"><input type="file" name="userfile" id="userfile"></span>
-      <div id="image_preview" style="display:none">
-        <a href="#">사진 지우기</a>
-        <br>
-        <img src="#" width="399" />
-        <br />
-      </div>
-      <hr>
-      <div id="copy" name="copy">
-      </div>
-    </div>
-    <div class="newBox-ui-block-title ui-block-title-small">
-      <h6 class="title">대표이지미 미 설정 시 Unsplash에서 임의로 지정됩니다.</h6>
-    </div>
-    <div class="ui-block-content">
-      <h6 class="title">공개설정</h6>
-      <div>
-        <div class="">
-          <div class="radio">
-            <label>
-									<input type="radio" name="optionsRadios" value="all" checked="true">전체공개
-						</label>
-            <label>
-									<input type="radio" name="optionsRadios" value="friend">초대기반
-						</label>
-            <label>
-									<input type="radio" name="optionsRadios" value="none">비공개
-						</label>
-          </div>
-        </div>
-        <div class="row ui-block-content">
-          <input type="submit" class="btn btn-primary btn-md full-width" value="소통상자 만들기" />
-        </div>
-      </div>
+    <div class="row ui-block-content">
+      <input type="submit" class="btn btn-primary btn-md full-width" onclick="submitContents(this)" value="소통카드 만들기" />
     </div>
   </div>
 </form>
+
 
 <div class="ui-block window-popup create-photo-album search">
   <a href="" class="icon-close js-close-popup">
