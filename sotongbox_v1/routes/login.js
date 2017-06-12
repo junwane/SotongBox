@@ -7,6 +7,7 @@ module.exports = function(passport){
   var SMTPServer = require('smtp-server').SMTPServer; //SMTP config
   var https = require('https');
   var auto_incre = require('./auto_incre.js');
+  var nowDate = require('./nowDate.js');
   var multer = require('multer');
 
   var storage = multer.diskStorage({
@@ -36,12 +37,13 @@ route.get('/auth/logout', function(req, res){
       console.log(req.body.passwordConfirm);
       if(req.body.password === req.body.passwordConfirm){
         pool.getConnection(function(err, connection){
-        var sql = 'select count(*) as id from member';
-        connection.query(sql, function(err, no){
-          var id = ""+no[0].id;
-          var name = 'm';
-          var m_no = auto_incre(id,name);
-          console.log(m_no);
+          var date = nowDate();
+          var sql = "select count(*) as cnt from member where DATE_FORMAT(m_register, '%y%m%d') = ?";
+          connection.query(sql, [date], function(err, no){
+            var cnt = ""+no[0].cnt;
+            var name = 'm';
+            var m_no = auto_incre(cnt,name);
+            console.log(m_no);
 
             var sql1 = 'insert into member(m_no, username, password, m_sort, m_nickname) values(?,?,?,?,?)';
             connection.query(sql1, [m_no, username, password, m_sort, username], function(err, no){

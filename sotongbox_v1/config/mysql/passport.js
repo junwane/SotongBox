@@ -1,6 +1,7 @@
 module.exports = function(app){
   var pool = require('./db')();
   var auto_incre = require('../../routes/auto_incre.js');
+  var nowDate = require('../../routes/nowDate.js');
   var bkfd2Password = require('pbkdf2-password');
   var passport = require('passport');
   var TwitterStrategy = require('passport-twitter').Strategy;
@@ -92,11 +93,12 @@ module.exports = function(app){
           var m_nickname = profile.displayName;
 
         pool.getConnection(function(err, connection){
-          var sql1 = 'select count(*) as id from member';
-          connection.query(sql1, function(err, no){
-            var id = ""+no[0].id;
+          var date = nowDate();
+          var sql1 = "select count(*) as cnt from member where DATE_FORMAT(m_register, '%y%m%d') = ?";
+          connection.query(sql1, [date], function(err, no){
+            var cnt = ""+no[0].cnt;
             var name = 'm';
-            var m_no = auto_incre(id,name);
+            var m_no = auto_incre(cnt,name);
             console.log(m_no);
             //회원번호 구함
 
@@ -157,11 +159,12 @@ module.exports = function(app){
             var m_nickname = profile.displayName;
 
           pool.getConnection(function(err, connection){
-            var sql1 = 'select count(*) as id from member';
-            connection.query(sql1, function(err, no){
-              var id = ""+no[0].id;
+            var date = nowDate();
+            var sql = "select count(*) as cnt from member where DATE_FORMAT(m_register, '%y%m%d') = ?";
+            connection.query(sql, [date], function(err, no){
+              var cnt = ""+no[0].cnt;
               var name = 'm';
-              var m_no = auto_incre(id,name);
+              var m_no = auto_incre(cnt,name);
               console.log(m_no);
               //회원번호 구함
 
@@ -219,11 +222,12 @@ module.exports = function(app){
             var m_nickname = profile.displayName;
 
           pool.getConnection(function(err, connection){
-            var sql1 = 'select count(*) as id from member';
-            connection.query(sql1, function(err, no){
-              var id = ""+no[0].id;
+            var date = nowDate();
+            var sql = "select count(*) as cnt from member where DATE_FORMAT(m_register, '%y%m%d') = ?";
+            connection.query(sql, [date], function(err, no){
+              var cnt = ""+no[0].cnt;
               var name = 'm';
-              var m_no = auto_incre(id,name);
+              var m_no = auto_incre(cnt,name);
               console.log(m_no);
               //회원번호 구함
 
@@ -283,11 +287,12 @@ module.exports = function(app){
               var m_nickname = profile.displayName;
 
             pool.getConnection(function(err, connection){
-              var sql1 = 'select count(*) as id from member';
-              connection.query(sql1, function(err, no){
-                var id = ""+no[0].id;
+              var date = nowDate();
+              var sql = "select count(*) as cnt from member where DATE_FORMAT(m_register, '%y%m%d') = ?";
+              connection.query(sql, [date], function(err, no){
+                var cnt = ""+no[0].cnt;
                 var name = 'm';
-                var m_no = auto_incre(id,name);
+                var m_no = auto_incre(cnt,name);
                 console.log(m_no);
                 //회원번호 구함
 

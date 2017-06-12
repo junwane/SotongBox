@@ -1,19 +1,9 @@
 module.exports = function(id, name){
-  var time = new Date();
-  var y = time.getFullYear();
-  var m = time.getMonth()+1;
-  if(m<10){
-    m = '0'+m;
-  }
-  var d = time.getDate();
-  if(d<10){
-    d = '0'+d;
-  }
-  time = y+m+d;
-  var t = time.substring(2, 8);
+  var nowDate = require('./nowDate.js');
 
+  var t = nowDate();
   var seq = '0000';
-  var m_no = name+t;
+  var no = name+t;
   if(id.length == 1){
     seq = seq.substring(0,3);
     seq += id;
@@ -26,7 +16,7 @@ module.exports = function(id, name){
   }else if(id.length == 4){
     seq = id;
   }
-  m_no = m_no+seq;
+  no = no+seq;
 
-  return m_no;
+  return no;
 };
