@@ -18,12 +18,11 @@ module.exports = function(multer, passport) {
   })
 
   /* GET home page. */
-  router.get('/Inner:id', function(req, res, next) {
+  router.get('/Inner/:id', function(req, res, next) {
     pool.getConnection(function(err, connection) {
       if (err) console.log("커넥션 객체 얻어오기 에러 : ", err);
       else {
         var sb_no = req.params.id;
-        sb_no = sb_no.substring(1, 13);
         var m_no = req.user.m_no;
         var sql = "select sb_open,"
                           +"sb_img,"
@@ -47,12 +46,31 @@ module.exports = function(multer, passport) {
                     subscribe: 2
                   };
                 }
-                res.render('index', {
-                  result: result,
-                  check: check,
-                  page: './boxInner.ejs',
-                  user: req.user,
-                  sb_no: sb_no
+
+                var sql3 = "select  sc_no,"
+                                   +"sc_title,"
+                                   +"sc_thumbnail,"
+                                   +"sc_content,"
+                                   +"(select m_img from member where m_no = sc.m_no) as m_img ,"
+                                   +"(select m_nickname from member where m_no = sc.m_no) as m_nickname,"
+                                   +"(select m_level from member where m_no = sc.m_no) as m_level,"
+                                   +"(select count(*) from sc_comment where sc_co_division = 'nice' and sc_no = sc.sc_no) as niceNum,"
+                                   +"(select count(*) from sc_reply where sc_no = sc.sc_no) as replynum"
+                            +" from sotongcard sc"
+                            +" where sb_no = ?";
+                connection.query(sql3, [sb_no], function(err, scresults){
+                  if(err) console.log('해당 상자 카드 리스트 select 에러 : ',err);
+                  else{
+                    console.log('시발', scresults);
+                    res.render('index', {
+                      result: result,
+                      check: check,
+                      scresults : scresults,
+                      page: './boxInner.ejs',
+                      user: req.user,
+                      sb_no: sb_no
+                    });
+                  }
                 });
               }
             });
@@ -77,7 +95,6 @@ module.exports = function(multer, passport) {
                           +"(select count(*) from sotongcard where sb_no = sb.sb_no) as cardnum,"
                           +"(select count(*) from sb_subscribe where sb_no = sb.sb_no) as subscribenum"
                 +" from sotongbox as sb"
-                +" where sb_no != '0'"
                 +" group by sb_no"
                 +" order by sb_register desc;"
         connection.query(sql, function(err, results) {
@@ -115,45 +132,39 @@ module.exports = function(multer, passport) {
         var second_sql = "INSERT INTO sotongbox(sb_no, cate_no, m_no, sb_name, sb_img, sb_open) VALUES (?,?,?,?,?,?);";
         connection.query(second_sql, [sb_no, cate_no, m_no, sb_name, sb_img, sb_open], function(err, result) {
           if (err) console.error("상자 만드는 중 에러 발생 err : ", err);
-
-          var third_sql = "select sb_open," +
-            "sb_img," +
-            "sb_name," +
-            "DATE_FORMAT(sb_register, '%Y %m %d')as sb_resiger," +
-            "(select count(*) from sotongcard where sb_no = ?) as cardnum," +
-            "(select count(*) from sb_subscribe where sb_no = ? and sb_s_check = 1) as subscribenum" +
-            " from  sotongbox as sb" +
-            " where sb_no = ?;"
-          connection.query(third_sql, [sb_no, sb_no, sb_no], function(err, result) {
-            if (err) console.log('상자 생성 후 해당 상자 내부 페이지 이동 시 에러 : ', err);
-            else {
-              var sql2 = "select sb_s_check as subscribe" +
-                " from sb_subscribe" +
-                " where sb_no = ? and m_no = (select m_no from member where m_no = ?);"
-              connection.query(sql2, [sb_no, m_no], function(err, check) {
-                if (err) console.log("구독 체크 에러 : ", err);
-                else {
-                  if (check == '') {
-                    check[0] = {
-                      subscribe: 2
-                    };
-                  }
-                  res.render('index', {
-                    result: result,
-                    check: check,
-                    page: './boxInner.ejs',
-                    user: req.user,
-                    sb_no : sb_no
-                  });
-                }
-              });
-              connection.release();
-            }
-          });
+            res.redirect('./Inner/'+sb_no);
         });
       });
     });
   });
+
+  router.post('/Inner/subscribe', function(req, res, next){
+    var sb_no  = req.body.sb_no;
+    var sb_open = req.body.sb_open;
+    var m_no = req.user.m_no;
+
+    pool.getConnection(function(err, connection) {
+      if(err) console.log("커넥션 객체 얻어오기 에러 : ", err);
+      else{
+        var sql = ''
+
+        if(sb_open == 'all'){
+          sql = 'insert into sb_subscribe(m_no, sb_no, sb_s_check) values(?,?,1)';
+        }else{
+          sql = 'insert into sb_subscribe(m_no, sb_no, sb_s_check) values(?,?,0)';
+        }
+
+        connection.query(sql,[m_no,sb_no], function(err, result){
+          if(err) console.log('구독테이블 인설트 에러 : ',err);
+          else{
+            res.redirect('./'+sb_no);
+          }
+        });
+      }
+    });
+
+  });
+
   router.post('/newCard', function(req, res, next) {
 
     console.log("내용");
@@ -173,10 +184,8 @@ module.exports = function(multer, passport) {
     pool.getConnection(function(err, connection) {
       if (err) console.error("커넥션 객체 얻어오기 에러 : ", err);
       var date = nowDate();
-      console.log('준완이형님',date);
       var first_sql = "select count(*) as cnt from sotongcard where DATE_FORMAT(sc_register, '%y%m%d') = ?";
       connection.query(first_sql, [date], function(err, result) {
-        console.log("박준완짱",result);
         var cnt = "" + result[0].cnt;
         var name = 'sc';
         var sc_no = auto_incre(cnt, name);
@@ -191,40 +200,7 @@ module.exports = function(multer, passport) {
               console.log("세번째 쿼리 에러", err);
             });
           }
-          var fourth_sql = "select sb_open," +
-            "sb_img," +
-            "sb_name," +
-            "DATE_FORMAT(sb_register, '%Y %m %d')as sb_resiger," +
-            "(select count(*) from sotongcard where sb_no = ?) as cardnum," +
-            "(select count(*) from sb_subscribe where sb_no = ? and sb_s_check = 1) as subscribenum" +
-            " from  sotongbox as sb" +
-            " where sb_no = ?;"
-          connection.query(fourth_sql, [sb_no, sb_no, sb_no], function(err, result) {
-            if (err) console.log('상자 생성 후 해당 상자 내부 페이지 이동 시 에러 : ', err);
-            else {
-              var sql2 = "select sb_s_check as subscribe" +
-                " from sb_subscribe" +
-                " where sb_no = ? and m_no = (select m_no from member where m_no = ?);"
-              connection.query(sql2, [sb_no, m_no], function(err, check) {
-                if (err) console.log("구독 체크 에러 : ", err);
-                else {
-                  if (check == '') {
-                    check[0] = {
-                      subscribe: 2
-                    };
-                  }
-                  res.render('index', {
-                    result: result,
-                    check: check,
-                    page: './boxInner.ejs',
-                    user: req.user,
-                    sb_no : sb_no
-                  });
-                }
-              });
-              connection.release();
-            }
-          });
+          res.redirect('./Inner/'+sb_no);
         });
       });
     });
