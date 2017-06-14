@@ -6,30 +6,131 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="/static/js/login/addRegister.js"></script>
     <script src="/static/js/login/parentSubmit.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var username = $("#username").val();
+        username = $("#uname", opener.document).val();
+        $("#username").attr("value", username);
+      });
+    </script>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap-reboot.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap-grid.css"> -->
+    <!--<link rel="stylesheet" type="text/css" href="css/non-responsive.css">-->
+
+    <!-- Theme Styles CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/css/theme-styles.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/blocks.css">
+
+    <!-- Main Font -->
+    <script src="/static/js/webfontloader.min.js"></script>
+    <script src="/static/js/login/register.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                families: ['Roboto:300,400,500,700:latin']
+            }
+        });
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/jin/jin.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/css/daterangepicker.css">
+
+
+    <!-- Styles for plugins -->
+    <link rel="stylesheet" type="text/css" href="/static/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/sotong.custom.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <!-- Lightbox popup script-->
+    <link rel="stylesheet" type="text/css" href="/static/css/magnific-popup.css">
   </head>
   <body>
-    <div class="">
-      <h2>내 정보 입력하기</h2>
-      <form class="" action="/addRegister" method="post" enctype="multipart/form-data" name="reg">
-        <div id="image_preview">
-          <img src="#" width="200" alt="">
+    <!-- 회원가입 팝업 -->
+    <div>
 
-        </div>
-        <p>
-          <label for="">사진 찾기</label>
-          <input type="file" name="userImage" id="userImage" value="">
-        </p>
-        <p><input type="text" name="displayName" value="" id="displayNameVal" placeholder="닉네임">
-        <button type="button" name="button" id="displayNameConfirm">중복확인</button>
-        <span id="resultDisplayName"></span>
-        </p>
-        <p><label for="">성별</label>
-           남<input type="radio" name="gender" value="m">
-           여<input type="radio" name="gender" value="f"></p>
-        <p><label for="">생년월일</label><input type="date" name="birthDay" value=""></p>
-        <p><input type="submit" name="" value="완료" id="save" onclick="parentSubmit();"></p>
-      </form>
+      <div class="ui-block-title bg-primary">
+          <h6 class="align-center">
+              <img src="/static/images/logo_w.png">
+          </h6>
+      </div>
+
+      <form class="" action="/addRegister" method="post" enctype="multipart/form-data" name="reg">
+      <div class="ui-block-content">
+          <div class="form-group label-floating is-empty">
+            <input type="hidden" name="username" id="username">
+            <div id="image_preview" class="author-thumb profile">
+              <img src="/static/images/logo_w.png" width="200px" height="200px" alt="" class="avatar">
+              <input type="file" name="userImage" id="userImage">
+            </div>
+
+
+
+          </div>
+
+          <div class="form-group label-floating is-empty">
+              <label class="control-label">닉네임</label>
+              <input type="text" name="displayName" value="" id="displayNameVal" placeholder="닉네임">
+              <span id="resultDisplayName" class="material-input"></span>
+          </div>
+
+          <div class="form-group label-floating is-empty">
+              <label >성별</label>
+              <div class="">
+                남<input type="radio" name="gender" value="m">
+                여<input type="radio" name="gender" value="f">
+                <span class="material-input"></span>
+              </div>
+
+          </div>
+
+          <div class="form-group label-floating is-empty">
+              <label class="control-label">생년월일</label>
+              <input type="date" name="birthDay" value="">
+              <span class="material-input"></span>
+          </div>
+
+          <div class="row">
+              <div class="col-lg-12 col-sm-12">
+                  <input type="submit" name="" class="btn btn-smoke btn-md btn-light-bg full-width" value="완료" id="save" onclick="parentSubmit();">
+              </div>
+          </div>
+        </form>
+
+
+          <hr/>
+
+
+      </div>
+
 
     </div>
+
+
+
+
+    <!-- jQuery first, then Other JS. -->
+    <script src="/static/js/jquery-3.2.0.min.js"></script>
+    <!-- Js effects for material design. + Tooltips -->
+    <script src="/static/js/material.min.js"></script>
+    <!-- Helper scripts (Tabs, Equal height, Scrollbar, etc) -->
+    <script src="/static/js/theme-plugins.js"></script>
+    <!-- Init functions -->
+    <!-- <script src="/static/js/main.js"></script> -->
+
+    <!-- Select / Sorting script -->
+    <script src="/static/js/selectize.min.js"></script>
+
+    <!-- Datepicker input field script-->
+    <script src="/static/js/moment.min.js"></script>
+    <script src="/static/js/daterangepicker.min.js"></script>
   </body>
 </html>

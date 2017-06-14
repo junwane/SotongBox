@@ -7,10 +7,18 @@
   </head>
   <script src=""></script>
   <body>
+    <input type="hidden" id="loginConfirm" value="<%=message%>">
     <% if(user && user.m_nickname){ %>
       <%- include('../index.ejs') %>
     <% }else { %>
       <%- include('../index-login.ejs') %>
+      <% if(message.length > 0 ){%>
+      <script type="text/javascript">
+          alert($("#loginConfirm").val());
+      </script>
+      <% } else { %>
+
+      <% } %>
     <%}%>
 
   </body>

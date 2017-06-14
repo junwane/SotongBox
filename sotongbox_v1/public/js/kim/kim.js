@@ -371,7 +371,7 @@ var CRUMINA = {};
 
     // Toggle inline popups
 
-    var $popup = $('.window-popup');
+    var $popup = $('.kim-window-popup');
 
     $(".js-open-popup").on('click', function (event) {
         var target_popup = $(this).data('popup-target');
@@ -465,13 +465,6 @@ var CRUMINA = {};
          $body.addClass('overlay-enable');
       });
 
-      //비밀번호 변경 팝업
-      $("#passModify").on('click', function(){
-        $(".create-passModify").addClass("open");
-        $(".create-passModify").css('top', 1100);
-        $body.addClass('overlay-enable');
-      });
-
       //email 체크
       $("#emailVal").keyup(function(){
         var email = $("#emailVal").val();
@@ -548,6 +541,7 @@ var CRUMINA = {};
             return false;
           }
           else{
+            alert("이메일 전송됨.");
             $(".create-user").removeClass("open");
             $(".create-emailpopup").addClass("open");
             $(".create-emailpopup").css('top', 25.80000114440918);
@@ -556,21 +550,21 @@ var CRUMINA = {};
         });
 
 
-      //카드 내부 팝업
-      $("#cardInner").on('click', function() {
-          var scrollValue = $(document).scrollTop();
-          $(".create-cardInner").addClass("open");
-          $(".create-cardInner").css('top', scrollValue-500);
-
-      });
-
 
       //비밀번호 찾기 클릭 시 비밀번호 찾기 팝업으로 넘어감
+
+      //카드 내부 팝업
+      $("#cardInner").on('click', function(){
+        var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환
+        $(".create-cardInner").addClass("open");
+        $(".create-cardInner").css('top', position);
+        $body.addClass('overlay-enable');
+
+      });
       $("#findpass").on('click', function(e){
         $(".create-user").removeClass("open");
         $(".create-findpass").addClass("open");
         $(".create-findpass").css('top', 25.80000114440918);
-        alert("해당 이메일로 임시 비밀번호가 전송되었습니다.");
         $body.addClass('overlay-enable');
       });
 
@@ -605,7 +599,7 @@ var CRUMINA = {};
 
 
     // Close on "X" click
-    $(".js-close-popup").on('click', function () {
+    $(".kim-js-close-popup").on('click', function () {
         $(this).closest($popup).removeClass('open');
         $body.removeClass('overlay-enable');
         return false

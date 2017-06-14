@@ -1,4 +1,3 @@
-
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
 <!-- Header -->
@@ -9,7 +8,7 @@
   <div class="profile_pane">
     <div class="row">
       <div class="author-thumb profile">
-        <img alt="author" src="/static/images/users/<%=result.m_img%>" class="avatar" width="220px" height="220px">
+        <img alt="author" src="/static/images/users/<%= result.m_img %>" class="avatar" width="220px" height="220px">
       </div>
     </div>
         <div class="profile_display">
@@ -25,22 +24,22 @@
           <a class="col-sm-1" href="#profile_app">앱</a>
         </div>
         <hr/>
-        <form class="" action="/???" method="post">
+        <form class="" action="/myProfile" method="post">
           <div class="profile_tab container-fluid" id="profile_name">
             <h2 class="profile_name">프로필</h2>
             <div class="form-group label-floating is-empty">
                 <label class="control-label">닉네임</label>
-                <input class="form-control" type="text" name="displayName" value="<%=result.m_nickname%>">
+                <input class="form-control" type="text" name="m_nickname" value="<%=user.m_nickname%>">
             </div>
             <div class="">
               나의 주소
             </div>
             <div class="">
-              www.sotongbox.com/ <input class="form-control" type="text" name="" value="<%=result.username%>">
+              www.sotongbox.com/ <input class="form-control" type="text" name="m_address" value="<%=user.username%>">
             </div>
             <div class="form-group label-floating is-empty">
               <label class="control-label">자기소개</label>
-              <textarea name="m_introduce" rows="8" cols="80" class="form-control"><%= result.m_introduce %></textarea>
+              <textarea name="m_introduce" rows="8" cols="80" class="form-control"><%= user.m_introduce%></textarea>
 
             </div>
           </div>
@@ -51,26 +50,27 @@
             <h2 class="profile_name">계정 정보</h2>
             <div class="">
                 <label class="control-label">이메일 주소</label>
-                <input class="form-control" type="text" name="username" value="<%=result.username%>">
+                <input class="form-control" type="text" name="username" value="<%=user.username%>">
             </div>
-            <div class="">
-              비밀번호
-            </div>
-            <div class="">
-              <button type="button" name="button" class="btn">비밀번호 변경</button>
-            </div>
+              <div class="">
+                비밀번호
+              </div>
+              <div class="">
+                <button type="button" name="button" class="btn js-open-popup" data-popup-target=".create-passModify" id="passModify">비밀번호 변경</button>
+              </div>
+
 
             <div class="">
               <label class="control-label">언어</label>
-              <select class="form-group" name="">
-                <option value="">한국어</option>
+              <select class="form-group" name="m_language">
+                <option value="한국어">한국어</option>
               </select>
             </div>
 
             <div class="">
               <label class="control-label">국가</label>
-              <select class="form-group" name="">
-                <option value="">대한민국</option>
+              <select class="form-group" name="m_nation">
+                <option value="대한민국">대한민국</option>
               </select>
             </div>
 
@@ -89,7 +89,8 @@
                   <span class="check"></span>
                   여자
                 </label>
-                <input type="hidden" name="" id="genderCheck" value="<%= result.m_gender %>">
+                <input type="hidden" name="" id="genderCheck" value="<%= user.m_gender %>">
+                <input type="hidden" name="m_no" value="<%= user.m_no %>">
               </div>
               <script src="/static/js/login/userProfile.js"></script>
             </div>
@@ -107,61 +108,63 @@
             <h2 class="profile_name">소셜 네트워크 연결</h2>
             <div class="">
               <img src="/static/images/social/facebook.png" alt="">
-              facebook에 연결되지 않음
+              <span id="facebookConnect">Facebook에 연결되지 않음</span>
             </div>
             <div class="social_pane">
               facebook에 로그인
               <div class="togglebutton">
                 <label>
-                  <input type="checkbox">
-                  사용자의 Facebook 계정을 로그인에 사용
+                  <input type="checkbox" id="facebook">
+                  <span id="facebookText">사용자의 Facebook 계정을 로그인에 사용</span>
                 </label>
               </div>
             </div>
 
             <div class="">
               <img src="/static/images/social/twitter.png" alt="">
-              twitter에 연결되지 않음
+              <span id="twitterConnect">Twitter에 연결되지 않음</span>
+              <span id="twitterURL"></span>
             </div>
             <div class="social_pane">
               twitter에 로그인
               <div class="togglebutton">
                 <label>
-                  <input type="checkbox">
-                  사용자의 Twitter 계정을 로그인에 사용
+                  <input type="checkbox" id="twitter">
+                  <span id="twitterText">사용자의 Twitter 계정을 로그인에 사용</span>
                 </label>
               </div>
             </div>
 
             <div class="">
               <img src="/static/images/social/google.png" alt="">
-              google에 연결되지 않음
+              <span id="googleConnect">Google에 연결되지 않음</span>
             </div>
             <div class="social_pane">
               google에 로그인
               <div class="togglebutton">
                 <label>
-                  <input type="checkbox">
-                  사용자의 google 계정을 로그인에 사용
+                  <input type="checkbox" id="google">
+                  <span id="googleText" class="connectTEXT">사용자의 google 계정을 로그인에 사용</span>
                 </label>
               </div>
             </div>
 
             <div class="">
               <img src="/static/images/social/naver.png" alt="" width="48px" height="48px">
-              naver에 연결되지 않음
+              <span id="naverConnect">Naver에 연결되지 않음</span>
             </div>
             <div class="social_pane">
-              naver에 로그인
+              Naver에 로그인
               <div class="togglebutton">
                 <label>
-                  <input type="checkbox">
-                  사용자의 naver 계정을 로그인에 사용
+                  <input type="checkbox" id="naver">
+                  <span id="naverText">사용자의 naver 계정을 로그인에 사용</span>
                 </label>
               </div>
             </div>
 
           </div>
+
 
           <hr/>
 
@@ -191,20 +194,64 @@
             </div>
           </div>
 
-          <div class="btn_pane">
-            <div class="row">
-              <div class="col-lg-6 col-sm-12">
-                <a href="/" class="btn btn-smoke btn-md btn-light-bg full-width">취소</a>
-              </div>
-              <div class="col-lg-6 col-sm-12">
-                <input type="submit" name="" value="설정저장" class="btn btn-primary btn-md full-width">
+
+            <div class="btn_pane">
+              <div class="row">
+                <div class="col-lg-6 col-sm-12">
+                  <a href="/" class="btn btn-smoke btn-md btn-light-bg full-width">취소</a>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                  <input type="submit" name="" value="설정저장" id="profileModfiy" class="btn btn-primary btn-md full-width">
+                </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+
+
 
 
   </div>
+</div>
+
+<!-- 비밀번호 변경 팝업 -->
+<div class="ui-block window-popup create-passModify">
+  <a href="" class="icon-close js-close-popup">
+      <svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
+  </a>
+
+  <div class="ui-block-title bg-primary">
+      <h6 class="align-center">
+          <img src="/static/images/logo_w.png">
+      </h6>
+  </div>
+
+  <form class="" action="/passModify" method="post">
+  <div class="ui-block-content">
+      <div class="form-group label-floating is-empty">
+          <label class="control-label">새로운 비밀번호</label>
+          <input class="form-control" type="password" name="password" id="modifyPass" placeholder="">
+          <span class="material-input"></span>
+      </div>
+      <div class="form-group label-floating is-empty">
+          <label class="control-label">새로운 비밀번호 확인</label>
+          <input class="form-control" type="password" name="passwordConfirm" id="modifyPassConfirm" placeholder="">
+          <span class="material-input"></span>
+      </div>
+
+      <div class="row">
+          <div class="col-lg-12 col-sm-12">
+              <span id="resultPass" class="material-input"></span>
+              <input type="submit" name="" value="비밀번호 변경" class="btn btn-primary btn-md full-width" id="passModifyConfirm">
+          </div>
+      </div>
+    </form>
+
+      <hr/>
+
+
+  </div>
+
+
 </div>
 
 <!-- Friends -->
@@ -217,9 +264,9 @@
 
 <!-- Window-popup Choose from my Photo -->
 
-
 <!-- jQuery first, then Other JS. -->
 <script src="/static/js/jquery-3.2.0.min.js"></script>
+
 <!-- Js effects for material design. + Tooltips -->
 <script src="/static/js/material.min.js"></script>
 <!-- Helper scripts (Tabs, Equal height, Scrollbar, etc) -->
@@ -230,12 +277,19 @@
 <!-- Select / Sorting script -->
 <script src="/static/js/selectize.min.js"></script>
 
+<script src="/static/js/login/userProfile.js"></script>
 <!-- Swiper / Sliders -->
 <script src="/static/js/swiper.jquery.min.js"></script>
 
 <script src="/static/js/mediaelement-and-player.min.js"></script>
 <script src="/static/js/mediaelement-playlist-plugin.min.js"></script>
-<script src="/static/js/login/userProfile.js"></script>
+<!-- Lightbox popup script-->
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+
+<script src="/static/js/login/socialPopup.js"></script>
+<script src="/static/js/login/socialConnect.js"></script>
+<script src="/static/js/login/mypageScript.js"></script>
+
 
 </body>
 </html>

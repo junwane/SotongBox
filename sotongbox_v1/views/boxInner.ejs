@@ -78,7 +78,7 @@
           </div>
 
           <div class="ui-block-content2 video-content">
-            <a href="#" class="title"><%= scresults[i].sc_title %></a>
+            <a href="#" class="title author-name fn js-open-popup" data-popup-target=".create-cardInner" id="cardInner"><%= scresults[i].sc_title %></a>
             <time class="published"><%= scresults[i].sc_content %></time>
 
             <ul class="widget w-friend-pages-added notification-list friend-requests">
@@ -153,7 +153,217 @@
 
         </div>
       </div>
-    <% } %>
+
+      <!-- 카드 팝업 -->
+
+      <div class="card-ui-block window-popup create-cardInner">
+        <a href="" class="icon-close js-close-popup">
+            <svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
+        </a>
+
+        <article class="hentry post">
+          <div class="author-page author vcard inline-items more">
+            <div class="author-thumb">
+              <img alt="author" src="/static/images/users/<%=user.m_img%>" class="avatar" width="50px" height="50px">
+            </div>
+            <a class="author-name fn">
+              <div class="author-title" style="color: #515365;">
+                <%= user.m_nickname %>
+              </div>
+              <span class="author-subtitle">5시간전</span>
+            </a>
+
+          </div>
+
+          <hr/>
+
+          <!-- 카드 제목 -->
+          <div class="ui-block-content">
+            <div class="form-group label-floating is-empty">
+              <label class="profile_name">태양보다 100배 무거운 별이 폭발한다면</label>
+            </div>
+
+
+            <!-- 카드 내용 -->
+            <div class="ui-block-content">
+
+              <h6>          별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다.
+                        별의 종류는 다양합니다. </h6>
+
+              <!-- 카드 태그 -->
+              <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                  <div class="form-group label-floating is-empty">
+                    #별의 폭발 #코스모스 #빅히스토리
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <hr>
+
+            <!--좋아요 ,댓글 , 공유 개수 -->
+            <div class="post-additional-info inline-items">
+              <a href="#" class="post-add-icon inline-items">
+        <svg class="olymp-heart-icon">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use>
+        </svg>
+        <span>15</span>
+        </a>
+
+              <ul class="friends-harmonic">
+                <li><a href="#"><img src="/static/images/friend-harmonic8.jpg" alt=""></a></li>
+                <li><a href="#"><img src="/static/images/users/고양이.png" alt=""></a></li>
+                <li><a href="#"></a></li>
+              </ul>
+              <div class="names-people-likes">
+                <a href="#">노드씨발</a>외 <br> 20명이 좋아함
+              </div>
+
+              <div class="">
+                <a href="#" class="post-add-icon inline-items">          <svg class="olymp-comments-post-icon">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use>
+                    </svg>
+                    <span>15</span>
+                  </a>
+
+              </div>
+
+              <div class="">
+                <a href="#" class="post-add-icon inline-items">
+            <svg class="olymp-share-icon">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use>
+            </svg>
+            <span>15</span>
+          </a>
+
+              </div>
+
+            </div>
+
+
+            <!-- 카드 댓글 -->
+            <!-- li태그 하나당 댓글하나 -->
+            <ul class="comments-list">
+              <li>
+                <div class="post__author author vcard inline-items">
+                  <img src="/static/images/users/고양이.png" alt="author">
+                  <div class="author-date">
+                    <a class="h6 post_author-name fn" href="#">키작은진세은</a>
+                    <div class="post_date">
+                      <time class="published" datetime="2017-06-14T18:00">
+                  방금 전
+                </time>
+                    </div>
+                  </div>
+                  <a href="#" class="more">
+                <svg class="olymp-three-dots-icon">
+                  <use xlink:href="#olymp-three-dots-icon"></use>
+                </svg>
+            </a>
+                </div>
+                <p>세은이는 키가 작다. 세은이는 키가 작다 세은이는 키가 작다 세은이는 키가 작다 어쩔수 없다.</p>
+                <p>
+                  <a href="#" class="post-add-icon inline-items">
+              <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
+              <span>2</span>
+            </a>
+                </p>
+
+              </li>
+
+              <li>
+                <div class="post__author author vcard inline-items">
+                  <img src="/static/images/users/고양이.png" alt="author">
+                  <div class="author-date">
+                    <a class="h6 post_author-name fn" href="#">키작은진세은</a>
+                    <div class="post_date">
+                      <time class="published" datetime="2017-06-14T18:00">
+                  방금 전
+                </time>
+                    </div>
+                  </div>
+                  <a href="#" class="more">
+              <svg class="olymp-three-dots-icon">
+                <use xlink:href="#olymp-three-dots-icon"></use>
+              </svg>
+            </a>
+                </div>
+                <p>세은이는 키가 작다. 세은이는 키가 작다 세은이는 키가 작다 세은이는 키가 작다 어쩔수 없다.</p>
+                <p>
+                  <a href="#" class="post-add-icon inline-items">
+              <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
+              <span>2</span>
+            </a>
+                </p>
+
+              </li>
+            </ul>
+            <a href="#" class="more-comments">더 많은 댓글 보기<span>▼</a>
+            <!-- 댓글등록 -->
+              <form class="comment-form inline-items" action="/댓글등록" method="post">
+                <div class="post__author author vcard inline-items">
+                  <img src="/static/images/users/고양이.png" alt="author">
+                </div>
+                <div class="form-group with-icon-right is-empty">
+                  <textarea class="form-control"></textarea>
+                  <div class="add-options-message">
+                    <a href="#" class="js-open-popup options-message" data-popup-target=".update-header-photo">
+                      <svg class="olymp-camera-icon">
+                        <use xlink:href="#olymp-camera-icon"></use>
+                      </svg>
+                    </a>
+                  </div>
+                  <span class="material-input"></span>
+                  <span class="material-input"></span>
+                    <div>
+                        <input type="submit" name="" value="댓글 등록" class="btn btn-primary btn-lg full-width">
+                    </div>
+                  </div>
+                </div>
+
+
+              </form>
+
+
+            <!-- 옆에 붙어있는 3개 -->
+            <div class="control-block-button post-control-button">
+              <a href="#" class="btn btn-control">
+          <svg class="olymp-like-post-icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use>
+          </svg>
+          <div class="ripple-container"></div>
+        </a>
+              <a href="#" class="btn btn-control">
+          <svg class="olymp-comments-post-icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use>
+          </svg>
+        </a>
+              <div class="ripple-container"></div>
+              <a href="#" class="btn btn-control">
+          <svg class="olymp-share-icon">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use>
+          </svg>
+        </a>
+              <div class="ripple-container"></div>
+            </div>
+        </article>
+
+        </div>
+        <% } %>
+      </div>
+
 
   </div>
 

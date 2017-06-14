@@ -19,7 +19,7 @@ $(document).ready(function(){
 
   if(gender === $("#man").val()){
     $("#man").attr("checked", true);
-  } else if (gender === $('$woman').val()){
+  } else {
     $("#woman").attr("checked", true);
   }
 });
