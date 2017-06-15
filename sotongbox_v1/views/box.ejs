@@ -5,12 +5,10 @@
       <select name="category" class="selectpicker form-control col-sm-2">
          <option value="A">모든 소통상자</option>
          <option value="B">내 소통 상자</option>
-         <option value="C">웹디자인</option>
     </select>
       <select name="list" class="selectpicker form-control col-sm-2">
          <option value="A">최신순</option>
          <option value="B">인기순</option>
-         <option value="C">기간설정</option>
     </select>
       <div class="checkbox" style="float:right; margin-top:20px;">
         <label>
@@ -46,6 +44,7 @@
               <div class="ui-block-content video-content">
                   <a href="box/Inner/<%= results[i].sb_no %>" class="h6"><%= results[i].sb_name %></a>
                   <ul class="widget w-friend-pages-added notification-list friend-requests">
+                      <span class="chat-message-item"><%= results[i].sb_open %></span>
                       <li class="inline-items">
                           <div class="author-thumb">
                               <img src="/static/images/users/<%= results[i].m_img %>" alt="author" class="avatar" width="40px" height="40px">

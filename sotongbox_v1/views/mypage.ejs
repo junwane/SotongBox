@@ -29,17 +29,17 @@
             <h2 class="profile_name">프로필</h2>
             <div class="form-group label-floating is-empty">
                 <label class="control-label">닉네임</label>
-                <input class="form-control" type="text" name="m_nickname" value="<%=user.m_nickname%>">
+                <input class="form-control" type="text" name="m_nickname" value="<%=result.m_nickname%>">
             </div>
             <div class="">
               나의 주소
             </div>
             <div class="">
-              www.sotongbox.com/ <input class="form-control" type="text" name="m_address" value="<%=user.username%>">
+              www.sotongbox.com/ <input class="form-control" type="text" name="m_address" value="<%=result.username%>">
             </div>
             <div class="form-group label-floating is-empty">
               <label class="control-label">자기소개</label>
-              <textarea name="m_introduce" rows="8" cols="80" class="form-control"><%= user.m_introduce%></textarea>
+              <textarea name="m_introduce" rows="8" cols="80" class="form-control"><%= result.m_introduce%></textarea>
 
             </div>
           </div>
@@ -50,7 +50,7 @@
             <h2 class="profile_name">계정 정보</h2>
             <div class="">
                 <label class="control-label">이메일 주소</label>
-                <input class="form-control" type="text" name="username" value="<%=user.username%>">
+                <input class="form-control" type="text" name="username" value="<%=result.username%>">
             </div>
               <div class="">
                 비밀번호
