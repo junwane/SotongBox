@@ -29,17 +29,17 @@
             <h2 class="profile_name">프로필</h2>
             <div class="form-group label-floating is-empty">
                 <label class="control-label">닉네임</label>
-                <input class="form-control" type="text" name="m_nickname" value="<%=result.m_nickname%>">
+                <input class="form-control OtherUserView" type="text" name="m_nickname" value="<%=result.m_nickname%>">
             </div>
             <div class="">
               나의 주소
             </div>
             <div class="">
-              www.sotongbox.com/ <input class="form-control" type="text" name="m_address" value="<%=result.username%>">
+              www.sotongbox.com/profile/<%=result.username%>
             </div>
             <div class="form-group label-floating is-empty">
               <label class="control-label">자기소개</label>
-              <textarea name="m_introduce" rows="8" cols="80" class="form-control"><%= result.m_introduce%></textarea>
+              <textarea name="m_introduce" rows="8" cols="80" class="form-control OtherUserView"><%= result.m_introduce%></textarea>
 
             </div>
           </div>
@@ -50,7 +50,7 @@
             <h2 class="profile_name">계정 정보</h2>
             <div class="">
                 <label class="control-label">이메일 주소</label>
-                <input class="form-control" type="text" name="username" value="<%=result.username%>">
+                <input class="form-control" type="text" name="username" value="<%=result.username%>" readonly>
             </div>
               <div class="">
                 비밀번호
@@ -62,14 +62,14 @@
 
             <div class="">
               <label class="control-label">언어</label>
-              <select class="form-group" name="m_language">
+              <select class="form-group OtherUserView" name="m_language">
                 <option value="한국어">한국어</option>
               </select>
             </div>
 
             <div class="">
               <label class="control-label">국가</label>
-              <select class="form-group" name="m_nation">
+              <select class="form-group OtherUserView" name="m_nation">
                 <option value="대한민국">대한민국</option>
               </select>
             </div>
@@ -90,7 +90,8 @@
                   여자
                 </label>
                 <input type="hidden" name="" id="genderCheck" value="<%= user.m_gender %>">
-                <input type="hidden" name="m_no" value="<%= user.m_no %>">
+                <input type="hidden" id="NowUser" name="m_no" value="<%= user.m_no %>">
+                <input type="hidden" id="OtherUser" name="result_m_no" value="<%= result.m_no %>">
               </div>
               <script src="/static/js/login/userProfile.js"></script>
             </div>
@@ -114,7 +115,7 @@
               facebook에 로그인
               <div class="togglebutton">
                 <label>
-                  <input type="checkbox" id="facebook">
+                  <input type="checkbox" id="facebook" class="OtherUserView">
                   <span id="facebookText">사용자의 Facebook 계정을 로그인에 사용</span>
                 </label>
               </div>
@@ -129,7 +130,7 @@
               twitter에 로그인
               <div class="togglebutton">
                 <label>
-                  <input type="checkbox" id="twitter">
+                  <input type="checkbox" id="twitter" class="OtherUserView">
                   <span id="twitterText">사용자의 Twitter 계정을 로그인에 사용</span>
                 </label>
               </div>
@@ -143,7 +144,7 @@
               google에 로그인
               <div class="togglebutton">
                 <label>
-                  <input type="checkbox" id="google">
+                  <input type="checkbox" id="google" class="OtherUserView">
                   <span id="googleText" class="connectTEXT">사용자의 google 계정을 로그인에 사용</span>
                 </label>
               </div>
@@ -157,7 +158,7 @@
               Naver에 로그인
               <div class="togglebutton">
                 <label>
-                  <input type="checkbox" id="naver">
+                  <input type="checkbox" id="naver" class="OtherUserView">
                   <span id="naverText">사용자의 naver 계정을 로그인에 사용</span>
                 </label>
               </div>
@@ -195,11 +196,12 @@
           </div>
 
 
-            <div class="btn_pane">
+            <div class="btn_pane" id="profileMod">
               <div class="row">
                 <div class="col-lg-6 col-sm-12">
                   <a href="/" class="btn btn-smoke btn-md btn-light-bg full-width">취소</a>
                 </div>
+
                 <div class="col-lg-6 col-sm-12">
                   <input type="submit" name="" value="설정저장" id="profileModfiy" class="btn btn-primary btn-md full-width">
                 </div>

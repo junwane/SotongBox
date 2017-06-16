@@ -12,6 +12,7 @@ module.exports = function(app){
 
   app.use(passport.initialize());
   app.use(passport.session());
+
   passport.serializeUser(function(user, done) {
     console.log('serializeUser', user);
     done(null, user.s_l_id); //각 사용자의 식별자로 done함수의 s_l_id를 줌
@@ -73,9 +74,10 @@ module.exports = function(app){
       consumerKey: '3B7AG1uxos0XHOuEgtVDcOBsL',
       consumerSecret: '21GZRLpisDFGT6EZqWWapEzcg2aynAL0XvmDnMIw2yV8gLmVsp',
       callbackURL: "/auth/twitter/callback",
-      userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true"
+      userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+      passReqToCallback : true
   },
-  function(token, tokenSecret, profile, done) {
+  function(req, token, tokenSecret, profile, done) {
     console.log(profile);
     var s_l_id = 'twitter:'+profile.id;
     pool.getConnection(function(err, connection){
@@ -102,73 +104,15 @@ module.exports = function(app){
             console.log(m_no);
             //회원번호 구함
 
-              var sql2 = 'insert into member(m_no, username, m_nickname) values(?,?,?)';
-              connection.query(sql2, [m_no, username, m_nickname], function(err, no){
-                console.log(no);
-              });
-
-              var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 3, ?)';
-              //3은 트위터
-              connection.query(sql3, [m_no, s_l_id], function(err, no){
-                console.log(no);
-              });
-
-              var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
-              connection.query(sql6, [s_l_id], function(err, resutls){
-              if(err){
-                console.log(err);
-                done('Error');
-                connection.release();
+            var addressSQL = "select m_address from member where username = ?";
+            connection.query(addressSQL, [username], function(err, address){
+              console.log(address);
+              if(address.length > 0){
+                console.log("현재 이메일있음");
+                done(null, false, req.flash('message', "현재 이메일 있음"));
               } else {
-                done(null, newuser);
-                connection.release();
-              }
-            });
-          });
-        });
-      }
-    });
-  });
-  }
-));
-
-  passport.use(new FacebookStrategy({
-      clientID: '1840733199510901',
-      clientSecret: 'ad245cb56ba5a1e2f7f8e07af2538235',
-      callbackURL: "/auth/facebook/callback",
-      profileFields:['id','email','displayName','gender','link','locale',
-      'name','timezone','updated_time','verified']
-      // 사용자 중에 email이 없다면 해당 SNS사이트에가서 이메일을 인증받아야함
-    },
-    function(accessToken, refreshToken, profile, done) {
-      console.log(profile);
-      var s_l_id = 'facebook:'+profile.id;
-      pool.getConnection(function(err, connection){
-        var sql = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
-        connection.query(sql, [s_l_id], function(err, results){
-          if(results.length > 0){ //사용자가 존재한다면
-            connection.release();
-            done(null, results[0]);
-          } else {
-            var newuser = {
-              's_l_id':s_l_id,
-              'username': profile.emails[0].value,
-              'm_nickname':profile.displayName
-            };
-            var username = profile.emails[0].value;
-            var m_nickname = profile.displayName;
-
-          pool.getConnection(function(err, connection){
-            var sql1 = 'select count(*) as id from member';
-            connection.query(sql1, function(err, no){
-              var id = ""+no[0].id;
-              var name = 'm';
-              var m_no = auto_incre(id,name);
-              console.log(m_no);
-              //회원번호 구함
-
-                var sql2 = 'insert into member(m_no, username, m_nickname) values(?,?,?)';
-                connection.query(sql2, [m_no, username, m_nickname], function(err, no){
+                var sql2 = 'insert into member(m_no, username, m_nickname, m_address) values(?,?,?,?)';
+                connection.query(sql2, [m_no, username, m_nickname, username], function(err, no){
                   console.log(no);
                 });
 
@@ -189,6 +133,86 @@ module.exports = function(app){
                   connection.release();
                 }
               });
+              }
+            });
+
+          });
+        });
+      }
+    });
+  });
+  }
+));
+
+  passport.use(new FacebookStrategy({
+      clientID: '1840733199510901',
+      clientSecret: 'ad245cb56ba5a1e2f7f8e07af2538235',
+      callbackURL: "/auth/facebook/callback",
+      profileFields:['id','email','displayName','gender','link','locale',
+      'name','timezone','updated_time','verified'],
+      // 사용자 중에 email이 없다면 해당 SNS사이트에가서 이메일을 인증받아야함
+      passReqToCallback : true
+    },
+    function(req, accessToken, refreshToken, profile, done) {
+      console.log(profile);
+      var s_l_id = 'facebook:'+profile.id;
+      pool.getConnection(function(err, connection){
+        var sql = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+        connection.query(sql, [s_l_id], function(err, results){
+          if(results.length > 0){ //사용자가 존재한다면
+            connection.release();
+            done(null, results[0]);
+          } else {
+            var newuser = {
+              's_l_id':s_l_id,
+              'username': profile.emails[0].value,
+              'm_nickname':profile.displayName
+            };
+            var username = profile.emails[0].value;
+            var m_nickname = profile.displayName;
+            var url = profile.profileUrl;
+          pool.getConnection(function(err, connection){
+            var sql1 = 'select count(*) as id from member';
+            connection.query(sql1, function(err, no){
+              var id = ""+no[0].id;
+              var name = 'm';
+              var m_no = auto_incre(id,name);
+              console.log(m_no);
+              //회원번호 구함
+
+                var addressSQL = "select m_address from member where username = ?";
+                connection.query(addressSQL, [username], function(err, address){
+                  console.log(address);
+                  if(address.length > 0){
+                    console.log("현재 이메일있음");
+                    done(null, false, req.flash('message', "현재 이메일 있음"));
+                  } else {
+                    var sql2 = 'insert into member(m_no, username, m_nickname, m_address) values(?,?,?,?)';
+                    connection.query(sql2, [m_no, username, m_nickname, url], function(err, no){
+                      console.log(no);
+                    });
+
+                    var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 2, ?)';
+                    //2는 페북
+                    connection.query(sql3, [m_no, s_l_id], function(err, no){
+                      console.log(no);
+                    });
+
+                    var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+                    connection.query(sql6, [s_l_id], function(err, resutls){
+                    if(err){
+                      console.log(err);
+                      done('Error');
+                      connection.release();
+                    } else {
+                      done(null, newuser);
+                      connection.release();
+                    }
+                  });
+                  }
+                });
+
+
             });
           });
         }
@@ -200,9 +224,10 @@ module.exports = function(app){
   passport.use(new GoogleStrategy({
       clientID: '777905994972-3a9e6a0j500t5dfurqe17a411i0i34rd.apps.googleusercontent.com',
       clientSecret: 'vIbzliejJPAmlDg9MqXC-aBN',
-      callbackURL: "/auth/google/callback"
+      callbackURL: "/auth/google/callback",
+      passReqToCallback : true
     },
-    function(accessToken, refreshToken, profile, done) {
+    function(req, accessToken, refreshToken, profile, done) {
       console.log(profile);
       var s_l_id = 'google:'+profile.id;
       pool.getConnection(function(err, connection){
@@ -220,6 +245,7 @@ module.exports = function(app){
             var username = profile.emails[0].value;
             var m_nickname = profile.displayName;
 
+
           pool.getConnection(function(err, connection){
             var sql1 = 'select count(*) as id from member';
             connection.query(sql1, function(err, no){
@@ -229,29 +255,38 @@ module.exports = function(app){
               console.log(m_no);
               //회원번호 구함
 
-                var sql2 = 'insert into member(m_no, username, m_nickname) values(?,?,?)';
-                connection.query(sql2, [m_no, username, m_nickname], function(err, no){
-                  console.log(no);
-                });
-
-                var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 4, ?)';
-                //4는 구글
-                connection.query(sql3, [m_no, s_l_id], function(err, no){
-                  console.log(no);
-                });
-
-
-                var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
-                connection.query(sql6, [s_l_id], function(err, resutls){
-                if(err){
-                  console.log(err);
-                  done('Error');
-                  connection.release();
+              var addressSQL = "select m_address from member where username = ?";
+              connection.query(addressSQL, [username], function(err, address){
+                console.log(address);
+                if(address.length > 0){
+                  console.log("현재 이메일있음");
+                  done(null, false, req.flash('message', "현재 이메일 있음"));
                 } else {
-                  done(null, newuser);
-                  connection.release();
+                  var sql2 = 'insert into member(m_no, username, m_nickname, m_address) values(?,?,?,?)';
+                  connection.query(sql2, [m_no, username, m_nickname, username], function(err, no){
+                    console.log(no);
+                  });
+
+                  var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 2, ?)';
+                  //2는 페북
+                  connection.query(sql3, [m_no, s_l_id], function(err, no){
+                    console.log(no);
+                  });
+
+                  var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+                  connection.query(sql6, [s_l_id], function(err, resutls){
+                  if(err){
+                    console.log(err);
+                    done('Error');
+                    connection.release();
+                  } else {
+                    done(null, newuser);
+                    connection.release();
+                  }
+                });
                 }
               });
+
             });
           });
         }
@@ -264,9 +299,10 @@ module.exports = function(app){
   passport.use(new NaverStrategy({
           clientID: 'lNuI9pzW82EtKeXpNxg8',
           clientSecret: 'gQ1NGQfwCt',
-          callbackURL: "/auth/naver/callback"
+          callbackURL: "/auth/naver/callback",
+          passReqToCallback : true
     },
-      function(accessToken, refreshToken, profile, done) {
+      function(req, accessToken, refreshToken, profile, done) {
         console.log(profile);
         var s_l_id = 'naver:'+profile.id;
         pool.getConnection(function(err, connection){
@@ -293,28 +329,38 @@ module.exports = function(app){
                 console.log(m_no);
                 //회원번호 구함
 
-                  var sql2 = 'insert into member(m_no,username, m_nickname) values(?,?,?)';
-                  connection.query(sql2, [m_no, username, m_nickname], function(err, no){
-                    console.log(no);
-                  });
-
-                  var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 5, ?)';
-                  //5는 네이버
-                  connection.query(sql3, [m_no, s_l_id], function(err, no){
-                    console.log(no);
-                  });
-
-                  var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
-                  connection.query(sql6, [s_l_id], function(err, resutls){
-                  if(err){
-                    console.log(err);
-                    done('Error');
-                    connection.release();
+                var addressSQL = "select m_address from member where username = ?";
+                connection.query(addressSQL, [username], function(err, address){
+                  console.log(address);
+                  if(address.length > 0){
+                    console.log("현재 이메일있음");
+                    done(null, false, req.flash('message', "현재 이메일 있음"));
                   } else {
-                    done(null, newuser);
-                    connection.release();
+                    var sql2 = 'insert into member(m_no, username, m_nickname, m_address) values(?,?,?,?)';
+                    connection.query(sql2, [m_no, username, m_nickname, username], function(err, no){
+                      console.log(no);
+                    });
+
+                    var sql3 = 'insert into s_link(m_no, s_no, s_l_id) values(?, 2, ?)';
+                    //2는 페북
+                    connection.query(sql3, [m_no, s_l_id], function(err, no){
+                      console.log(no);
+                    });
+
+                    var sql6 = 'select * from member a, s_link b where a.m_no = b.m_no and s_l_id = ?';
+                    connection.query(sql6, [s_l_id], function(err, resutls){
+                    if(err){
+                      console.log(err);
+                      done('Error');
+                      connection.release();
+                    } else {
+                      done(null, newuser);
+                      connection.release();
+                    }
+                  });
                   }
                 });
+
             });
         });
       }

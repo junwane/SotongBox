@@ -43,8 +43,8 @@ route.get('/auth/logout', function(req, res){
           var m_no = auto_incre(id,name);
           console.log(m_no);
 
-            var sql1 = 'insert into member(m_no, username, password, m_sort, m_nickname) values(?,?,?,?,?)';
-            connection.query(sql1, [m_no, username, password, m_sort, username], function(err, no){
+            var sql1 = 'insert into member(m_no, username, password, m_sort, m_nickname, m_address) values(?,?,?,?,?,?)';
+            connection.query(sql1, [m_no, username, password, m_sort, username, username], function(err, no){
               console.log(no);
             });
 
@@ -570,12 +570,11 @@ route.get('/profile/:mypage', function(req, res){
     if(err) console.log("커넥션 객체 얻어오기 에러 : ",err);
     else{
       var username = req.params.mypage;
-      var sql = "select m_img, m_nickname, username, m_introduce, m_langage, m_nation, m_gender"
+      var sql = "select m_no, m_img, m_nickname, username, m_introduce, m_langage, m_nation, m_gender"
                 +" from member"
                 +" where username = ?";
       connection.query(sql, [username], function(err, result){
-        console.log("왜안돼씨발럼아"+ result);
-        console.log("유저네임"+username);
+
         if(err) console.log("해당 사용자 프로필 select 에러 : ", err);
         else{
             res.render('index', {user: req.user, page : "./mypage.ejs", result : result[0]} );
@@ -687,19 +686,27 @@ route.post('/myProfile', function(req, res) {
   var m_language = req.body.m_language;
   var m_nation = req.body.m_nation;
   var m_no = req.body.m_no;
+  var Otherm_no = req.body.result_m_no;
   var username = req.body.username;
   console.log(req.body);
-  pool.getConnection(function(err, connection){
-    var sql = "update member set m_nickname = ?, m_introduce = ? , m_langage = ? , m_nation = ? where m_no = ?";
-    connection.query(sql, [m_nickname, m_introduce, m_language, m_nation, m_no], function(err, result){
-      if(err){
-        console.log(err);
-      } else {
-        console.log(result);
-        res.redirect('/profile/'+ username);
-      }
+
+  if(m_no === Otherm_no){
+    pool.getConnection(function(err, connection){
+      var sql = "update member set m_nickname = ?, m_introduce = ? , m_langage = ? , m_nation = ? where m_no = ?";
+      connection.query(sql, [m_nickname, m_introduce, m_language, m_nation, m_no], function(err, result){
+        if(err){
+          console.log(err);
+        } else {
+          console.log(result);
+          res.redirect('/profile/'+ username);
+        }
+        connection.release();
+      });
     });
-  });
+  } else {
+    res.render('login/mypageUpdateError');
+  }
+
 
 });
 

@@ -57,6 +57,8 @@ var box = require('./routes/box')(multer,passport);
 app.use('/box', box);
 var login = require('./routes/login')(passport);
 app.use('/', login);
+var Class = require('./routes/class')(passport);
+app.use('/class', Class);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
