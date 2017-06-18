@@ -11,7 +11,7 @@ module.exports = function(passport,io){
 
   var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/images/users/'); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+    cb(null, 'public/images/userUploadImages/'); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
@@ -367,12 +367,9 @@ route.get('/auth/logout', function(req, res){
   });
 
   route.post("/addRegister", upload.single('userImage'), function(req, res, next){
-    var destination = String(req.file.destination+req.file.filename);
-    console.log(destination);
-    console.log(req.body);
     var m_nickname = req.body.displayName;
     var m_gender = req.body.gender;
-    var m_img = req.file.filename;
+    var m_img = String("/static/images/userUploadImages/" + req.file.filename);
     var username = req.body.username;
     //이메일로 username?
 
