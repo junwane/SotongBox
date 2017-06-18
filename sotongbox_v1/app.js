@@ -60,7 +60,7 @@ app.use('/box', box);
 app.use('/chat', chat);
 var login = require('./routes/login')(passport,io);
 app.use('/', login);
-var Class = require('./routes/class')(passport);
+var Class = require('./routes/class')(multer,passport);
 app.use('/class', Class);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -655,6 +655,7 @@ var CRUMINA = {};
             });
         }
    });
+
 })(jQuery);
 
 function emailChecked(){ //email 형식 체크
