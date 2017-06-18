@@ -1705,89 +1705,89 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
       color: #515365; }
 
 /*------------- #NOTIFICATION --------------*/
-.notification-list {
+.kim-notification-list {
   margin-bottom: 0; }
-  .notification-list .selectize-dropdown-content > *, .notification-list li {
+  .kim-notification-list .selectize-dropdown-content > *, .kim-notification-list li {
     border-bottom: 1px solid #e6ecf5;
     display: block;
     position: relative;
     transition: all .3s ease; }
-    .notification-list .selectize-dropdown-content > * > *, .notification-list li > * {
+    .kim-notification-list .selectize-dropdown-content > * > *, .kim-notification-list li > * {
       margin-bottom: 0;
       display: inline-block;
       vertical-align: middle; }
-    .notification-list .selectize-dropdown-content > *:hover, .notification-list li:hover {
+    .kim-notification-list .selectize-dropdown-content > *:hover, .kim-notification-list li:hover {
       background-color: #fafbfd; }
-      .notification-list .selectize-dropdown-content > *:hover .more, .notification-list li:hover .more {
+      .kim-notification-list .selectize-dropdown-content > *:hover .more, .kim-notification-list li:hover .more {
         opacity: 1; }
-    .notification-list .selectize-dropdown-content > *.un-read, .notification-list li.un-read {
+    .kim-notification-list .selectize-dropdown-content > *.un-read, .kim-notification-list li.un-read {
       background-color: #f7f9fc; }
-      .notification-list .selectize-dropdown-content > *.un-read .notification-icon, .notification-list li.un-read .notification-icon {
+      .kim-notification-list .selectize-dropdown-content > *.un-read .kim-notification-icon, .kim-notification-list li.un-read .kim-notification-icon {
         color: #9da2c1;
         fill: #9da2c1; }
-  .notification-list .selectize-dropdown-content > * {
+  .kim-notification-list .selectize-dropdown-content > * {
     cursor: pointer; }
-    .notification-list .selectize-dropdown-content > *:last-child {
+    .kim-notification-list .selectize-dropdown-content > *:last-child {
       border-bottom: none; }
-  .notification-list .notification-friend {
+  .kim-notification-list .kim-notification-friend {
     display: inline-block; }
-  .notification-list .comment-photo {
+  .kim-notification-list .comment-photo {
     margin: 30px 0 0 60px;
     max-width: 280px;
     border-radius: 10px;
     overflow: hidden;
     display: table; }
-    .notification-list .comment-photo img {
+    .kim-notification-list .comment-photo img {
       display: table-cell;
       vertical-align: middle; }
-    .notification-list .comment-photo span {
+    .kim-notification-list .comment-photo span {
       background-color: #f5f7fb;
       display: table-cell;
       vertical-align: middle;
       padding: 0 15px; }
-  .notification-list .author-thumb {
+  .kim-notification-list .author-thumb {
     height: 40px;
     width: 40px; }
-  .notification-list .notification-event {
+  .kim-notification-list .kim-notification-event {
     padding-left: 15px; }
-  .notification-list .notification-date {
+  .kim-notification-list .kim-notification-date {
     font-size: 11px;
     display: block;
     margin-top: 5px; }
-  .notification-list .notification-link {
+  .kim-notification-list .kim-notification-link {
     color: #ff5e3a; }
-  .notification-list .notification-icon {
+  .kim-notification-list .kim-notification-icon {
     color: #d7d9e5;
     fill: #d7d9e5;
     float: right;
     margin-top: 10px; }
-    .notification-list .notification-icon svg {
+    .kim-notification-list .kim-notification-icon svg {
       width: 22px;
       height: 20px; }
-  .notification-list .more {
+  .kim-notification-list .more {
     position: absolute;
     right: 10px;
     top: 5px;
     font-size: 10px;
     color: #d6d9e6;
     opacity: 0; }
-    .notification-list .more i + i {
+    .kim-notification-list .more i + i {
       margin-left: 5px; }
-    .notification-list .more svg + i {
+    .kim-notification-list .more svg + i {
       margin-left: 5px; }
-    .notification-list .more i + svg {
+    .kim-notification-list .more i + svg {
       margin-left: 5px; }
-    .notification-list .more svg + svg {
+    .kim-notification-list .more svg + svg {
       margin-left: 5px; }
 
-.notification-friend {
+.kim-notification-friend {
   margin-bottom: 0; }
 
-.chat-message .notification-event {
+.chat-message .kim-notification-event {
   max-width: 75%;
   font-size: 12px; }
 
-.chat-message .notification-friend {
+.chat-message .kim-notification-friend {
   display: block; }
 
 .chat-message li > * {
@@ -1814,7 +1814,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
 
 .chat-message li.message-unread {
   background-color: #f7f9fc; }
-  .chat-message li.message-unread .notification-icon {
+  .chat-message li.message-unread .kim-notification-icon {
     fill: #9a9fbf; }
 
 .chat-field {
@@ -1831,7 +1831,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
     border-right: 0;
     border-left: 0; }
 
-.chat-message-field .notification-event {
+.chat-message-field .kim-notification-event {
   max-width: 90%; }
 
 .chat-message-field li {
@@ -1844,12 +1844,12 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
   margin-top: 10px;
   font-size: 13px; }
 
-.chat-message-field .notification-date {
+.chat-message-field .kim-notification-date {
   font-size: 10px;
   float: right;
   margin-top: 0; }
 
-.chat-message-field .notification-friend {
+.chat-message-field .kim-notification-friend {
   float: left; }
 
 .added-photos {
@@ -1923,19 +1923,19 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
   .icon-status.status-invisible {
     background-color: #cbdfee; }
 
-.friend-requests .notification-icon {
+.friend-requests .kim-notification-icon {
   margin-top: 0; }
 
-.friend-requests .notification-friend {
+.friend-requests .kim-notification-friend {
   display: block; }
 
-.friend-requests .accepted .notification-friend {
+.friend-requests .accepted .kim-notification-friend {
   display: inline-block; }
 
-.friend-requests .accepted .notification-link {
+.friend-requests .accepted .kim-notification-link {
   color: #00b7ff; }
 
-.friend-requests .accepted .notification-icon {
+.friend-requests .accepted .kim-notification-icon {
   margin-top: 10px; }
 
 .friend-requests .chat-message-item {
@@ -1996,7 +1996,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
     margin-left: 15px; }
   .add-options-message button {
     float: none; }
-  .notification-list .notification-event {
+  .kim-notification-list .kim-notification-event {
     max-width: 75%; } }
 
 @media (max-width: 420px) {
@@ -2010,12 +2010,12 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
     display: block; } }
 
 @media (max-width: 360px) {
-  .notification-list .notification-event {
+  .kim-notification-list .kim-notification-event {
     max-width: 60%; }
-  .chat-message-field .notification-date {
+  .chat-message-field .kim-notification-date {
     float: none;
     margin-top: 5px; }
-  .chat-message-field .notification-friend {
+  .chat-message-field .kim-notification-friend {
     float: none; } }
 
 /*------------- #NOTIFICATION --------------*/
@@ -2051,7 +2051,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
       margin-left: 15px; }
     .popup-chat .more svg + svg {
       margin-left: 15px; }
-  .popup-chat .notification-event {
+  .popup-chat .kim-notification-event {
     padding-left: 10px;
     width: 75%; }
   .popup-chat .chat-message-item {
@@ -2061,7 +2061,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
     border-radius: 10px;
     margin-bottom: 5px;
     font-size: 12px; }
-  .popup-chat .notification-date {
+  .popup-chat .kim-notification-date {
     float: left; }
   .popup-chat .author-thumb {
     width: 26px;
@@ -2078,7 +2078,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
       float: right; }
     .popup-chat .chat-message-field li:nth-child(2n) .chat-message-item {
       float: right; }
-    .popup-chat .chat-message-field li:nth-child(2n) .notification-event {
+    .popup-chat .chat-message-field li:nth-child(2n) .kim-notification-event {
       float: right;
       padding-left: 0;
       padding-right: 10px; }
@@ -2774,7 +2774,7 @@ figure {
     display: block; }
   .page-link {
     padding: 10px; }
-  .notification-list.friend-requests .notification-icon {
+  .kim-notification-list.friend-requests .kim-notification-icon {
     float: none;
     display: block;
     margin-top: 10px; }
@@ -3143,22 +3143,22 @@ figure {
   height: 34px;
   width: 34px; }
 
-.w-friend-pages-added .notification-event {
+.w-friend-pages-added .kim-notification-event {
   padding-left: 8px;
   max-width: 70%; }
 
-.w-friend-pages-added .notification-friend {
+.w-friend-pages-added .kim-notification-friend {
   font-size: 13px; }
 
 .w-friend-pages-added .chat-message-item {
   font-size: 11px; }
 
-.w-friend-pages-added .notification-icon svg {
+.w-friend-pages-added .kim-notification-icon svg {
   width: 20px;
   height: 20px; }
 
 @media (max-width: 768px) {
-  .w-friend-pages-added.notification-list.friend-requests .notification-icon {
+  .w-friend-pages-added.kim-notification-list.friend-requests .kim-notification-icon {
     float: right; } }
 
 /*------------- #W-CREATE-FAV-PAGE --------------*/
@@ -3351,11 +3351,11 @@ figure {
   height: 28px;
   width: 28px; }
 
-.w-activity-feed .notification-event,
-.w-activity-feed .notification-friend {
+.w-activity-feed .kim-notification-event,
+.w-activity-feed .kim-notification-friend {
   font-size: 12px; }
 
-.w-activity-feed .notification-event {
+.w-activity-feed .kim-notification-event {
   max-width: 85%; }
 
 .w-activity-feed li > * {
