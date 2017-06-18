@@ -16,6 +16,63 @@ $('#userfile').on('change', function() {
   }
 });
 
+function openCard(frm){
+    var url = "chat/";
+    var title = "chat";
+    var status = "toolbar=no,location=no,status=no,directories=no,scrollbars=no,resizable=no,menubar=no,width=600, height=280, top=0,left=20";
+    window.open("",title,status);
+    frm.target = title;
+    frm.method = "post";
+    frm.action = url;
+    frm.submit();
+}
+
+$("#userSearch").on("click",function(){
+  event.preventDefault();
+ var username = document.getElementById("username").value;
+
+  $.ajax({
+    url : "http://localhost:4000/chat/usersearch",
+    type : "post",
+    dataType : "json",
+    data : {username:username},
+    success : function(result){
+      if(result[0].m_nickname==null){
+        var a = "일치하는 아이디가 없습니다.";
+          $("#resultUser div").remove();
+          $("#resultUser").append("<div class='col-xl-12 col-lg-6 col-md-12 col-sm-12 col-xs-12'><div class='ui-block'>"+a+"</div></div>");
+      }else{
+      var m_nickname = result[0].m_nickname;
+      var m_img = result[0].m_img;
+      var m_no = result[0].m_no;
+      $("#resultUser div").remove();
+      $("#resultUser").append("<form name='form'><div class='col-xl-12 col-lg-6 col-md-12 col-sm-12 col-xs-12'>"
+                    +"<div class='ui-block'>"
+                    +"<div class='birthday-item inline-items'>"
+                    +"<div class='author-thumb'>"
+                    +"<img src='"+m_img+"' width='50px' height='50px'>"
+                    +"</div>"
+                    +"<input name='take_m_no' value='"+m_no+"' type='hidden'>"
+                    +"<input name='take_m_nickname' value='"+m_nickname+"' type='hidden'>"
+                    +"<input name='take_m_img' value='"+m_img+"' type='hidden'>"
+                    +"<div class='birthday-author-name'>"
+                    +"<a href='#' class='h6 author-name'>"+m_nickname+"</a>"
+                    +"<div class='birthday-date'></div>"
+                    +"</div>"
+                    +"<button type='submit' class='btn btn-sm bg-blue' onClick='javascript:openCard(this.form);''>메세지 보내기</button>"
+                    +"</div>"
+                    +"</div>"
+                    +"</div></form>");
+      }
+    },
+    error : function(err){
+      resultEmail.html("에러");
+    }
+  });
+
+
+});
+
 $('#image_preview a').bind('click', function() {
   resetFormElement($('#userfile')); //전달한 양식 초기화
   $('#userfile').show(); //파일 양식 보여줌

@@ -1,4 +1,4 @@
-module.exports = function(passport){
+module.exports = function(passport,io){
   var bkfd2Password = require("pbkdf2-password");
   var hasher = bkfd2Password();
   var pool = require('../config/mysql/db')();
@@ -395,8 +395,22 @@ route.get('/auth/logout', function(req, res){
 
 
   route.get('/', function(req, res){
+
+    if(req.user){
+      global.username = req.user.username;
+      global.usernickname = req.user.m_nickname;
+    }
+
     res.render('login/home.ejs' , {user : req.user, page : "./mainPage.ejs", message : req.flash('message')});
   });
+
+  io.on('connection', function(socket) {
+
+  console.log('유저 소켓 연결: ', global.usernickname);
+  socket.on('disconnect', function() {
+    console.log('유저 소켓 연결 해제: ', global.usernickname);
+  });
+});
 
   route.get('/reg', function(req, res){
     res.render('login/reg.ejs');

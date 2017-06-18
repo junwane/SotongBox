@@ -1,0 +1,96 @@
+<script type="text/javascript" src="/static/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+
+<header class="header header-responsive" id="site-header-responsive">
+
+  <div class="header-content-wrapper">
+    <a href="#" class="link-find-friend">소통카드</a>
+    <a href="#" class="link-find-friend">소통상자</a>
+  </div>
+
+  <!-- Tab panes -->
+
+  <!-- ... end  Tab panes -->
+
+</header>
+
+<!-- ... end Responsive Header -->
+
+<div class="header-spacer"></div>
+
+<!-- Top Header -->
+
+<!-- ... end Top Header -->
+<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" style="float:left; margin-left:50px; margin-bottom:50px;">
+  <div class="jin-registration-login-form" data-mh="log-tab" style="height: 634.05px;">
+    <!-- Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="home" role="tabpanel" data-mh="log-tab" style="height: 634.05px;">
+        <div class="title h6">채팅 목록</div>
+        <form class="content">
+          <div class="row" id="chatlog">
+            <%for(var i=0 ; i<rows.length; i++){
+              var item = rows[i];
+              var time = String(item.note_date);
+              var date = time.substr(4,17);
+              var item2 = rows2[i];
+              %>
+
+              <ul class="notification-list friend-requests col-xl-12 col-lg-12 col-md-12" style="margin-left:15px;">
+                <form name='form'>
+                  <li>
+                    <div class="author-thumb">
+                      <img src="<%=item2.m_img%>" alt="author" width="50px;" height="50px;">
+                    </div>
+                    <div class="notification-event">
+                      <a href="#" class="h6 notification-friend">
+                        <%=item2.m_nickname%>
+                      </a>
+                      <span class="chat-message-item"><%=item.note_content%></span><br>
+                      <span class="chat-message-item"><%=date%></span>
+                      <input name='take_m_no' value='<%=item2.m_no%>' type='hidden'>
+                      <input name='take_m_nickname' value='<%=item2.m_nickname%>' type='hidden'>
+                      <input name='take_m_img' value='<%=item2.m_img%>' type='hidden'>
+                    </div>
+                    <button type='submit' class='btn btn-sm bg-blue' style='float:right;'' onClick='javascript:openCard(this.form);''>메세지 보내기</button>
+                  </li>
+                </form>
+              </ul>
+              <%}%>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-5 col-md-8 col-sm-8 col-xs-12" style="float:right; margin-right:50px;">
+  <div class="jin-registration-login-form" data-mh="log-tab" style="height: 637.533px;">
+    <!-- Nav tabs -->
+
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+      <div class="tab-pane active" id="profile-12" role="tabpanel" data-mh="log-tab" style="">
+        <div class="title h6">사용자 검색</div>
+        <form class="content">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12">
+              <form class="w-search">
+                <div class="form-group with-button is-empty">
+                  <input class="form-control" id="username" type="text" placeholder="Search Friends...">
+                  <button id="userSearch"></button>
+                  <span class="material-input"></span>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="resultUser">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

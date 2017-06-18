@@ -10,12 +10,13 @@ var MySQLStore = require('express-mysql-session')(session);
 var flash = require('connect-flash');
 var multer = require('multer');
 
+var app = express();
+var http = require('http').Server(app);
+http.listen('4000');
+var io = require('socket.io')(http);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
-
-var app = express();
 
 
 
@@ -54,8 +55,10 @@ app.use('/users', users);
 
 var passport = require('./config/mysql/passport')(app);
 var box = require('./routes/box')(multer,passport);
+var chat = require('./routes/chat')(passport,io);
 app.use('/box', box);
-var login = require('./routes/login')(passport);
+app.use('/chat', chat);
+var login = require('./routes/login')(passport,io);
 app.use('/', login);
 var Class = require('./routes/class')(passport);
 app.use('/class', Class);

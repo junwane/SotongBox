@@ -1,319 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-    <title>소통상자</title>
+  <title>소통상자</title>
 
-    <!-- Required meta tags always come first -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap-grid.css">
-    <!--<link rel="stylesheet" type="text/css" href="css/non-responsive.css">-->
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="format-detection" content="telephone=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap-reboot.css">
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap-grid.css">
+  <!--<link rel="stylesheet" type="text/css" href="css/non-responsive.css">-->
 
-    <!-- Theme Styles CSS -->
-    <link rel="stylesheet" type="text/css" href="/static/css/theme-styles.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/blocks.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/jin/jin.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/kim/kim.css">
+  <!-- Theme Styles CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/css/theme-styles.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/blocks.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/jin/jin.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/kim/kim.css">
 
-    <!-- Main Font -->
-    <script src="/static/js/webfontloader.min.js"></script>
-    <script>
-        WebFont.load({
-            google: {
-                families: ['Roboto:300,400,500,700:latin']
-            }
-        });
-    </script>
+  <!-- Main Font -->
+  <script src="/static/js/webfontloader.min.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Roboto:300,400,500,700:latin']
+      }
+    });
+  </script>
 
-    <link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
 
-    <!-- Styles for plugins -->
-    <link rel="stylesheet" type="text/css" href="/static/css/jquery.mCustomScrollbar.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/sotong.custom.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
-    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+  <!-- Styles for plugins -->
+  <link rel="stylesheet" type="text/css" href="/static/css/jquery.mCustomScrollbar.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/swiper.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/sotong.custom.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
 </head>
+
 <body>
 
-<!-- Header -->
-<header class="header" id="site-header">
+  <!-- Header -->
+  <header class="header" id="site-header">
 
     <div class="page-title">
-        <a href="/" class="logo">
-            <img src="/static/images/logo-sotong.png" alt="Olympus">
-        </a>
+      <a href="/" class="logo">
+        <img src="/static/images/logo-sotong.png" alt="Olympus">
+      </a>
     </div>
 
     <div class="header-content-wrapper align-center">
 
-        <a href="#" class="link-find-friend">소통카드</a>
-        <a href="/box" class="link-find-friend">소통상자</a>
-        <a href="/class" class="link-find-friend">클래스</a>
-        <a href="" class="btn btn-yellow btn-md author-name fn js-open-popup" data-popup-target=".create-classRegister" id="classRegister">클래스 신청</a>
+      <a href="#" class="link-find-friend">소통카드</a>
+      <a href="/box" class="link-find-friend">소통상자</a>
+      <a href="/class" class="link-find-friend">클래스</a>
+      <a href="" class="btn btn-yellow btn-md author-name fn js-open-popup" data-popup-target=".create-classRegister" id="classRegister">클래스 신청</a>
 
-        <div class="control-block">
+      <div class="control-block">
 
-            <div class="control-icon more has-items" >
-                <i class="fa fa-search js-open-popup" data-popup-target=".search" aria-hidden="true" style="font-size: 18px;" ></i>
-            </div>
-
-            <div class="control-icon more has-items">
-                <i class="fa fa-bell-o" aria-hidden="true" style="font-size: 18px;"></i>
-                <div class="label-avatar bg-primary">8</div>
-
-                <div class="more-dropdown more-with-triangle triangle-top-center">
-                    <div class="ui-block-title ui-block-title-small">
-                        <h4>알림</h4>
-                    </div>
-
-                    <div class="mCustomScrollbar" data-mcs-theme="dark">
-                        <ul class="notification-list">
-                            <li>
-                                <div class="author-thumb">
-                                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                                </div>
-                                <div class="notification-event" style="margin-left: 10px;">
-                                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                                </div>
-
-                                <div class="more">
-                                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="author-thumb">
-                                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                                </div>
-                                <div class="notification-event" style="margin-left: 10px;">
-                                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                                </div>
-
-                                <div class="more">
-                                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="author-thumb">
-                                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                                </div>
-                                <div class="notification-event" style="margin-left: 10px;">
-                                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                                </div>
-
-                                <div class="more">
-                                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="author-thumb">
-                                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                                </div>
-                                <div class="notification-event" style="margin-left: 10px;">
-                                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                                </div>
-
-                                <div class="more">
-                                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="author-thumb">
-                                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                                </div>
-                                <div class="notification-event" style="margin-left: 10px;">
-                                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                                </div>
-
-                                <div class="more">
-                                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="author-thumb">
-                                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                                </div>
-                                <div class="notification-event" style="margin-left: 10px;">
-                                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                                </div>
-
-                                <div class="more">
-                                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                                </div>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <a href="#" class="view-all bg-primary">더 보기</a>
-                </div>
-            </div>
-
-            <!-- 로그인 후 -->
-            <div class="author-page author vcard inline-items more">
-                <div class="author-thumb">
-                    <img alt="author" src="/static/images/users/<%=user.m_img%>" class="avatar" width="50px" height="50px">
-                    <span class="icon-status online"></span>
-                    <div class="more-dropdown more-with-triangle">
-
-                        <ul class="account-settings">
-                            <li>
-                                <a href="/profile/<%=user.username%>">
-                                    <span>• 마이페이지 ></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="36-FavPage-SettingsAndCreatePopup.html">
-                                    <span>• 알림 > </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="36-FavPage-SettingsAndCreatePopup.html">
-                                    <span>• 내상자와카드 > </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="36-FavPage-SettingsAndCreatePopup.html">
-                                    <span>• 메시지 > </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/auth/logout">
-                                    <span>• 로그아웃 <i class="fa fa-sign-out" aria-hidden="true"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-
-
-                    </div>
-                </div>
-                <a class="author-name fn">
-                    <div class="author-title" style="color: #515365;">
-                        <%= user.m_nickname %>
-                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                    </div>
-                    <span class="author-subtitle">레벨1</span>
-                </a>
-            </div>
-
+        <div class="control-icon more has-items">
+          <i class="fa fa-search js-open-popup" data-popup-target=".search" aria-hidden="true" style="font-size: 18px;"></i>
         </div>
+
+        <div class="control-icon more has-items">
+          <i class="fa fa-bell-o" aria-hidden="true" style="font-size: 18px;"></i>
+          <div class="label-avatar bg-primary">8</div>
+
+          <div class="more-dropdown more-with-triangle triangle-top-center">
+            <div class="ui-block-title ui-block-title-small">
+              <h4>알림</h4>
+            </div>
+
+            <div class="mCustomScrollbar" data-mcs-theme="dark">
+              <ul class="notification-list">
+                <li>
+                  <div class="author-thumb">
+                    <img src="/static/images/avatar62-sm.jpg" alt="author">
+                  </div>
+                  <div class="notification-event" style="margin-left: 10px;">
+                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
+                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+                  </div>
+
+                  <div class="more">
+                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="author-thumb">
+                    <img src="/static/images/avatar62-sm.jpg" alt="author">
+                  </div>
+                  <div class="notification-event" style="margin-left: 10px;">
+                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
+                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+                  </div>
+
+                  <div class="more">
+                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="author-thumb">
+                    <img src="/static/images/avatar62-sm.jpg" alt="author">
+                  </div>
+                  <div class="notification-event" style="margin-left: 10px;">
+                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
+                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+                  </div>
+
+                  <div class="more">
+                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="author-thumb">
+                    <img src="/static/images/avatar62-sm.jpg" alt="author">
+                  </div>
+                  <div class="notification-event" style="margin-left: 10px;">
+                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
+                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+                  </div>
+
+                  <div class="more">
+                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="author-thumb">
+                    <img src="/static/images/avatar62-sm.jpg" alt="author">
+                  </div>
+                  <div class="notification-event" style="margin-left: 10px;">
+                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
+                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+                  </div>
+
+                  <div class="more">
+                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="author-thumb">
+                    <img src="/static/images/avatar62-sm.jpg" alt="author">
+                  </div>
+                  <div class="notification-event" style="margin-left: 10px;">
+                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
+                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
+                  </div>
+
+                  <div class="more">
+                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+
+            <a href="#" class="view-all bg-primary">더 보기</a>
+          </div>
+        </div>
+
+        <!-- 로그인 후 -->
+        <div class="author-page author vcard inline-items more">
+          <div class="author-thumb">
+            <img alt="author" src="/static/images/users/<%=user.m_img%>" class="avatar" width="50px" height="50px">
+            <span class="icon-status online"></span>
+            <div class="more-dropdown more-with-triangle">
+
+              <ul class="account-settings">
+                <li>
+                  <a href="/profile/<%=user.username%>">
+                    <span>• 마이페이지 ></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="36-FavPage-SettingsAndCreatePopup.html">
+                    <span>• 알림 > </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="36-FavPage-SettingsAndCreatePopup.html">
+                    <span>• 내상자와카드 > </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/chat">
+                    <span>• 메시지 > </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/auth/logout">
+                    <span>• 로그아웃 <i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                  </a>
+                </li>
+              </ul>
+
+
+            </div>
+          </div>
+          <a class="author-name fn">
+            <div class="author-title" style="color: #515365;">
+              <%= user.m_nickname %>
+                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+            </div>
+            <span class="author-subtitle">레벨1</span>
+          </a>
+        </div>
+
+      </div>
     </div>
 
-</header>
+  </header>
 
-<!-- ... end Header -->
+  <!-- ... end Header -->
 
-<%- include(page) %>
+  <%- include(page) %>
 
-<!-- Friends -->
+    <!-- Friends -->
 
-<!-- ... end Friends -->
+    <!-- ... end Friends -->
 
 
 
-<!-- 클래스 신청 팝업 -->
-<div class="ui-block window-popup create-classRegister">
-  <a href="" class="icon-close js-close-popup">
-      <svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
-  </a>
+    <!-- 클래스 신청 팝업 -->
+    <div class="ui-block window-popup create-classRegister">
+      <a href="" class="icon-close js-close-popup">
+        <svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
+      </a>
 
-  <div class="ui-block-title bg-primary">
-      <h6 class="align-center">
+      <div class="ui-block-title bg-primary">
+        <h6 class="align-center">
           <img src="/static/images/logo_w.png">
       </h6>
-  </div>
-
-  <form class="" action="/class/register" method="post">
-  <div class="ui-block-content">
-      <div class="form-group label-floating is-empty">
-          <label class="control-label">성함</label>
-          <input class="form-control" type="text" name="name" placeholder="">
       </div>
 
-      <div class="form-group label-floating is-empty">
-          <label class="control-label">연락처</label>
-          <input class="form-control" type="text" name="phone" placeholder="">
-          <span class="material-input"></span>
-      </div>
+      <form class="" action="/class/register" method="post">
+        <div class="ui-block-content">
+          <div class="form-group label-floating is-empty">
+            <label class="control-label">성함</label>
+            <input class="form-control" type="text" name="name" placeholder="">
+          </div>
 
-      <div class="form-group label-floating is-empty">
-          <label class="control-label">하고싶은 클래스</label>
-          <textarea class="form-control" name="wantClass" rows="8" cols="80" placeholder="하고싶은 클래스에 대해 간단한 설명과 참고할 수 있는 URL을 적어주세요.">
+          <div class="form-group label-floating is-empty">
+            <label class="control-label">연락처</label>
+            <input class="form-control" type="text" name="phone" placeholder="">
+            <span class="material-input"></span>
+          </div>
+
+          <div class="form-group label-floating is-empty">
+            <label class="control-label">하고싶은 클래스</label>
+            <textarea class="form-control" name="wantClass" rows="8" cols="80" placeholder="하고싶은 클래스에 대해 간단한 설명과 참고할 수 있는 URL을 적어주세요.">
           </textarea>
-      </div>
+          </div>
 
-      <div class="form-group label-floating is-empty">
-        유/무료 강의 선택
-      </div>
+          <div class="form-group label-floating is-empty">
+            유/무료 강의 선택
+          </div>
 
-      <div class="form-group label-floating is-empty checkbox">
-        <label>
+          <div class="form-group label-floating is-empty checkbox">
+            <label>
           <input type="checkbox" name="optionsCheckboxes" value="무료">무료
           <span class="checkbox-material"></span>
         </label>
-        <label>
+            <label>
           <input type="checkbox" name="optionsCheckboxes" value="유료">유료
           <span class="checkbox-material"></span>
         </label>
-        <label>
+            <label>
           <input type="checkbox" name="optionsCheckboxes" value="유무료">둘다
           <span class="checkbox-material"></span>
         </label>
-      </div>
-
-      <div class="row">
-          <div class="col-lg-12 col-sm-12">
-              <input type="submit" name="" value="제출하기" class="btn btn-primary btn-md full-width" id="save">
           </div>
+
+          <div class="row">
+            <div class="col-lg-12 col-sm-12">
+              <input type="submit" name="" value="제출하기" class="btn btn-primary btn-md full-width" id="save">
+            </div>
+          </div>
+      </form>
+
+
       </div>
-    </form>
 
 
-  </div>
+    </div>
+
+    <!-- ... end Window-popup Update Header Photo -->
 
 
-</div>
-
-<!-- ... end Window-popup Update Header Photo -->
+    <!-- Window-popup Choose from my Photo -->
 
 
-<!-- Window-popup Choose from my Photo -->
+    <!-- jQuery first, then Other JS. -->
+    <script src="/static/js/jquery-3.2.0.min.js"></script>
+    <!-- Js effects for material design. + Tooltips -->
+    <script src="/static/js/material.min.js"></script>
+    <!-- Helper scripts (Tabs, Equal height, Scrollbar, etc) -->
+    <script src="/static/js/theme-plugins.js"></script>
+    <!-- Init functions -->
+    <script src="/static/js/main.js"></script>
 
+    <!-- Select / Sorting script -->
+    <script src="/static/js/selectize.min.js"></script>
 
-<!-- jQuery first, then Other JS. -->
-<script src="/static/js/jquery-3.2.0.min.js"></script>
-<!-- Js effects for material design. + Tooltips -->
-<script src="/static/js/material.min.js"></script>
-<!-- Helper scripts (Tabs, Equal height, Scrollbar, etc) -->
-<script src="/static/js/theme-plugins.js"></script>
-<!-- Init functions -->
-<script src="/static/js/main.js"></script>
+    <!-- Swiper / Sliders -->
+    <script src="/static/js/swiper.jquery.min.js"></script>
 
-<!-- Select / Sorting script -->
-<script src="/static/js/selectize.min.js"></script>
-
-<!-- Swiper / Sliders -->
-<script src="/static/js/swiper.jquery.min.js"></script>
-
-<script src="/static/js/mediaelement-and-player.min.js"></script>
-<script src="/static/js/mediaelement-playlist-plugin.min.js"></script>
-<script src="/static/js/jin/jin.js"></script>
-<script src="/static/js/wan/wan.js"></script>
+    <script src="/static/js/mediaelement-and-player.min.js"></script>
+    <script src="/static/js/mediaelement-playlist-plugin.min.js"></script>
+    <script src="/static/js/jin/jin.js"></script>
+    <script src="/static/js/wan/wan.js"></script>
+    <script>
+      var socket = io();
+    </script>
 </body>
+
 </html>
