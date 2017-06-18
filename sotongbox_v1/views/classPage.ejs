@@ -42,12 +42,12 @@
 		</div>
 
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6">
-			<div class="friend-item friend-groups create-group" data-mh="friend-groups-item" style="height: 398.6px;">
+			<div class="friend-item friend-groups create-group" data-mh="friend-groups-item" style="height: 455px;">
 
-				<a href="#" class="js-open-popup full-block" data-popup-target=".create-friend-group-1"></a>
+				<a href="#" class="jin-js-open-popup full-block" data-popup-target=".create-friend-group-1"></a>
 				<div class="content">
 
-					<a href="#" class="js-open-popup btn btn-control bg-blue" data-popup-target=".create-friend-group-1">
+					<a href="#" class="jin-js-open-popup btn btn-control bg-blue" data-popup-target=".create-friend-group-1">
 						<svg class="olymp-plus-icon"><use xlink:href="icons/icons.svg#olymp-plus-icon"></use></svg>
 					</a>
 
@@ -67,7 +67,7 @@
   			<div class="ui-block">
   				<div class="friend-item fav-page">
   					<div class="friend-header-thumb">
-  						<a href="/class/Inner/<%= result[i].c_no%>"><img src="/static/images/classImages/<%=result[i].c_img%>" alt="friend" width="318px" height="122px"></a>
+  						<a href="/class/Inner/<%= result[i].c_no%>"><img src="<%=result[i].c_img%>" alt="friend" width="318px" height="122px"></a>
   					</div>
 
   					<div class="friend-item-content">
@@ -88,7 +88,7 @@
   						</div>
   						<div class="friend-avatar">
   							<div class="author-thumb">
-  								<img src="/static/images/userUploadImages/<%=result[i].m_img%>" alt="author" width="92px" height="92px">
+  								<img src="<%=result[i].m_img%>" alt="author" width="92px" height="92px">
   							</div>
   							<div class="author-content">
   								<a href="/profile/<%=result[i].username%>" class="h5 author-name"><%=result[i].m_nickname%></a>
@@ -151,11 +151,10 @@
 
     <!-- Window-popup Create Friends Group -->
 <form class="" action="/class/newClass" method="post" enctype="multipart/form-data">
-    <div class="card-ui-block window-popup create-friend-group create-friend-group-1">
+    <div class="card-ui-block window-popup create-friend-group create-friend-group-1" style="width:500px;">
     	<a href="" class="icon-close js-close-popup">
     		<svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
     	</a>
-
     	<div class="ui-block-title">
     		<h6 class="title">클래스 만들기</h6>
     	</div>
@@ -170,30 +169,35 @@
             		    </select>
                   </div>
                 </div>
-
             			<label class="control-label">클래스 제목</label>
             			<input type="text" class="form-control" placeholder="" name="c_title">
-
-
 
                   <label class="control-label">클래스 소개</label>
                   <textarea name="c_content" class="form-control" rows="8" cols="80"></textarea>
 
-
-                  <input type="file" name="c_img">
-
+                    <label class="control-label">대표이미지 설정</label>
+                  <div class="ui-block-content">
+                    <span class="buttonWrap ui-block-content"><input type="file" name="userfile" id="userfile"></span>
+                    <div id="image_preview" style="display:none">
+                      <a href="#">사진 지우기</a>
+                      <br>
+                      <img src="#" width="399" />
+                      <br />
+                    </div>
+                    <hr>
+                    <div id="copy" name="copy">
+                    </div>
+                  </div>
+                  <div class="newBox-ui-block-title ui-block-title-small">
+                    <input id="randomImg" type="hidden" name="unsplash" value="">
+                    <h6 class="title">대표이지미 미 설정 시 Unsplash에서 임의로 지정됩니다.</h6>
+                  </div>
 
                   <label class="control-label">금액 / 미설정 시 무료로 판단합니다.</label>
                   <input type="text" class="form-control" name="c_money" rows="8" cols="80"></input>
 
-
-
             		<input type="submit" name="" class="btn btn-blue btn-lg full-width" value="클래스 만들기">
-
-
             	</div>
-
-
 
           </div>
         </form>

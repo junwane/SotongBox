@@ -54,13 +54,13 @@ app.use('/users', users);
 
 
 var passport = require('./config/mysql/passport')(app);
-var box = require('./routes/box')(multer,passport);
+var box = require('./routes/box')(multer,passport,io);
 var chat = require('./routes/chat')(passport,io);
 app.use('/box', box);
 app.use('/chat', chat);
 var login = require('./routes/login')(passport,io);
 app.use('/', login);
-var Class = require('./routes/class')(multer,passport);
+var Class = require('./routes/class')(multer,passport,io);
 app.use('/class', Class);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

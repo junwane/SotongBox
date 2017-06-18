@@ -1,4 +1,4 @@
-module.exports = function(multer,passport){
+module.exports = function(multer,passport,io){
   var auto_incre = require('./auto_incre.js');
   var nowDate = require('./nowDate.js');
   var pool = require('../config/mysql/db')();
@@ -49,10 +49,16 @@ module.exports = function(multer,passport){
 
   });
 
-  route.post('/newClass', upload.single('c_img'), function(req, res){
+  route.post('/newClass', upload.single('userfile'), function(req, res){
     console.log(req.body);
     var date = nowDate();
     var money = Number(req.body.c_money);
+
+    if (req.file) {
+      var c_img = String("/static/images/classImages/" + req.file.filename);
+    } else {
+      var c_img = req.body.unsplash;
+    }
 
     pool.getConnection(function(err, connection){
       var first_sql = "select count(*) as cnt from class where DATE_FORMAT(c_register, '%y%m%d') = ?";
@@ -67,7 +73,7 @@ module.exports = function(multer,passport){
           'c_title' : req.body.c_title,
           'c_content' : req.body.c_content,
           'c_money' : money,
-          'c_img' : req.file.filename,
+          'c_img' : c_img,
           'c_state' : 'before',
           'c_register' : date,
           'c_modify' : date,
@@ -81,7 +87,7 @@ module.exports = function(multer,passport){
           if(err){
             console.log(err);
           } else {
-            console.log(results);
+            res.redirect('/class');
           }
         });
         connection.release();
