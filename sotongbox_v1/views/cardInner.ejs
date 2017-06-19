@@ -30,7 +30,7 @@
       <article class="hentry post">
         <div class="author-page author vcard inline-items more">
           <div class="author-thumb">
-            <img alt="author" src="/static/images/users/<%=scresult[0].m_img%>" class="avatar" width="50px" height="50px">
+            <img alt="author" src="<%=scresult[0].m_img%>" class="avatar" width="50px" height="50px">
           </div>
           <a class="author-name fn">
             <div class="author-title" style="color: #515365;">
@@ -74,7 +74,7 @@
 
             <ul class="friends-harmonic">
               <% for(var i = 0 ; i < nice.length ; i++){ if(i == 4) break%>
-                <img alt = 'a' src="/static/images/users/<%= nice[i].m_img %>" class="avatar" width="20px" height="20px">
+                <img alt = 'a' src="<%= nice[i].m_img %>" class="avatar" width="20px" height="20px">
               <% } %>
             </ul>
             <div class="names-people-likes">
@@ -112,7 +112,7 @@
             <% for(var i = 0 ; i < reply.length; i++){ %>
             <li>
               <div class="post__author author vcard inline-items">
-                <img src="/static/images/users/<%= reply[i].m_img %>" alt="author">
+                <img src="<%= reply[i].m_img %>" alt="author">
                 <div class="author-date">
                   <a class="h6 post_author-name fn" href="#"><%= reply[i].m_nickname %></a>
                   <div class="post_date">
@@ -142,7 +142,7 @@
           <!-- 댓글등록 -->
           <form class="comment-form inline-items" action="/댓글등록" method="post">
             <div class="post__author author vcard inline-items">
-              <img src="/static/images/users/<%= user.m_img %>" alt="author">
+              <img src="<%= user.m_img %>" alt="author">
             </div>
             <div class="form-group with-icon-right is-empty">
               <textarea class="form-control"></textarea>

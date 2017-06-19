@@ -1,4 +1,5 @@
 <script type="text/javascript" src="/static/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script src="/static/js/jquery-3.2.0.min.js"></script>
 <header class="header header-responsive" id="site-header-responsive">
 
   <div class="header-content-wrapper">
@@ -37,14 +38,14 @@
                 <div class="country"><%=result[0].sb_resiger%></div>
               </div>
 
-              <div class="col-md-1 " style="font-size: 30px;">
-                <i class="fa fa-file-text-o" aria-hidden="true" style=""> <%= result[0].cardnum %></i>
-                <i class="fa fa-smile-o" aria-hidden="true"> <%= result[0].subscribenum %></i>
-              </div>
-
-              <div class="col-md-2 boxState" style="font-size: 55px;">
+              <div class="col-md-3 boxState" style="font-size: 55px;">
                 <button class="btn btn-primary btn-md-2 sotong-join-btn stateValue jin-js-open-popup">상자 구독하기<div class="ripple-container" ></div></button>
                 <input type = 'hidden' id = 'subscribe' value = '<%= check[0].subscribe %>' />
+              </div>
+
+              <div class="col-md-1 subscribeInto" style="font-size: 30px;">
+                <div class="fa fa-file-text-o" aria-hidden="true"> <%= result[0].cardnum %></div>
+                <div class="fa fa-smile-o subscribemem jin-js-open-popup" aria-hidden="true" value= '<%= result[0].subscribenum %>'> <%= result[0].subscribenum %></div>
               </div>
 
             </div>
@@ -84,7 +85,7 @@
             <ul class="widget w-friend-pages-added notification-list friend-requests">
               <li class="inline-items">
                 <div class="author-thumb">
-                  <img src="/static/images/users/<%= scresults[i].m_img %>" alt="author" width="40px" height="40px">
+                  <img src="<%= scresults[i].m_img %>" alt="author" width="40px" height="40px">
                 </div>
                 <div class="notification-event">
                   <a href="#" class="h6 notification-friend"><%= scresults[i].m_nickname %></a>
@@ -137,7 +138,7 @@
 
 <!-- Window-popup Create Friends Group -->
 <form  class = 'subscribe' action = './subscribe', method = 'post'>
-  <input type = 'hidden' name = 'sb_no' value= <%= sb_no %> />
+  <input type = 'hidden' id = 'sb_no' name = 'sb_no' value= <%= sb_no %> />
   <input type = 'hidden' name = 'sb_open' value = '<%= result[0].sb_open %>' />
 </form>
 
@@ -212,25 +213,43 @@
   </div>
 </div>
 
-<div class="ui-block window-popup subscribe">
+<div class="ui-block window-popup subscribeMemberInfo">
+
   <a class="icon-close js-close-popup">
     <svg class="olymp-close-icon"><use xlink:href="/static/icons/icons.svg#olymp-close-icon"></use></svg>
   </a>
   <div class="ui-block-title bg-primary">
-    <h6 class="align-center" style="color:white;">소통카드 생성</h6>
+    <h6 class="align-center" style="color:white;">구독 회원 관리</h6>
   </div>
 
   <div class="ui-block" >
-    <button class = 'btn btn-grey-lighter btn-lg'>시발시발 </button>
-    <button class = 'btn btn-grey-lighter btn-lg'>폭풍폭풍 </button>
+    <button class = 'btn btn-secondary btn-lg subscribeManagement' id = 'subscribeMember'>구독 사용자 </button>
+    <button class = 'btn btn-secondary btn-lg subscribeManagement' id = 'subscribeWaitMember'>요청 사용자 </button>
   </div>
-  <div class="ui-block">
-    <a class = 'h4 post__author-name fn'>박준완ㅋ</a> <a> X </a><br><br>
-    <a class = 'h4 post__author-name fn'>준완이ㅋ</a> <a> X </a><br><br>
-    <a class = 'h4 post__author-name fn'>파워ㅋㅋ</a> <a> X </a><br><br>
+
+  <div class="ui-block subscribeList">
+
   </div>
+
 </div>
 
-<script src="/static/js/jquery-3.2.0.min.js"></script>
-<script src="/static/js/wan/wan.js"></script>
-<script src="/static/js/wan/subscribe.js"></script>
+
+<div class="ui-block window-popup subscribeMemberUninfo">
+
+  <a class="icon-close js-close-popup">
+    <svg class="olymp-close-icon"><use xlink:href="/static/icons/icons.svg#olymp-close-icon"></use></svg>
+  </a>
+  <div class="ui-block-title bg-primary">
+    <h6 class="align-center" style="color:white;">구독 회원 관리</h6>
+  </div>
+
+  <div class="ui-block" >
+    <button class = 'btn btn-secondary btn-lg ' >구독 사용자 </button>
+    <button class = 'btn btn-secondary btn-lg ' >요청 사용자 </button>
+  </div>
+
+  <div class="ui-block subscribeList">
+    <h3>권한이 없습니다.</h3>
+  </div>
+
+</div>
