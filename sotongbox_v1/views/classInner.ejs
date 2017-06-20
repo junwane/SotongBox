@@ -24,11 +24,11 @@
             <img src="/static/images/classImages/jquery.png" alt="nature" width="1368px" height="472px">
             <div class="top-header-author">
               <div class="author-thumb">
-                <img src="/static/images/userUploadImages/고양이.png" alt="author">
+                <img src="<%=rows2[0].m_img%>" alt="author">
               </div>
               <div class="author-content">
-                <a href="#" class="h3 author-name">영태</a>
-                <div class="country">Rock Band | San Francisco, CA</div>
+                <a href="#" class="h3 author-name"><%=rows2[0].m_nickname%></a>
+                <div class="country"><%=rows2[0].m_introduce%></div>
               </div>
             </div>
           </div>
@@ -37,10 +37,10 @@
               <div class="col-xl-8 offset-xl-2 col-lg-8 offset-lg-2 col-md-12 offset-md-0">
                 <ul class="profile-menu">
                   <li>
-                    <a href="12-FavouritePage.html" class="active">강좌소개</a>
+                    <a href="/class/Inner/<%= rows[0].c_no%>" class="active">강좌 소개</a>
                   </li>
                   <li>
-                    <a href="13-FavouritePage-About.html">강의 목차</a>
+                    <a href="/class/Inner/<%= rows[0].c_no%>/courseList" class="active">강의 목차</a>
                   </li>
                   <li>
                     <a href="07-ProfilePage-Photos.html">강의 평가</a>
@@ -59,13 +59,6 @@
             </div>
 
             <div class="control-block-button">
-              <a href="#" class="btn btn-control bg-primary">
-                <svg class="olymp-star-icon"><use xlink:href="icons/icons.svg#olymp-star-icon"></use></svg>
-              </a>
-
-              <a href="#" class="btn btn-control bg-purple">
-                <svg class="olymp-chat---messages-icon"><use xlink:href="icons/icons.svg#olymp-chat---messages-icon"></use></svg>
-              </a>
 
             </div>
           </div>
@@ -75,226 +68,9 @@
   </div>
 </div>
 
-<div class="container" style="margin-top:1px;">
-  <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="ui-block">
-        <div class="ui-block-title inline-items">
-          <div class="btn btn-control btn-control-small bg-yellow">
-            <svg class="olymp-trophy-icon"><use xlink:href="icons/icons.svg#olymp-trophy-icon"></use></svg>
-          </div>
-          <h6 class="title">강좌 소개</h6>
-          <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container" style="margin-top:1px;">
-  <div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="ui-block features-video">
-        <div class="video-player">
-          <img src="/static/images/1.jpg" alt="photo">
-          <a href="https://youtu.be/cQbHjOduepU" class="play-video">
-            <svg class="olymp-play-icon"><use xlink:href="icons/icons.svg#olymp-play-icon"></use></svg>
-          </a>
-
-          <div class="video-content">
-            <div class="h4 title">Rock Garden Festival - Day 3</div>
-            <time class="published" datetime="2017-03-24T18:18">12:06</time>
-          </div>
-
-          <div class="overlay"></div>
-        </div>
-
-        <div class="features-video-content">
-
-          <article class="hentry post">
-
-            <div class="post__author author vcard inline-items">
-              <img src="/static/images/userUploadImages/고양이.png" alt="author">
-
-              <div class="author-date">
-                <a class="h6 post__author-name fn" href="02-ProfilePage.html">영태</a>
-                <div class="post__date">
-                  <time class="published" datetime="2017-03-24T18:18">
-                              2 hours ago
-                           </time>
-                </div>
-              </div>
-
-              <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg>
-                <ul class="more-dropdown">
-                  <li>
-                    <a href="#">Edit Post</a>
-                  </li>
-                  <li>
-                    <a href="#">Delete Post</a>
-                  </li>
-                  <li>
-                    <a href="#">Turn Off Notifications</a>
-                  </li>
-                  <li>
-                    <a href="#">Select as Featured</a>
-                  </li>
-                </ul>
-              </div>
-
-            </div>
-
-            <p>모르는 거 있으면 물어보세요</p>
-
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container" style="margin-top:1px;">
-  <div class="row">
-    <div class="col-xl-12 col-lg-8 col-md-8 col-sm-8 col-xs-8">
-      <div class="ui-block">
-        <div class="ui-block-title">
-          <h6 class="title">강의 목차</h6>
-          <div class="align-right">
-            <a href="#" class="js-open-popup btn btn-primary btn-md-2" data-popup-target=".update-header-photo">강의 업로드 +</a>
-          </div>
-        </div>
-
-        <ul class="kim-notification-list">
-          <li>
-            <div class="author-thumb">
-              <img src="/static/icons/playIcon.png" alt="author" width="40px" height="40px">
-            </div>
-            <div class="notification-event">
-              Jquery 강좌 소개
-            </div>
-
-            <div class="col-x1-4 col-lg-6">
-              00:00:00
-            </div>
-
-            <div class="more">
-
-            </div>
-          </li>
-
-          <li>
-            <div class="author-thumb">
-              <img src="/static/icons/playIcon.png" alt="author" width="40px" height="40px">
-            </div>
-            <div class="notification-event">
-              Jquery 강좌 소개
-            </div>
-            <span class="notification-icon">
-                        <svg class="olymp-happy-face-icon"><use xlink:href="icons/icons.svg#olymp-happy-face-icon"></use></svg>
-                     </span>
-
-            <div class="more">
-              <svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg>
-              <svg class="olymp-little-delete"><use xlink:href="icons/icons.svg#olymp-little-delete"></use></svg>
-            </div>
-          </li>
-
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container" style="margin-top:1px;">
-  <div class="row">
-    <div class="col-xl-12 col-lg-8 col-md-12 col-sm-8 col-xs-8">
-      <div class="ui-block">
-        <div class="ui-block-title">
-          <h6 class="title">강의 평가</h6>
-          <div class="align-right">
-
-          </div>
-        </div>
-
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
-          <div class="ui-block">
-            <div class="ui-block-content">
-              <div class="widget w-action">
-                <div class="content">
-                  <h4 class="title">0</h6>
-                  <div class="star-left">
-                    <div class="fave" onmouseover="faves(0)" onmouseout="offfaves(0)" onclick="stay()"></div>
-                    <div class="fave" onmouseover="faves(1)" onmouseout="offfaves(1)" onclick="stay()"></div>
-                    <div class="fave" onmouseover="faves(2)" onmouseout="offfaves(2)" onclick="stay()"></div>
-                    <div class="fave" onmouseover="faves(3)" onmouseout="offfaves(3)" onclick="stay()"></div>
-                    <div class="fave" onmouseover="faves(4)" onmouseout="offfaves(4)" onclick="stay()"></div>
-                  </div>
-                </div>
-                <div id="grade">
-                  <h6>0개의 수강평</h6>
-                </div>
-
-              </div>
-
-                </div>
-             </div>
-          </div>
-
-        <ul class="comments-list">
-          <li>
-            <div class="post__author author vcard inline-items">
-              <img src="img/author-page.jpg" alt="author">
-
-              <div class="author-date">
-                <a class="h6 post__author-name fn" href="02-ProfilePage.html">James Spiegel</a>
-                <div class="post__date">
-                  <time class="published" datetime="2004-07-24T18:18">
-                    38 mins ago
-                  </time>
-                </div>
-              </div>
-
-              <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg></a>
-
-            </div>
-
-            <p>강의 정말 좋아요 긋긋</p>
-
-          </li>
-          <li>
-            <div class="post__author author vcard inline-items">
-              <img src="img/avatar1-sm.jpg" alt="author">
-
-              <div class="author-date">
-                <a class="h6 post__author-name fn" href="#">Mathilda Brinker</a>
-                <div class="post__date">
-                  <time class="published" datetime="2004-07-24T18:18">
-                    1 hour ago
-                  </time>
-                </div>
-              </div>
-
-              <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg></a>
-
-            </div>
-
-            <p>강의 정말 좋아요 긋긋
-            </p>
-
-
-          </li>
-        </ul>
-
-      </div>
-    </div>
-
-
-
-  </div>
-  </div>
-</div>
-</div>
-
+<%- include(class_page) %>
 
 <script src="/static/js/kim/star.js"></script>
+
+
+<!-- Window-popup Create Friends Group -->

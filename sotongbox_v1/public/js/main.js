@@ -410,6 +410,16 @@ var CRUMINA = {};
           return false;
       });
 
+      $(".class-js-open-popup").on('click', function (event) {
+        var target_popup = $(this).data('popup-target');
+        var current_popup = $popup.filter(target_popup);
+        current_popup.addClass('open');
+        current_popup.css('top', "-200");
+        console.log(current_popup.innerHeight());
+        $body.addClass('overlay-enable');
+        return false;
+    });
+
     // 이메일 인증하라는 팝업 생성
     $(".email-close-popup").on('click', function(){
       var target_popup = $(this).data('popup-target');

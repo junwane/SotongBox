@@ -32,14 +32,22 @@
       }
     });
   </script>
-
-  <link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
-
-  <!-- Styles for plugins -->
   <link rel="stylesheet" type="text/css" href="/static/css/jquery.mCustomScrollbar.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;subset=latin" media="all">
+  <script>
+		WebFont.load({
+			google: {
+				families: ['Roboto:300,400,500,700:latin']
+			}
+		});
+	</script>
+  <!-- Styles for plugins -->
+
   <link rel="stylesheet" type="text/css" href="/static/css/swiper.min.css">
   <link rel="stylesheet" type="text/css" href="/static/css/sotong.custom.css">
   <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/daterangepicker.css">
   <link rel="stylesheet" href="/static/css/font-awesome.min.css">
 </head>
 
@@ -319,8 +327,6 @@
     <script src="/static/js/mediaelement-playlist-plugin.min.js"></script>
     <script src="/static/js/jin/jin.js"></script>
     <script src="/static/js/wan/wan.js"></script>
-    <script src="/static/js/wan/subscribe.js"></script>
-    <script src="/static/js/wan/card.js"></script>
     <script>
       var socket = io();
     </script>

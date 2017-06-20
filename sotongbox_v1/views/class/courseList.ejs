@@ -1,0 +1,193 @@
+<div class="container" style="margin-top:1px;">
+  <div class="row">
+    <div class="col-xl-12 col-lg-8 col-md-8 col-sm-8 col-xs-8">
+      <div class="ui-block">
+        <div class="ui-block-title inline-items" style="margin-bottom:15px;">
+          <div class="btn btn-control btn-control-small bg-orange">
+            <svg class="olymp-trophy-icon"><use xlink:href="icons/icons.svg#olymp-trophy-icon"></use></svg>
+          </div>
+          <h6 class="title">강의 목차</h6>
+          <div class="align-right" style="float:right;">
+            <a href="#" class="js-open-popup btn btn-primary btn-md-2" id="make_button" data-popup-target=".make-course">강의 등록하기</a>
+          </div>
+        </div>
+        <div id="List">
+          <%
+          for(var i=0 ; i<rows3.length; i++){
+          var item2 = rows3[i];
+          var index =  rows3[i].b_index;
+
+          var str_index = index.substr(70,11);
+          rows3[i].b_index = str_index;
+          var item = rows3[i];
+          %>
+            <ul class='kim-notification-list'>
+              <li>
+                <div style='margin-left:10px'>
+                  <img src='http://img.youtube.com/vi/<%=item.b_index%>/1.jpg'></img>
+                </div>
+                <div class='notification-event'>
+                  <a href='#' class='scrollup class-js-open-popup' data-popup-target='.<%=item.b_no%>'>
+                    <p style='margin-left:20px'>
+                      <%=item.b_title%>
+                    </p>
+                  </a>
+                </div>
+              </li>
+            </ul>
+
+            <div class='ui-block window-popup open-photo-popup open-photo-popup-v2 <%=item.b_no%>'>
+              <a href="" class="icon-close js-close-popup">
+                <svg class="olymp-close-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#olymp-close-icon"></use></svg>
+              </a>
+              <div class="open-photo-thumb">
+                <iframe width="750" height="472.5" src="https://www.youtube.com/embed/<%=item2.b_index%>" frameborder="0" allowfullscreen></iframe>
+              </div>
+              <div class="open-photo-content">
+
+                <article class="hentry post">
+
+                  <div class="post__author author vcard inline-items">
+                    <img src="<%=rows2[0].m_img%>" alt="author">
+
+                    <div class="author-date">
+                      <a class="h6 post__author-name fn" href="02-ProfilePage.html">
+                        <%=rows2[0].m_nickname%>
+                      </a>
+                      <div class="post__date">
+                        <time class="published" datetime="2017-03-24T18:18">
+						                  </time>
+                      </div>
+                    </div>
+
+                    <div class="more"><svg class="olymp-three-dots-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#olymp-three-dots-icon"></use></svg>
+
+                    </div>
+
+                  </div>
+
+                  <p>
+                    <%=item.b_content%>
+                  </p>
+
+
+                  <div class="post-additional-info inline-items">
+                    <div class="comments-shared">
+                    </div>
+                  </div>
+
+                  <div class="control-block-button post-control-button">
+
+                  </div>
+
+                </article>
+
+                <div class="mCustomScrollbar _mCS_1" data-mcs-theme="dark">
+                  <div id="mCSB_1" class="mCustomScrollBox mCS-dark mCSB_vertical mCSB_inside" style="max-height: 180px; overflow-y:auto;" tabindex="0">
+                    <div id="mCSB_1_container" class="mCSB_container" style="position: relative; left: 0px;" dir="ltr">
+                      <ul class="comments-list" name="commentList">
+                        <%
+                          for(var j = 0 ; j < rows4.length ; j++){
+                          var item3 = rows4[j];
+
+                          if(item.b_no==item3.b_no){
+                        %>
+                        <li>
+                          <div class='post__author author vcard inline-items'>
+                            <img src='<%=item3.m_img%>' alt='author' class='mCS_img_loaded'>
+
+
+                            <div class='author-date'>
+                              <a class='h6 post__author-name fn' href='#'><%=item3.m_nickname%></a>
+                              <div class='post__date'>
+                                <time class='published' datetime='2017-03-24T18:18'><%=item3.b_r_register%></time>
+                              </div>
+                            </div>
+                            <a href='#' class='more'><svg class='olymp-three-dots-icon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#olymp-three-dots-icon'></use></svg></a>
+                					</div>
+                					<p><%=item3.b_r_content%></p>
+                        </li>
+                        <%}}%>
+                      </ul>
+                      </div>
+                      <div class="mCSB_draggerContainer">
+                        <div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; display: block; height: 88px; max-height: 170px; top: 42px;">
+                          <div class="mCSB_dragger_bar" style="line-height: 30px;">
+                          </div>
+                        </div>
+                        <div class="mCSB_draggerRail">
+                        </div>
+                      </div>
+
+                      </div>
+                    </div>
+
+                    <form class="comment-form inline-items" id="ajaxReply">
+                      <div class="post__author author vcard inline-items">
+                        <img src="<%=user.m_img%>" alt="author">
+                      </div>
+                      <a>
+                        <%=user.m_nickname%>
+                      </a>
+                      <div class="form-group with-icon-right is-empty">
+                        <textarea class="form-control b_r_content" name='b_r_content' placeholder="댓글을 남겨 보세요..." style="margin-top:15px;"></textarea>
+                        <input type='hidden' name='reply_b_no' value="<%=item.b_no%>" />
+                        <input type='hidden' name='reply_m_no' value="<%=user.m_no%>" />
+                        <div class="add-options-message">
+                          <a href="#" class="options-message">
+                            <svg class="olymp-camera-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#olymp-camera-icon"></use></svg>
+                          </a>
+                        </div>
+                        <span class="material-input"></span></div>
+                        <button class="sendReply btn btn-primary btn-md-2" style="width:310px;margin-right:20px;">댓글 달기</button>
+                    </form>
+
+                  </div>
+                </div>
+                <%}%>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Window-popup Create Friends Group -->
+
+    <form class="uploadForm" id="uploadForm" >
+      <div class="ui-block window-popup make-course ">
+        <a class="icon-close js-close-popup">
+          <svg class="olymp-close-icon"><use xlink:href="/static/icons/icons.svg#olymp-close-icon"></use></svg>
+        </a>
+
+        <div class="ui-block-title bg-primary">
+          <h6 class="align-center" style="color:white">강의 등록</h6>
+        </div>
+        <div class="form-group label-floating is-select newBox-ui-block-content">
+        </div>
+        <div class="newBox-ui-block-content">
+          <div class="form-group label-floating is-empty">
+            <label class="control-label">강의 제목</label>
+            <input name="b_title" id="b_title" class="form-control" type="text" placeholder="">
+            <span class="material-input"></span>
+          </div>
+        </div>
+        <input type='hidden' name='c_no' id="c_no" value="<%= rows[0].c_no%>" />
+        <input type='hidden' name='b_me_no' id="b_me_no" value="bm0000" />
+        <div class="form-group label-floating is-empty ui-block" style="margin:25px; margin-bottom:0px">
+          <label class="control-label">강의 설명</label>
+          <textarea name="b_content" id="b_content" class="form-control" rows="8" cols="80"></textarea>
+        </div>
+        <div class="newBox-ui-block-content" style="margin-top:0px;">
+          <div class="form-group label-floating is-empty">
+            <label class="control-label">영상 소스코드</label>
+            <input name="b_index" id="b_index" class="form-control" type="text" placeholder="">
+            <span class="material-input"></span>
+          </div>
+        </div>
+        <div class="row ui-block-content">
+          <input type="submit" id="courseMake" class="btn btn-primary btn-md full-width" value="강의 등록하기" />
+        </div>
+      </div>
+  </div>
+</div>
+</form>
