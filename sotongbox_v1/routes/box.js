@@ -288,10 +288,6 @@ module.exports = function(multer, passport) {
     var check = req.body.check;
     var sb_no = req.body.sb_no;
 
-    console.log('check', check);
-    console.log('m_no', m_no);
-    console.log('sb_no', sb_no);
-
     pool.getConnection(function(err, connection){
       var sql = '';
 
@@ -357,6 +353,7 @@ module.exports = function(multer, passport) {
       else {
         var sql1 = 'select m.m_img as m_img,' +
           'm.m_nickname as m_nickname,' +
+          'sc.sc_no as sc_no,'+
           'DATE_FORMAT(sc.sc_register, "%Y-%m-%d")as sc_register,' +
           'sc.sc_title as sc_title,' +
           'sc.sc_content as sc_content,' +
@@ -402,7 +399,9 @@ module.exports = function(multer, passport) {
                       "sc_r.sc_r_content as sc_r_content," +
                       "(select count(*) from sc_r_comment where sc_r_co_division = 'nice' and sc_r_no = sc_r.sc_r_no) as niceNum" +
                       " from sc_reply as sc_r, member as m" +
-                      " where sc_r.sc_no = ? and sc_r.m_no = m.m_no";
+                      " where sc_r.sc_no = ? and sc_r.m_no = m.m_no"+
+                      " order by sc_r.sc_r_register desc"+
+                      " limit 0, 5";
                     connection.query(sql4, [sc_no], function(err, reply) {
                       if (err) console.log('카드 댓글 select 에러 : ', err);
                       else {
@@ -430,6 +429,135 @@ module.exports = function(multer, passport) {
           }
         });
       }
+    });
+  });
+
+  router.post('/card/reply', function(req, res, next){
+    var m_no = req.body.m_no;
+    var sc_no = req.body.sc_no;
+    var sc_r_content = req.body.sc_r_content;
+
+    pool.getConnection(function(err, connection){
+      if(err) console.log('커넥션 객체 얻어오기 에러 : ', err);
+      else{
+        var date = nowDate();
+        var sql1 = "select count(*) as cnt from sc_reply where DATE_FORMAT(sc_r_register, '%y%m%d') = ?";
+
+        connection.query(sql1, [date], function(err, cnt){
+          if(err) console.log('댓글 수 select 에러 : ', err);
+          else{
+            var cnt = ""+cnt[0].cnt;
+            var name= "scr";
+            var sc_r_no = auto_incre(cnt,name);
+            var date = new Date();
+            var sql2 = "insert into sc_reply(sc_r_no,sc_no,m_no,sc_r_content,sc_r_register,sc_r_modify) values(?,?,?,?,?,?)";
+
+            connection.query(sql2, [sc_r_no,sc_no,m_no,sc_r_content,date,date], function(err, result){
+              if(err) console.log('댓글 등록 에러 : ', err);
+              else{
+                var sql3 = "select sc_r.sc_r_no as sc_r_no," +
+                  "m.m_img as m_img," +
+                  "m.m_nickname as m_nickname," +
+                  "DATE_FORMAT(sc_r.sc_r_register, '%Y-%m-%d') as sc_r_register," +
+                  "sc_r.sc_r_content as sc_r_content," +
+                  "(select count(*) from sc_r_comment where sc_r_co_division = 'nice' and sc_r_no = sc_r.sc_r_no) as niceNum" +
+                  " from sc_reply as sc_r, member as m" +
+                  " where sc_r.sc_no = ? and sc_r.m_no = m.m_no and sc_r.sc_r_no = ?";
+
+                connection.query(sql3, [sc_no, sc_r_no], function(err, data){
+                  if(err) console.log('댓글 등록 정보 select 에러 : ', err);
+                  else{
+                    res.json(data);
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  });
+
+  router.post('/card/moreReply', function(req, res, next){
+    var sc_no = req.body.sc_no;
+    pool.getConnection(function(err, connection){
+      if(err) console.log('커넥션 객체 얻어오기 에러 : ', err);
+      else{
+        var sql = "select sc_r.sc_r_no as sc_r_no," +
+                "m.m_img as m_img," +
+                "m.m_nickname as m_nickname," +
+                "DATE_FORMAT(sc_r.sc_r_register, '%Y-%m-%d') as sc_r_register," +
+                "sc_r.sc_r_content as sc_r_content," +
+                "(select count(*) from sc_r_comment where sc_r_co_division = 'nice' and sc_r_no = sc_r.sc_r_no) as niceNum" +
+                " from sc_reply as sc_r, member as m" +
+                " where sc_r.sc_no = ? and sc_r.m_no = m.m_no";
+
+        connection.query(sql, [sc_no], function(err, data){
+          if(err) console.log('카드 댓글 더보기 select 에러 : ',err);
+          else{
+            res.json(data);
+          }
+        });
+      }
+    });
+  });
+
+  router.post('/card/comment', function(req, res, next){
+    var check = req.body.check;
+    var m_no = req.body.m_no;
+    var sc_no = req.body.sc_no;
+
+    console.log('check', check);
+    console.log('m_no', m_no);
+    console.log('sc_no',sc_no);
+
+    pool.getConnection(function(err, connection){
+      var sql1 = "insert into sc_comment(sc_no,m_no,sc_co_division) values(?,?,?)";
+
+      connection.query(sql1, [sc_no, m_no, check], function(err, result){
+        if(err){
+          var data = 'err';
+          res.json(data)
+        }
+        else{
+          var sql2 =  "select m.m_nickname as m_nickname, m.m_img as m_img" +
+            " from sc_comment as sc_co, member m" +
+            " where sc_co_division = 'nice' and sc_no = ?  and sc_co.m_no = m.m_no";
+
+          connection.query(sql2, [sc_no], function(err, data){
+            if(err) console.log('카드 좋아요 select 에러 : ', err);
+            else{
+              res.json(data);
+            }
+          });
+        }
+      });
+    });
+  });
+
+  router.post('/card/reply/comment', function(req, res, next){
+    var sc_r_no = req.body.sc_r_no;
+    var m_no = req.body.m_no;
+
+    pool.getConnection(function(err, connection){
+      var sql1 = "insert into sc_r_comment(sc_r_no, m_no, sc_r_co_division) values(?,?,'nice')";
+
+      connection.query(sql1, [sc_r_no, m_no], function(err, result){
+        if(err){
+          var data = 'err';
+          res.json(data)
+        }
+        else{
+          var sql2 = "select count(*) as niceNum from sc_r_comment where sc_r_no = ?";
+
+          connection.query(sql2, [sc_r_no], function(err, data){
+            if(err) console.log('카드 댓글 좋아요 수 select 에러 :',err);
+            else{
+              res.json(data);
+            }
+          });
+        }
+      });
     });
   });
 

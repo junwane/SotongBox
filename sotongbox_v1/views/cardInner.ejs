@@ -23,8 +23,6 @@
 <div class="container">
   <div class="row">
 
-    <!-- 카드 팝업 -->
-
     <div class="card-ui-block">
 
       <article class="hentry post">
@@ -52,8 +50,9 @@
 
           <!-- 카드 내용 -->
           <div class="ui-block-content">
-
             <h5><%- scresult[0].sc_content %></h5>
+            <input type = 'hidden' id = 'sc_no' value = '<%= scresult[0].sc_no %>'/>
+            <input type = 'hidden' id = 'm_no' value = '<%= user.m_no %>' />
 
             <!-- 카드 태그 -->
             <div class="row">
@@ -67,6 +66,7 @@
             </div>
 
           </div>
+
           <hr>
 
           <!--좋아요 ,댓글 , 공유 개수 -->
@@ -85,11 +85,12 @@
             </div>
 
             <div class="">
-              <a href="#" class="post-add-icon inline-items">          <svg class="olymp-comments-post-icon">
+              <a href="#" class="post-add-icon inline-items">
+                <svg class="olymp-comments-post-icon">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use>
-                    </svg>
-                    <span><%= replyNum[0].replyNum %></span>
-                  </a>
+                </svg>
+                <span id = 'replyNum'><%= replyNum[0].replyNum %></span>
+              </a>
 
             </div>
 
@@ -109,43 +110,37 @@
           <!-- 카드 댓글 -->
           <!-- li태그 하나당 댓글하나 -->
           <ul class="comments-list">
-            <% for(var i = 0 ; i < reply.length; i++){ %>
-            <li>
+            <% for(var i = 0 ; i < reply.length; i++){ if(i==5) break;%>
+            <li class = 'cardReplyList'>
               <div class="post__author author vcard inline-items">
-                <img src="<%= reply[i].m_img %>" alt="author">
+                <img src="<%= reply[reply.length-(1+i)].m_img %>" alt="author">
                 <div class="author-date">
-                  <a class="h6 post_author-name fn" href="#"><%= reply[i].m_nickname %></a>
+                  <a class="h6 post_author-name fn" href="#"><%= reply[reply.length-(1+i)].m_nickname %></a>
                   <div class="post_date">
                     <time class="published" datetime="2017-06-14T18:00">
-                  <%= reply[i].sc_r_register %>
-                </time>
+                      <%= reply[reply.length-(1+i)].sc_r_register %>
+                    </time>
                   </div>
                 </div>
-                <a href="#" class="more">
-                <svg class="olymp-three-dots-icon">
-                  <use xlink:href="#olymp-three-dots-icon"></use>
-                </svg>
-            </a>
               </div>
-              <p><%= reply[i].sc_r_content %></p>
-              <p>
-                <a href="#" class="post-add-icon inline-items">
-              <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
-              <span><%= reply[i].niceNum %></span>
-            </a>
-              </p>
+              <p><%= reply[reply.length-(1+i)].sc_r_content %></p>
+              <div class="post-add-icon inline-items sc_reply" id = '<%= reply[reply.length-(1+i)].sc_r_no %>' >
+                <svg class="olymp-heart-icon sc_r_nice"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
+                <span class = 'sc_r_niceNum'><%= reply[reply.length-(1+i)].niceNum %></span>
+              </div>
             </li>
             <% } %>
           </ul>
-          <a href="#" class="more-comments">더 많은 댓글 보기<span>▼</a>
+
+          <div class="more-comments moreReplyList">댓글 5개 더 보기<span>▼</div>
+          <input type = 'hidden' id = 'showReplyNum' value = 5 />
           <!-- 댓글등록 -->
-          <form class="comment-form inline-items" action="/댓글등록" method="post">
+          <div class = "comment-form inline-items">
             <div class="post__author author vcard inline-items">
               <img src="<%= user.m_img %>" alt="author">
             </div>
             <div class="form-group with-icon-right is-empty">
-              <textarea class="form-control"></textarea>
+              <textarea class="form-control cardReplyContent"></textarea>
               <div class="add-options-message">
                 <a href="#" class="js-open-popup options-message" data-popup-target=".update-header-photo">
                       <svg class="olymp-camera-icon">
@@ -156,30 +151,25 @@
               <span class="material-input"></span>
               <span class="material-input"></span>
               <div>
-                <input type="submit" name="" value="댓글 등록" class="btn btn-primary btn-lg full-width">
+                <input type="button" id = 'cardReplyRegister' value="댓글 등록" class="btn btn-primary btn-lg full-width">
               </div>
             </div>
+          </div>
         </div>
 
 
-        </form>
-
-
-        <!-- 옆에 붙어있는 3개 -->
+        <!-- 옆에 붙어있는 2개 -->
         <div class="control-block-button post-control-button">
-          <a href="#" class="btn btn-control">
+          <div class="btn btn-control cardComment" id = "nice">
             <svg class="olymp-like-post-icon">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use>
             </svg>
-            <div class="ripple-container"></div>
-          </a>
-          <div class="ripple-container"></div>
-          <a href="#" class="btn btn-control">
+          </div>
+          <div class="btn btn-control cardComment" id = "share">
             <svg class="olymp-share-icon">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use>
             </svg>
-          </a>
-          <div class="ripple-container"></div>
+          </div>
         </div>
       </article>
 
@@ -187,8 +177,3 @@
 
   </div>
 </div>
-
-
-
-<script src="/static/js/jquery-3.2.0.min.js"></script>
-<script src="/static/js/wan/subscribe.js"></script>

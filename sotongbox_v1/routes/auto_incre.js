@@ -3,7 +3,7 @@ module.exports = function(id, name){
 
   var t = nowDate();
   var seq = '0000';
-  var no = name+t;
+  var no = t;
   if(id.length == 1){
     seq = seq.substring(0,3);
     seq += id;
