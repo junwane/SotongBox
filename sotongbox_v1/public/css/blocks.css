@@ -3695,7 +3695,7 @@ ol li:before {
   position: relative;
   counter-increment: list1;
   /* Add "1" */
-  content: counter(list1) " ";
+  /*content: counter(list1) " ";*/
   /* Show count */
   color: #888da8;
   display: inline-block;

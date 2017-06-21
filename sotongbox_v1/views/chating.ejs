@@ -68,7 +68,7 @@
 
     .discussion {
       list-style: none;
-      background: #ededed;
+      background: #edf2f6;
       margin: 0;
       padding: 0 0 50px 0;
     }
@@ -92,6 +92,7 @@
     .other .avatar:after {
       content: "";
       position: absolute;
+      margin-right: -13px;
       top: 0;
       right: 0;
       width: 0;
@@ -114,6 +115,9 @@
     .self .avatar {
       order: 2;
     }
+    .jinNote{
+      font-size: 8px;
+    }
 
     .self .avatar:after {
       margin-left: -13px;
@@ -132,6 +136,7 @@
 
     .messages {
       margin-right: 13px;
+      margin-left: 13px;
       background: white;
       padding: 10px;
       border-radius: 2px;
@@ -154,10 +159,14 @@
       color: #ccc;
     }
   </style>
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap-reboot.css">
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/dist/css/bootstrap-grid.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/blocks.css">
 </head>
 
 <body>
-  <div class="ui segment" id="result">
+  <div class="ui segment" id="result" style="height:320px;background:#edf2f6;">
     <ol class="discussion" id="discussion">
       <%for(var i=0 ; i<rows.length; i++){
         var item = rows[i];
@@ -168,12 +177,12 @@
           <li class="self" id="self">
             <div class="avatar">
               <img src="<%= send_m_img %>"></img>
-              <p>
+              <p class="jinNote">
                 <%=send_nickname%>
               </p>
             </div>
             <div class="messages">
-              <p>
+              <p class="jinNote">
                 <%=item.note_content%>
               </p>
               <time><%=date%></time>
@@ -183,45 +192,47 @@
             <li class="other" id="other">
               <div class="avatar">
                 <img src="<%=take_m_img%>" />
-                <p>
+                <p class="jinNote">
                   <%=take_nickname%>
                 </p>
               </div>
               <div class="messages">
-                <p>
+                <p class="jinNote">
                   <%=item.note_content%>
                 </p>
                 <time><%-date%></time>
               </div>
             </li>
             <%}%>
-        <%}%>
+              <%}%>
     </ol>
   </div>
   <form id="chat">
-    <input id="name" class="name" type="text" value="" readonly>
-    <input id="take_nickname" type="hidden" value="<%= take_nickname %>">
-    <input id="send_m_no" type="hidden" value="<%= send_m_no %>">
-    <input id="take_m_no" type="hidden" value="<%= take_m_no %>">
-    <input id="send_m_img" type="hidden" value="<%= send_m_img %>">
-    <input id="take_m_img" type="hidden" value="<%= take_m_img %>">
-    <input id="message" class="message" type="text">
-    <input type="submit" class="chat" value="chat" />
+    <div class="form-group with-button is-empty">
+      <input id="name" class="name" type="hidden" value="" readonly>
+      <input id="take_nickname" type="hidden" value="<%= take_nickname %>">
+      <input id="send_m_no" type="hidden" value="<%= send_m_no %>">
+      <input id="take_m_no" type="hidden" value="<%= take_m_no %>">
+      <input id="send_m_img" type="hidden" value="<%= send_m_img %>">
+      <input id="take_m_img" type="hidden" value="<%= take_m_img %>">
+      <input class="form-control message" id="message" type="text" style="background:white;" placeholder="Search Friends...">
+      <button class="chat" id="ajax_chat" value="chat"></button>
+    </div>
   </form>
   <div id="box" class="box">
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/static/js/semantic.min.js"></script>
     <script>
-    document.getElementById('result').scrollTop = document.getElementById('result').scrollHeight;
+      document.getElementById('result').scrollTop = document.getElementById('result').scrollHeight;
       var socket = io();
       $('#chat').on('submit', function(e) {
 
         var check = $('#discussion').children();
 
-        if(check[0]==null){
+        if (check[0] == null) {
           socket.emit('first message', $('#send_m_no').val(), $('#message').val(), $('#take_m_no').val(), $('#name').val(), $('#take_nickname').val());
-        }else{
+        } else {
           socket.emit('send message', $('#send_m_no').val(), $('#message').val(), $('#take_m_no').val(), $('#name').val(), $('#take_nickname').val());
         }
 
@@ -230,7 +241,7 @@
       });
       socket.on('receive message', function(content, name) {
         addToDiscussion(name, content);
-         document.getElementById('result').scrollTop = document.getElementById('result').scrollHeight;
+        document.getElementById('result').scrollTop = document.getElementById('result').scrollHeight;
       });
       socket.on('change name', function(name) {
         $('#name').val(name);
@@ -255,7 +266,7 @@
 
         var contents = "<li class='" + writer + "'>" +
           "  <div class='avatar'>" +
-          "    <img src='" + img + "' /><p>" + name + "</p>" +
+          "    <img src='" + img + "' /><p class='jinNote'>" + name + "</p>" +
           "  </div>" +
           "  <div class='messages'>" +
           "    <p>" + msg + "</p>" +

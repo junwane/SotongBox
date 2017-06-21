@@ -19,13 +19,14 @@ $('#userfile').on('change', function() {
 function openCard(frm) {
   var url = "chat/";
   var title = "chat";
-  var status = "toolbar=no,location=no,status=no,directories=no,scrollbars=no,resizable=no,menubar=no,width=600, height=280, top=0,left=20";
-  window.open("", title, status);
+  var status = "";
+  window.open("", title, ",width=650, height=390, top=0,left=20,resizable=no,toolbar=no,location=no,status=no,directories=no,scrollbars=no,menubar=no");
   frm.target = title;
   frm.method = "post";
   frm.action = url;
   frm.submit();
 }
+
 
 $("#userSearch").on("click", function() {
   event.preventDefault();
@@ -72,6 +73,11 @@ $("#userSearch").on("click", function() {
     }
   });
 });
+
+$("#ajax_chat").on("click",function(){
+  window.alert("씨발");
+});
+
 $('#make_button').on("click",function(){
     $('#uploadForm').show();
 });
@@ -111,9 +117,6 @@ $("#courseMake").on("click", function() {
         "</div>" +
         "</li>" +
         "</ul>");
-
-
-
       $('#uploadForm').hide();
       $('body').removeAttr("class","overlay-enable");
       window.location.reload();
@@ -126,6 +129,7 @@ $("#courseMake").on("click", function() {
 $(".scrollup").on("click", function(){
   $(".mCustomScrollBox").scrollTop($(".mCustomScrollBox")[0].scrollTop);
 });
+
 
 $(".sendReply").on("click", function() {
   event.preventDefault();
