@@ -16,10 +16,34 @@
  background-position: 0 0;
 }
 
-
 .fave:hover {
  transition: background 1s steps(55);
  }
+
+ .faveComment{
+  float: left;
+  width: 60px;
+  height: 50px;
+  background: url(http://cfile27.uf.tistory.com/original/24223F3355E5864E1D4E26) no-repeat;
+  background-position: 0 0;
+ }
+
+ .faveCommentView{
+  float: left;
+  width: 60px;
+  height: 50px;
+  background: url(http://cfile27.uf.tistory.com/original/24223F3355E5864E1D4E26) no-repeat;
+  background-position: 0 0;
+  margin-bottom: 5px;
+ }
+
+ .faveCommentView:hover{
+   transition: background 1s steps(55);
+ }
+
+ .faveComment:hover {
+  transition: background 1s steps(55);
+  }
 
 .card-ui-block {
   background-color: #fff;

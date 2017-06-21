@@ -46,8 +46,11 @@ module.exports = function(app){
     if(err){
       connection.release();
 
-      return done('There is no user.');
+      return done(null, false, req.flash('message', "아이디 혹은 비밀번호가 틀립니다."));
     } else {
+      if(results[0] === undefined){
+        return done(null, false, req.flash('message', "아이디는 이메일 형식입니다."));
+      }
       var user = results[0];
       console.log(user);
       return hasher({password:password, salt:user.m_sort}, function(err, pass, salt, hash){
@@ -57,7 +60,12 @@ module.exports = function(app){
             connection.release();
             done(null, user);
 
-          } else{
+          }
+          else if(user.m_sort === undefined){
+            connection.release();
+            done(null, false, req.flash('message', "아이디 혹은 비밀번호가 틀립니다."));
+          }
+          else{
             console.log("false");
             connection.release();
             done(null, false, req.flash('message', "아이디나 비밀번호가 틀립니다."));

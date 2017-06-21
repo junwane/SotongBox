@@ -1,0 +1,120 @@
+<input type="hidden" id="c_no" value="<%=rows[0].c_no%>">
+<div class="container" style="margin-top:1px;">
+  <div class="row">
+    <div class="col-xl-12 col-lg-8 col-md-12 col-sm-8 col-xs-8">
+      <div class="ui-block">
+        <div class="ui-block-title">
+          <h6 class="title">강의 평가</h6>
+          <div class="align-right">
+
+          </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+          <div class="ui-block">
+            <div class="ui-block-content">
+              <div class="widget w-action">
+                <div class="content">
+                  <%
+                  if(!row) {
+
+                  }else{ %>
+                    <% if (!row[0]){ %>
+                      <h4 class="title" id="starGrade">0</h6>
+                      <div class="star_grade" id="star_grade" data-star='0' style="margin-left:48px">
+                      </div>
+                    </div>
+                    <div id="grade">
+                      <h6><h5 id="totalCount">0</h5>개의 수강평</h6>
+                    </div>
+                    <% } else { %>
+                      <h4 class="title" id="starGrade"><%= row[0].starGrade%></h6>
+                      <div class="star_grade" id="star_grade" data-star='<%=row[0].starGrade%>' style="margin-left:48px">
+                      </div>
+                    </div>
+                    <div id="grade">
+                      <h6><h5 id="totalCount"><%= row[0].commentNum %></h5>개의 수강평</h6>
+                    </div>
+                    <%}%>
+
+                  <% } %>
+
+
+
+              </div>
+
+                </div>
+             </div>
+          </div>
+
+        <ul class="comments-list">
+          <!-- 수강평 등록  li 하나 당 댓글 하나-->
+          <%
+          if(!row){
+
+          }else{
+          for(var i=0; i< row.length ; i++){ %>
+          <li>
+            <div class="post__author author vcard inline-items">
+              <img src="<%=row[i].m_img%>" alt="author">
+
+              <div class="author-date">
+                <a class="h6 post__author-name fn" href="02-ProfilePage.html"><%=row[i].m_nickname%></a>
+                <div class="post__date">
+                  <time class="published" datetime="2004-07-24T18:18">
+                    <%=row[i].b_register%>
+                  </time>
+                </div>
+                <div class="starCheck" data-star='<%=row[i].b_title.substring(1)%>'>
+
+                </div>
+              </div>
+
+              <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg></a>
+
+            </div>
+
+            <p><%= row[i].b_content %></p>
+          </li>
+          <%}}%>
+        </ul>
+
+        <a href="#" class="more-comments">수강평 더보기<span>+</span></a>
+        <!-- 수강평 작성 -->
+        <form class="comment-form inline-items">
+
+          <div class="post__author author vcard inline-items">
+            <img src="<%=user.m_img%>" alt="author">
+          </div>
+
+          <div class="star-left">
+            <div class="faveComment" onmouseover="faves(0)" onmouseout="offfaves(0)" onclick="stay()"></div>
+            <div class="faveComment" onmouseover="faves(1)" onmouseout="offfaves(1)" onclick="stay()"></div>
+            <div class="faveComment" onmouseover="faves(2)" onmouseout="offfaves(2)" onclick="stay()"></div>
+            <div class="faveComment" onmouseover="faves(3)" onmouseout="offfaves(3)" onclick="stay()"></div>
+            <div class="faveComment" onmouseover="faves(4)" onmouseout="offfaves(4)" onclick="stay()"></div>
+          </div>
+
+
+          <div class="form-group with-icon-right is-empty">
+            <textarea class="form-control" placeholder="" id="comment"></textarea>
+            <div class="add-options-message">
+              <a href="#" class="js-open-popup options-message" data-popup-target=".update-header-photo">
+                <svg class="olymp-camera-icon"><use xlink:href="icons/icons.svg#olymp-camera-icon"></use></svg>
+              </a>
+            </div>
+            <span><button type="button" name="button" class="btn btn-primary" id="commentSubmit">전송</button></span>
+            <span class="material-input"></span>
+          </div>
+
+        </form>
+
+
+
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

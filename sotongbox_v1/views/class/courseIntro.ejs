@@ -19,7 +19,11 @@
   <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="ui-block features-video">
+        <%if(!rows3[0]){%>
+        <p style="margin-left:30px">강의목차 메뉴에서 강의를 등록하면 영상이 생성됩니다.</p>
+        <%}else{%>
         <iframe width="840" height="472.5" src="https://www.youtube.com/embed/<%=rows3[0].b_index%>" frameborder="0" allowfullscreen></iframe>
+        <%}%>
         <div class="features-video-content">
 
           <article class="hentry post">
@@ -46,8 +50,11 @@
               </div>
 
             </div>
+            <%if(!rows3[0]){%>
 
-            <p style="font-size:14px"><%=rows[0].c_content%></p>
+            <%}else{%>
+              <p style="font-size:14px;"><%=rows[0].c_content%></p>
+            <%}%>
 
 
         </div>
