@@ -169,6 +169,7 @@ module.exports = function(multer, passport) {
           else {
             res.json(data);
           }
+          connection.release();
         });
       }
     });
@@ -198,6 +199,7 @@ module.exports = function(multer, passport) {
         connection.query(second_sql, [sb_no, cate_no, m_no, sb_name, sb_img, sb_open], function(err, result) {
           if (err) console.error("상자 만드는 중 에러 발생 err : ", err);
           res.redirect('./Inner/' + sb_no);
+          connection.release();
         });
       });
     });
@@ -224,6 +226,7 @@ module.exports = function(multer, passport) {
           else {
             res.redirect('./' + sb_no);
           }
+          connection.release();
         });
       }
     });
@@ -259,6 +262,7 @@ module.exports = function(multer, passport) {
           else{
             res.json(data);
           }
+          connection.release();
         });
       }
     });
@@ -278,6 +282,7 @@ module.exports = function(multer, passport) {
           else{
             res.json(data);
           }
+          connection.release();
         });
       }
     });
@@ -302,6 +307,7 @@ module.exports = function(multer, passport) {
         else{
           res.json(data);
         }
+        connection.release();
       });
     });
 
@@ -341,6 +347,7 @@ module.exports = function(multer, passport) {
           }
           res.redirect('./Inner/' + sb_no);
         });
+        connection.release();
       });
     });
   });
@@ -427,6 +434,7 @@ module.exports = function(multer, passport) {
               }
             });
           }
+          connection.release();
         });
       }
     });
@@ -473,6 +481,7 @@ module.exports = function(multer, passport) {
               }
             });
           }
+          connection.release();
         });
       }
     });
@@ -497,6 +506,7 @@ module.exports = function(multer, passport) {
           else{
             res.json(data);
           }
+          connection.release();
         });
       }
     });
@@ -517,7 +527,8 @@ module.exports = function(multer, passport) {
       connection.query(sql1, [sc_no, m_no, check], function(err, result){
         if(err){
           var data = 'err';
-          res.json(data)
+          res.json(data);
+          connection.release();
         }
         else{
           var sql2 =  "select m.m_nickname as m_nickname, m.m_img as m_img" +
@@ -529,6 +540,7 @@ module.exports = function(multer, passport) {
             else{
               res.json(data);
             }
+            connection.release();
           });
         }
       });
@@ -557,6 +569,7 @@ module.exports = function(multer, passport) {
             }
           });
         }
+        connection.release();
       });
     });
   });
