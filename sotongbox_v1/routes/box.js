@@ -1,4 +1,4 @@
-module.exports = function(multer, passport) {
+module.exports = function(multer, passport,io) {
 
   var express = require('express');
   var pool = require('../config/mysql/db')();
@@ -573,6 +573,8 @@ module.exports = function(multer, passport) {
       });
     });
   });
-
+  io.on('connection', function(socket) {
+    io.to(socket.id).emit('change name', global.usernickname);
+});
   return router;
 }

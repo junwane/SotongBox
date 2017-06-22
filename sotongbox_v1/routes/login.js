@@ -394,18 +394,16 @@ route.get('/auth/logout', function(req, res){
   route.get('/', function(req, res){
 
     if(req.user){
-      global.username = req.user.username;
-      global.usernickname = req.user.m_nickname;
+      var username = req.user.username;
+      var usernickname = req.user.m_nickname;
     }
-
     res.render('login/home.ejs' , {user : req.user, page : "./mainPage.ejs", message : req.flash('message')});
   });
 
   io.on('connection', function(socket) {
-
-  console.log('유저 소켓 연결: ', global.usernickname);
+    console.log('유저 소켓 연결 소켓아이디 : ', socket.id);
   socket.on('disconnect', function() {
-    console.log('유저 소켓 연결 해제: ', global.usernickname);
+    console.log('유저 소켓 연결 해제 소켓아이디 : ', socket.id);
   });
 });
 

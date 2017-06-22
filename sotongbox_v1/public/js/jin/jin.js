@@ -74,10 +74,6 @@ $("#userSearch").on("click", function() {
   });
 });
 
-$("#ajax_chat").on("click",function(){
-  window.alert("씨발");
-});
-
 $('#make_button').on("click",function(){
     $('#uploadForm').show();
 });

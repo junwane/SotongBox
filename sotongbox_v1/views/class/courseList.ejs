@@ -7,9 +7,17 @@
             <svg class="olymp-trophy-icon"><use xlink:href="icons/icons.svg#olymp-trophy-icon"></use></svg>
           </div>
           <h6 class="title">강의 목차</h6>
+          <%if(n_m_no == rows[0].m_no){%>
           <div class="align-right" style="float:right;">
             <a href="#" class="js-open-popup btn btn-primary btn-md-2" id="make_button" data-popup-target=".make-course">강의 등록하기</a>
           </div>
+          <%}else{%>
+            <div class="align-right" style="float:right;">
+              <a href="/class/Inner/<%=rows[0].c_no%>/classjoin" class="btn btn-primary btn-md-2" id="make_button">강의 수강하기</a>
+            </div>
+          <%}%>
+
+
         </div>
         <div id="List">
           <%

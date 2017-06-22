@@ -11,6 +11,6 @@ module.exports = function(){
   }
   time = y+m+d;
   var t = time.substring(2, 8);
-  
+
   return t;
 }

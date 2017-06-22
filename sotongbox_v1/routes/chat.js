@@ -82,10 +82,12 @@ module.exports = function(passport, io) {
   }); //end of route
   io.on('connection', function(socket) {
 
-    socket.broadcast.emit(global.usernickname, socket.id);
     io.to(socket.id).emit('change name', global.usernickname);
 
     socket.on('send message', function(note_send, note_content, note_accept, send_name, take_name) {
+
+      console.log("여기 센드메세지");
+
       var note_content = note_content;
       var note_send = note_send;
       var note_accept = note_accept;
@@ -104,20 +106,26 @@ module.exports = function(passport, io) {
           var second_sql = "insert into note(note_no, note_content ,note_send, note_accept , note_check) values(?,?,?,?,?)";
           connection.query(second_sql, [note_no, note_content, note_send, note_accept, note_check], function(err, rows) {
 
-            io.to(socket.id).emit('receive message', note_content, send_name);
+
             connection.release();
           });
         });
       });
+                io.emit('receive message', note_content, send_name);
     });
 
     socket.on('first message', function(note_send, note_content, note_accept, send_name, take_name) {
+
+      console.log("여기 퍼스트메세지");
+
       var note_content = note_content;
       var note_send = note_send;
       var note_accept = note_accept;
       var note_check = 0;
       var send_name = send_name;
       var take_name = take_name;
+
+
 
       var datas = [note_send, note_accept, note_accept, note_send];
 
@@ -126,7 +134,7 @@ module.exports = function(passport, io) {
         connection.query(first_sql, function(err, result) {
 
           var check = result[0].num;
-
+          console.log("첫번쨰 이프");
           if (check == null) {
             var note_no = 0;
           } else {
@@ -135,6 +143,8 @@ module.exports = function(passport, io) {
 
           var second_sql = "select * from note where note_send=? and note_accept =? or note_send=? and note_accept =?";
           connection.query(second_sql, datas, function(err, rows) {
+
+            console.log("두번쨰 이프");
 
             if (rows == "") {
 
@@ -147,11 +157,14 @@ module.exports = function(passport, io) {
             var sqlForInsertBoard = "insert into note(note_no, note_content ,note_send, note_accept , note_check) values(?,?,?,?,?)";
             connection.query(sqlForInsertBoard, [now_no, note_content, note_send, note_accept, note_check], function(err, rows) {
               if (err) console.error("err : " + err);
+
+
               connection.release();
             });
           });
         });
       });
+      console.log("리시브 위");
       io.emit('receive message', note_content, send_name);
     });
   });

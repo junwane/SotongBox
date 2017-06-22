@@ -142,10 +142,57 @@ module.exports = function(multer, passport, io) {
       connection.release();
     });
   });
+  route.post('/Inner/:id/newQuestion', upload.single('userfile'), function(req, res){
+
+    var c_no = req.params.id;
+
+    console.log("바디", req.body);
+    console.log("파일", req.file);
+
+    pool.getConnection(function(err, connection) {
+      var first_sql = "select * from class where c_no = '" + c_no + "' ";
+      connection.query(first_sql, function(err, rows) {
+
+        var m_no = rows[0].m_no;
+
+        var second_sql = "select * from member where m_no = '" + m_no + "' ";
+        connection.query(second_sql, function(err, rows2) {
+
+          res.render('index', {
+            user: req.user,
+            rows: rows,
+            rows2: rows2,
+            class_page: './class/question.ejs',
+            page: './classInner.ejs'
+          });
+        });
+      });
+      connection.release();
+    });
+  });
+
+  route.get('/Inner/:id/classjoin',function(req, res){
+    var c_no = req.params.id;
+    var m_no = req.user.m_no;
+
+    console.log("클래스!!!", c_no);
+    console.log("유저번호!!!", m_no);
+
+    pool.getConnection(function(err, connection){
+        var first_sql = "INSERT INTO c_course(c_no, m_no) VALUES (?,?)";
+        connection.query(first_sql,[c_no,m_no],function(err, rows){
+
+
+
+        });
+      connection.release();
+    });
+  });
 
   route.get('/Inner/:id/courseList', function(req, res) {
 
     var c_no = req.params.id;
+    var n_m_no = req.user.m_no;
 
     pool.getConnection(function(err, connection) {
 
@@ -180,6 +227,7 @@ module.exports = function(multer, passport, io) {
               res.render('index', {
                 user: req.user,
                 rows: rows,
+                n_m_no: n_m_no,
                 rows2: rows2,
                 rows3: rows3,
                 rows4: rows4,
@@ -273,6 +321,32 @@ module.exports = function(multer, passport, io) {
       connection.release();
     });
   });
+  route.get('/Inner/:id/question',function(req,res){
+
+    var c_no = req.params.id;
+
+    pool.getConnection(function(err, connection) {
+
+      var first_sql = "select * from class where c_no = '" + c_no + "' ";
+      connection.query(first_sql, function(err, rows) {
+
+        var m_no = rows[0].m_no;
+
+        var second_sql = "select * from member where m_no = '" + m_no + "' ";
+        connection.query(second_sql, function(err, rows2) {
+
+          res.render('index', {
+            user: req.user,
+            rows: rows,
+            rows2: rows2,
+            class_page: './class/question.ejs',
+            page: './classInner.ejs'
+          });
+        });
+      });
+      connection.release();
+    });
+  });
 
   //수강평 게시판
   route.get('/Inner/:id/courseEvaluation', function(req, res) {
@@ -303,10 +377,10 @@ module.exports = function(multer, passport, io) {
           var second_sql = "select * from class where c_no = '" + c_no + "' ";
           connection.query(second_sql, function(err, rows) {
 
-
+            var m_no = rows[0].m_no;
 
           var third_sql = "select * from member where m_no = ?";
-          connection.query(third_sql, [req.user.m_no], function(err, rows2) {
+          connection.query(third_sql, [m_no], function(err, rows2) {
             if(err){
               console.log(err);
             }
@@ -315,7 +389,7 @@ module.exports = function(multer, passport, io) {
               res.render('index', {
                 user: req.user,
                 rows: rows,
-                rows2 : rows,
+                rows2 : rows2,
                 row : row,
                 class_page: './class/courseEvaluation.ejs',
                 page: './classInner.ejs'
@@ -437,5 +511,8 @@ module.exports = function(multer, passport, io) {
   //     rows2: rows2,
   //     page: './classInner.ejs'
   //   });
+  io.on('connection', function(socket) {
+    io.to(socket.id).emit('change name', global.usernickname);
+});
   return route;
 };
