@@ -11,6 +11,10 @@
           <div class="align-right" style="float:right;">
             <a href="#" class="js-open-popup btn btn-primary btn-md-2" id="make_button" data-popup-target=".make-course">강의 등록하기</a>
           </div>
+          <%}else if(rows5[0]){%>
+            <div class="align-right" style="float:right;">
+              <a class="btn btn-primary btn-md-2" id="make_button" style="color:white">강의 수강중</a>
+            </div>
           <%}else{%>
             <div class="align-right" style="float:right;">
               <a href="/class/Inner/<%=rows[0].c_no%>/classjoin" class="btn btn-primary btn-md-2" id="make_button">강의 수강하기</a>
@@ -35,11 +39,19 @@
                   <img src='http://img.youtube.com/vi/<%=item.b_index%>/1.jpg'></img>
                 </div>
                 <div class='notification-event'>
+                  <%if(rows5[0]||user.m_no==rows2[0].m_no){%>
                   <a href='#' class='scrollup class-js-open-popup' data-popup-target='.<%=item.b_no%>'>
                     <p style='margin-left:20px'>
                       <%=item.b_title%>
                     </p>
                   </a>
+                  <%}else{%>
+                    <a class='scrollup' data-popup-target='.<%=item.b_no%>'>
+                      <p style='margin-left:20px'>
+                        <%=item.b_title%>
+                      </p>
+                    </a>
+                  <%}%>
                 </div>
               </li>
             </ul>

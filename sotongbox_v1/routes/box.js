@@ -573,8 +573,7 @@ module.exports = function(multer, passport,io) {
       });
     });
   });
-  io.on('connection', function(socket) {
-    io.to(socket.id).emit('change name', global.usernickname);
-});
+
+
   return router;
 }
