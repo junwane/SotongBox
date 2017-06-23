@@ -371,9 +371,9 @@ var CRUMINA = {};
 
     // Toggle inline popups
 
-    var $popup = $('.kim-window-popup');
+    var $popup = $('.window-popup');
 
-    $(".js-open-popup").on('click', function (event) {
+    $(".kim-js-open-popup").on('click', function (event) {
         var target_popup = $(this).data('popup-target');
         var current_popup = $popup.filter(target_popup);
         var offset = $(this).offset();
@@ -385,6 +385,57 @@ var CRUMINA = {};
         $body.addClass('overlay-enable');
         return false;
     });
+
+    //카테고리선택 팝업
+
+
+    //카테고리 선택한 사용자가 없고 카테고리 선택한 사용자의 카테고리 넘버도 없고 체크가 0이면
+    if(!$("#cate_choice_m").val() && !$("#cate_no").val() && $("#cate_selectedCheck").val() === '0'){
+      $(document).ready(function(){
+
+
+              $(".create-category").addClass('open');
+              $(".create-category").css('top', 70);
+              // console.log(offset.top - (current_popup.innerHeight() / 2));
+
+              $body.addClass("overlay-enable");
+
+              $body.click(function(event){
+                event.stopImmediatePropagation();
+
+              });
+
+
+
+
+
+              $("#categorySumbit").on("click", function(){
+
+                var checkedCount = $(".categories:checked");
+                  if(checkedCount.length < 3){
+                    // $("#categoryCheck").html("최소 3개 이상 선택하시오.");
+                    alert("최소 3개 이상 선택해주세요.");
+                    return false;
+                  } else {
+                    $("#cate_selectedCheck").val('1');
+
+                  }
+
+                });
+
+
+      });
+    }
+
+
+
+    //팝업 끄기
+    // $(".kim-js-close-popup").on('click', function () {
+    //     $(this).closest($popup).removeClass('open');
+    //     $body.removeClass('overlay-enable');
+    //     return false;
+    // });
+
 
     $(".jin-js-open-popup").on('click', function (event) {
           var target_popup = $(this).data('popup-target');
@@ -598,12 +649,7 @@ var CRUMINA = {};
     });
 
 
-    // Close on "X" click
-    $(".kim-js-close-popup").on('click', function () {
-        $(this).closest($popup).removeClass('open');
-        $body.removeClass('overlay-enable');
-        return false
-    });
+
 
 
     $(".js-open-choose-from-my-photo").on('click', function () {
