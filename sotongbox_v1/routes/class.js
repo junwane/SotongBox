@@ -21,34 +21,33 @@ module.exports = function(multer, passport, io) {
 
   route.get('/', function(req, res) {
     pool.getConnection(function(err, connection) {
-      var sql = "select  c_no, " +
-        "c_img, " +
+      var sql = "select  c_no," +
+        "c_img," +
         "c_state," +
         "c_title," +
         "c_content," +
-        "c_money," +
-        "c_RTcourse," +
-        "(select m_img from member where m_no = c.m_no) as m_img," +
-        "(select m_nickname from member where m_no = c.m_no) as m_nickname," +
-        "(select m_level from member where m_no = c.m_no) as m_level," +
-        "(select username from member  where m_no = c.m_no) as username"
+        "(select m_img from member where m_no = c.m_no) as m_img, " +
+        "(select m_nickname from member where m_no = c.m_no) as m_nickname, " +
+        "(select m_level from member where m_no = c.m_no) as m_level, " +
+        "(select username from member  where m_no = c.m_no) as username, " +
+        "(select count(b_me_no) from b_write where b_me_no='bm0000' and c_no = c.c_no ) as coursecount, " +
+        "(select count(c_no) from c_course where c_no = c.c_no) as studentcount, " +
+        "(select count(b_me_no) from b_write where b_me_no='bm0001' and c_no = c.c_no ) as replycount, " +
+        "(select sum(b.b_title)div(replycount) from board b, b_write w where b.b_no = w.b_no and w.c_no = c.c_no and w.b_me_no='bm0001') as star " +
+        "from class as c " +
+        "group by c_no " +
+        "order by c_register desc;";
+      connection.query(sql, function(err, result) {
+        console.log("에러", err);
 
-        +
-        " from class as c" +
-        " where c_state = 'before' or (c_state = 'afoot' and m_no = ?)" +
-        " group by c_no" +
-        " order by c_register desc;"
-      connection.query(sql, req.user.m_no, function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(result);
-          res.render('index', {
-            user: req.user,
-            page: './classPage.ejs',
-            result: result
-          });
-        }
+        console.log("씨이발", result);
+
+        res.render('index', {
+          user: req.user,
+          page: './classPage.ejs',
+          result: result
+        });
+
         connection.release();
       });
     });
@@ -120,13 +119,13 @@ module.exports = function(multer, passport, io) {
           var third_sql = "select * from board b, b_write w where w.c_no = '" + c_no + "' and b.b_no = w.b_no and w.b_me_no = 'bm0000' group by w.c_no";
           connection.query(third_sql, function(err, rows3) {
 
-            if(!rows3[0]){
+            if (!rows3[0]) {
 
-                }else{
-                  var index = rows3[0].b_index;
-                  var str_index = index.substr(70,11);
-                  rows3[0].b_index = str_index;
-                }
+            } else {
+              var index = rows3[0].b_index;
+              var str_index = index.substr(70, 11);
+              rows3[0].b_index = str_index;
+            }
 
             res.render('index', {
               user: req.user,
@@ -142,7 +141,7 @@ module.exports = function(multer, passport, io) {
       connection.release();
     });
   });
-  route.post('/Inner/:id/newQuestion', upload.single('userfile'), function(req, res){
+  route.post('/Inner/:id/newQuestion', upload.single('userfile'), function(req, res) {
 
     var c_no = req.params.id;
 
@@ -171,20 +170,61 @@ module.exports = function(multer, passport, io) {
     });
   });
 
-  route.get('/Inner/:id/classjoin',function(req, res){
+  route.get('/Inner/:id/classjoin', function(req, res) {
     var c_no = req.params.id;
-    var m_no = req.user.m_no;
+    var n_m_no = req.user.m_no;
 
-    console.log("클래스!!!", c_no);
-    console.log("유저번호!!!", m_no);
+    pool.getConnection(function(err, connection) {
+      var zero_sql = "INSERT INTO c_course(c_no, m_no) VALUES (?,?)";
+      connection.query(zero_sql, [c_no, n_m_no], function(err, rows5) {
 
-    pool.getConnection(function(err, connection){
-        var first_sql = "INSERT INTO c_course(c_no, m_no) VALUES (?,?)";
-        connection.query(first_sql,[c_no,m_no],function(err, rows){
+        var first_sql = "select * from class where c_no = '" + c_no + "' ";
+        connection.query(first_sql, function(err, rows) {
+
+          var m_no = rows[0].m_no;
+
+          var second_sql = "select * from member where m_no = '" + m_no + "' ";
+          connection.query(second_sql, function(err, rows2) {
+
+            var third_sql = "select w.m_no, w.c_no, w.b_me_no, w.b_no, b.b_title, b.b_content, b.b_index from b_write w, board b where w.m_no = '" + m_no + "' and w.b_me_no = 'bm0000' and w.c_no = '" + c_no + "'and w.b_no = b.b_no order by b_no";
+            connection.query(third_sql, function(err, rows3) {
+
+              var middle_sql = "select * from c_course where c_no = '" + c_no + "' and m_no = '" + n_m_no + "' ";
+              connection.query(middle_sql, function(err, rows5) {
 
 
+                var fourth_sql = "select w.c_no as c_no, b.b_no as b_no, r.b_r_no as b_r_no, r.m_no as m_no, r.b_r_content as b_r_content, r.b_r_register as b_r_register, m.m_img as m_img, m.m_nickname as m_nickname from b_write w, board b, b_reply r, member m where w.c_no = '" + c_no + "' and w.b_me_no = 'bm0000' and w.b_no = b.b_no and b.b_no = r.b_no and r.m_no = m.m_no ";
+                connection.query(fourth_sql, function(err, rows4) {
 
+                  for (var i = 0; i < rows4.length; i++) {
+
+                    var time = rows4[i].b_r_register;
+
+                    if (moment(time).format("YYMMDD") - moment().format("YYMMDD") == 0) {
+                      time = moment(time).fromNow()
+                    } else {
+                      time = moment(time).format("YY년 MM월DD일 HH시mm분")
+                    }
+                    rows4[i].b_r_register = time;
+
+                  }
+                  res.render('index', {
+                    user: req.user,
+                    rows: rows,
+                    n_m_no: n_m_no,
+                    rows2: rows2,
+                    rows3: rows3,
+                    rows4: rows4,
+                    rows5: rows5,
+                    class_page: './class/courseList.ejs',
+                    page: './classInner.ejs'
+                  });
+                });
+              });
+            });
+          });
         });
+      });
       connection.release();
     });
   });
@@ -207,34 +247,43 @@ module.exports = function(multer, passport, io) {
           var third_sql = "select w.m_no, w.c_no, w.b_me_no, w.b_no, b.b_title, b.b_content, b.b_index from b_write w, board b where w.m_no = '" + m_no + "' and w.b_me_no = 'bm0000' and w.c_no = '" + c_no + "'and w.b_no = b.b_no order by b_no";
           connection.query(third_sql, function(err, rows3) {
 
-            var fourth_sql = "select w.c_no as c_no, b.b_no as b_no, r.b_r_no as b_r_no, r.m_no as m_no, r.b_r_content as b_r_content, r.b_r_register as b_r_register, m.m_img as m_img, m.m_nickname as m_nickname from b_write w, board b, b_reply r, member m where w.c_no = '" + c_no + "' and w.b_me_no = 'bm0000' and w.b_no = b.b_no and b.b_no = r.b_no and r.m_no = m.m_no ";
-            connection.query(fourth_sql, function(err, rows4) {
+            var middle_sql = "select * from c_course where c_no = '" + c_no + "' and m_no = '" + n_m_no + "' ";
+            connection.query(middle_sql, function(err, rows5) {
 
-              for (var i = 0; i < rows4.length; i++) {
 
-                var time = rows4[i].b_r_register;
+              var fourth_sql = "select w.c_no as c_no, b.b_no as b_no, r.b_r_no as b_r_no, r.m_no as m_no, r.b_r_content as b_r_content, r.b_r_register as b_r_register, m.m_img as m_img, m.m_nickname as m_nickname from b_write w, board b, b_reply r, member m where w.c_no = '" + c_no + "' and w.b_me_no = 'bm0000' and w.b_no = b.b_no and b.b_no = r.b_no and r.m_no = m.m_no ";
+              connection.query(fourth_sql, function(err, rows4) {
 
-                if (moment(time).format("YYMMDD") - moment().format("YYMMDD") == 0) {
-                  time = moment(time).fromNow()
-                } else {
-                  time = moment(time).format("YY년 MM월DD일 HH시mm분")
+                for (var i = 0; i < rows4.length; i++) {
+
+                  var time = rows4[i].b_r_register;
+
+                  if (moment(time).format("YYMMDD") - moment().format("YYMMDD") == 0) {
+                    time = moment(time).fromNow()
+                  } else {
+                    time = moment(time).format("YY년 MM월DD일 HH시mm분")
+                  }
+                  rows4[i].b_r_register = time;
+
                 }
-                rows4[i].b_r_register = time;
-
-              }
 
 
-              res.render('index', {
-                user: req.user,
-                rows: rows,
-                n_m_no: n_m_no,
-                rows2: rows2,
-                rows3: rows3,
-                rows4: rows4,
-                class_page: './class/courseList.ejs',
-                page: './classInner.ejs'
+                res.render('index', {
+                  user: req.user,
+                  rows: rows,
+                  n_m_no: n_m_no,
+                  rows2: rows2,
+                  rows3: rows3,
+                  rows4: rows4,
+                  rows5: rows5,
+                  class_page: './class/courseList.ejs',
+                  page: './classInner.ejs'
+                });
               });
+
             });
+
+
           });
         });
       });
@@ -284,6 +333,8 @@ module.exports = function(multer, passport, io) {
 
   route.post('/Inner/:id/courseMake', function(req, res) {
 
+    console.log("여기온다 클래스");
+
     var m_no = req.user.m_no
     var c_no = req.params.id;
     var date = nowDate();
@@ -321,7 +372,7 @@ module.exports = function(multer, passport, io) {
       connection.release();
     });
   });
-  route.get('/Inner/:id/question',function(req,res){
+  route.get('/Inner/:id/question', function(req, res) {
 
     var c_no = req.params.id;
 
@@ -412,6 +463,7 @@ module.exports = function(multer, passport, io) {
     var b_content = req.body.comment;
     var starNum = String(req.body.num);
 
+
     pool.getConnection(function(err, connection){
       var sql = "select count(*) as cnt from board where DATE_FORMAT(b_register, '%y%m%d') = ?";
       connection.query(sql, [date], function(err, result) {
@@ -461,6 +513,46 @@ module.exports = function(multer, passport, io) {
   });
 
 });
+  route.post('/Inner/choice', function(req, res) {
+    var m_no = req.user.m_no;
+    var check1 = req.body.check1;
+    var check2 = req.body.check2;
+
+    pool.getConnection(function(err, connection) {
+
+      var sql = "select  c_no, " +
+        "c_img, " +
+        "c_state, " +
+        "c_title, " +
+        "c_content, " +
+        "(select m_img from member where m_no = c.m_no) as m_img, " +
+        "(select m_nickname from member where m_no = c.m_no) as m_nickname, " +
+        "(select m_level from member where m_no = c.m_no) as m_level, " +
+        "(select username from member  where m_no = c.m_no) as username, " +
+        "(select count(b_me_no) from b_write where b_me_no='bm0000' and c_no = c.c_no ) as coursecount, " +
+        "(select count(c_no) from c_course where c_no = c.c_no) as studentcount, " +
+        "(select count(b_me_no) from b_write where b_me_no='bm0001' and c_no = c.c_no ) as replycount, " +
+        "(select sum(b.b_title)div(replycount) from board b, b_write w where b.b_no = w.b_no and w.c_no = c.c_no and w.b_me_no='bm0001') as star " +
+        "from class as c ";
+
+      if (check1 == 'allclass') {
+        if (check2 == 'newclass') {
+          sql += "group by c_no order by c_register desc;";
+        } else if (check2 = 'highstar') {
+          sql += "group by c_no order by star desc;";
+        }
+      } else if (check1 == 'myclass') {
+        if (check2 == 'newclass') {
+          sql += "where m_no = '" + m_no + "' group by c_no order by c_register desc;";
+        } else if (check2 = 'highstar') {
+          sql += "where m_no = '" + m_no + "' group by c_no order by star desc;";
+        }
+      }
+      connection.query(sql, function(err, ajax_result) {
+        res.json(ajax_result);
+      });
+    });
+  });
 
   route.post('/register', function(req, res) {
 
@@ -511,8 +603,5 @@ module.exports = function(multer, passport, io) {
   //     rows2: rows2,
   //     page: './classInner.ejs'
   //   });
-  io.on('connection', function(socket) {
-    io.to(socket.id).emit('change name', global.usernickname);
-});
   return route;
 };

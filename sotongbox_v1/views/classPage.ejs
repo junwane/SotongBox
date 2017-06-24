@@ -18,19 +18,15 @@
 <div class="container">
   <div class="jin-ui-block responsive-flex" style="margin-top:20px;">
     <div class="ui-block-title checkbox clicked row">
-      <select name="category" class="selectpicker form-control col-sm-2">
-         <option value="A">모든 클래스</option>
-         <option value="B">내 클래스</option>
+      <select id="classcategory" name="category" class="selectpicker form-control col-sm-2 classcheck">
+         <option value="allclass">모든 클래스</option>
+         <option value="myclass">내 클래스</option>
     </select>
-      <select name="list" class="selectpicker form-control col-sm-2">
-         <option value="A">최신순</option>
-         <option value="B">인기순</option>
+      <select id="classlist" name="list" class="selectpicker form-control col-sm-2 classcheck">
+         <option value="newclass">최신순</option>
+         <option value="highstar">평점순</option>
     </select>
-      <div class="checkbox" style="float:right; margin-top:20px;">
-        <label>
-            <input type="checkbox" name="optionsCheckboxes">나의 클래스
-        </label>
-      </div>
+
     </div>
   </div>
 
@@ -61,9 +57,9 @@
       </div>
 
     </div>
-
+    <p class="class_parents">
     <% for(var i = 0 ; i < result.length ; i++){ %>
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6 ajax_class">
         <div class="ui-block">
           <div class="friend-item fav-page">
             <div class="friend-header-thumb">
@@ -177,16 +173,13 @@
                     </p>
                   <%}%>
 
-                <!-- If we need pagination -->
-
               </div>
-
-
             </div>
           </div>
         </div>
       </div>
       <% } %>
+    </p>
 
   </div>
 </div>
