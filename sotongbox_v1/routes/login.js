@@ -413,26 +413,34 @@ route.get('/auth/logout', function(req, res){
           connection.query(first_sql, function(err, cate_choice){
             console.log(cate_choice);
 
-          var second_sql = "select *,"
-                            +"(select m_nickname from member where m_no = b.m_no) as m_nickname,"
-                            +"(select m_img from member where m_no = b.m_no) as m_img,"
-                            +"(select m_level from member where m_no = b.m_no) as m_level,"
-                            +"(select count(sc_no) from sotongcard where sb_no = b.sb_no and m_no = b.m_no) as sc_num,"
-                            +"(select count(*) from sb_subscribe where sb_no = b.sb_no and sb_s_check = 1) as subscribenum"
-                        +" from sotongbox b"
-                        +" where sb_open = '전체공개' and cate_no in(select cate_no from cate_choice where m_no = ?);"
+            var second_sql = "select *,"
+                              +"(select m_nickname from member where m_no = b.m_no) as m_nickname,"
+                              +"(select m_img from member where m_no = b.m_no) as m_img,"
+                              +"(select username from member where m_no = b.m_no) as username,"
+                              +"(select m_level from member where m_no = b.m_no) as m_level,"
+                              +"(select count(sc_no) from sotongcard where sb_no = b.sb_no and m_no = b.m_no) as sc_num,"
+                              +"(select count(*) from sb_subscribe where sb_no = b.sb_no and sb_s_check = 1) as subscribenum,"
+                              +"(select sum(sc_num) + sum(subscribenum)) as sum"
+                          +" from sotongbox b"
+                          +" where sb_open = '전체공개' and cate_no in(select cate_no from cate_choice where m_no = ?)"
+                          +" order by sum desc"
+                          +" limit 0, 3;"
           connection.query(second_sql, [m_no], function(err, cate_box){
             console.log(cate_box);
 
-          var third_sql = "select *"
-                            +" from (select sc_no, b.m_no, b.sb_no, sc_title, sc_content, sc_register, sc_modify, sc_thumbnail,"
-                                   +" (select m_nickname from member where m_no = b.m_no) as m_nickname,"
-                                   +" (select m_img from member where m_no = b.m_no) as m_img,"
-                                   +" (select m_level from member where m_no = b.m_no) as m_level"
-                                   +" from sotongbox a, sotongcard b"
-                                   +" where a.sb_no = b.sb_no and a.sb_open = '전체공개' and a.cate_no in(select cate_no "
-                                                                            +" from cate_choice"
-                                                                            +" where m_no = ?)) as sotong;"
+            var third_sql = "select *"
+                              +" from (select sc_no, b.m_no, b.sb_no, sc_title, sc_content, sc_register, sc_modify, sc_thumbnail,"
+                                     +" (select m_nickname from member where m_no = b.m_no) as m_nickname,"
+                                     +" (select username from member where m_no = b.m_no) as username,"
+                                     +" (select m_img from member where m_no = b.m_no) as m_img,"
+                                     +" (select m_level from member where m_no = b.m_no) as m_level,"
+                                     +" (select count(*) as num from sc_comment where sc_no = b.sc_no and sc_co_division = 'nice') as sc_nice,"
+                                     +" (select count(*) from sc_reply where sc_no = b.sc_no) as replynum,"
+                                     +" (select m_nickname from sc_comment a, member m where a.m_no = m.m_no and sc_no = b.sc_no and sc_co_division = 'nice') as nicePerson"
+                                     +" from sotongbox a, sotongcard b"
+                                     +" where a.sb_no = b.sb_no and a.sb_open = '전체공개' and a.cate_no in(select cate_no "
+                                                                              +" from cate_choice"
+                                                                              +" where m_no = ?)) as sotong;"
           connection.query(third_sql, [m_no], function(err, cate_card){
             var noti_sql = "select m.m_img as m_img,"+
                                            "m.m_nickname as m_nickname,"+

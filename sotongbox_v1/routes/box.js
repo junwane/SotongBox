@@ -498,7 +498,7 @@ module.exports = function(multer, passport,io) {
                                            "msg.msg_content as msg_content"+
                                     " from member m, notice n, message msg"+
                                     " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
-                            connection.query(noti_sql, [req.uesr.m_no], function(err, noti_list){
+                            connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
                               res.render('index', {
                                 scresult: scresult,
                                 nice: nice,

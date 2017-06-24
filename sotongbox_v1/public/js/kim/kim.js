@@ -463,6 +463,20 @@ var CRUMINA = {};
     // });
 
 
+    //메인 사진 로케이션
+    $(document).ready(function(){
+      $('.mainCardImage').on('click', function(){
+        var sc_no = $(this).attr("id");
+        location.href='/box/cardInner/'+sc_no;
+      });
+
+      $('.mainBoxImage').on('click', function(){
+        var sc_no = $(this).attr("id");
+        location.href='/box/Inner/'+sc_no;
+      });
+    });
+
+
     $(".jin-js-open-popup").on('click', function (event) {
           var target_popup = $(this).data('popup-target');
           var current_popup = $popup.filter(target_popup);

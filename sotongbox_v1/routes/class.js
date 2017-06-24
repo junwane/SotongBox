@@ -564,8 +564,9 @@ module.exports = function(multer, passport, io) {
               "(select DATE_FORMAT(b_register, '%y-%m-%d %H:%i:%s')) as b_register, b_modify," +
               "(select m_img from member where m_no =?) as m_img," +
               "(select m_nickname from member where m_no=?) as m_nickname" +
-              " from board, class c;"
-            connection.query(sql4, [req.user.m_no, req.user.m_no], function(err, reply) {
+              " from board, class c" +
+              " where b_no = ?;"
+            connection.query(sql4, [req.user.m_no, req.user.m_no, b_no], function(err, reply) {
               if (err) {
                 console.log(err);
               } else {

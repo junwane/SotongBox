@@ -46,7 +46,7 @@
                 <% for(var i=0 ; i < cate_box.length ; i++){ %>
                   <div class="col-xl-4">
                       <div class="ui-block video-item">
-                          <div class="video-player">
+                          <div class="video-player mainBoxImage" id="<%= cate_box[i].sb_no %>">
                               <img src="<%= cate_box[i].sb_img %>" alt="photo">
                           </div>
 
@@ -56,10 +56,10 @@
                               <ul class="widget w-friend-pages-added notification-list friend-requests">
                                   <li class="inline-items">
                                       <div class="author-thumb">
-                                          <img src="<%= cate_box[i].sb_img %>" alt="author" width="40px" height="40px">
+                                          <img src="<%= cate_box[i].m_img %>" alt="author" width="40px" height="40px">
                                       </div>
                                       <div class="notification-event">
-                                          <a href="#" class="h6 notification-friend"><%= cate_box[i].m_nickname %></a>
+                                          <a href="/profile/<%= cate_box[i].username %>" class="h6 notification-friend"><%= cate_box[i].m_nickname %></a>
                                           <span class="chat-message-item">레벨<%= cate_box[i].m_level %></span>
                                       </div>
                                   </li>
@@ -285,12 +285,12 @@
             <div class="ui-block video-item">
 
 
-                <div class="video-player">
-                    <img src="<%= cate_card[i].sc_thumbnail %>" alt="photo">
+                <div class="video-player mainCardImage" id="<%= cate_card[i].sc_no %>">
+                      <img src="<%= cate_card[i].sc_thumbnail %>" alt="photo">
                 </div>
 
                 <div class="ui-block-content2 video-content">
-                    <a href="#" class="title"><%= cate_card[i].sc_title %></a>
+                    <a href="/box/cardInner/<%=cate_card[i].sc_no %>" class="title"><%= cate_card[i].sc_title %></a>
                     <time class="published"><%- cate_card[i].sc_content %></time>
 
                     <ul class="widget w-friend-pages-added notification-list friend-requests">
@@ -299,7 +299,7 @@
                                 <img src="<%= cate_card[i].m_img %>" alt="author" width="40px" height="40px">
                             </div>
                             <div class="notification-event">
-                                <a href="#" class="h6 notification-friend"><%= cate_card[i].m_nickname %></a>
+                                <a href="/profile/<%= cate_card[i].username %>" class="h6 notification-friend"><%= cate_card[i].m_nickname %></a>
                                 <span class="chat-message-item">레벨<%= cate_card[i].m_level %></span>
                             </div>
                         </li>
@@ -309,43 +309,17 @@
 
                 <div class="post-additional-info inline-items">
 
-                    <a href="#" class="post-add-icon inline-items">
-                        <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
-                        <span>15</span>
-                    </a>
+                  <a href="#" class="post-add-icon inline-items">
+                    <svg class="olymp-add-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
 
-                    <ul class="friends-harmonic">
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic5.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic10.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic7.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic8.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic2.jpg" alt="friend">
-                            </a>
-                        </li>
-                    </ul>
+                    <span><%= cate_card[i].sc_nice %></span>
+                  </a>
 
-                    <div class="names-people-likes">
-                        <a href="#">꿈꾸는 과학자</a>외
-                        <br>20명이 좋아
-                    </div>
+                  <a href="#" class="post-add-icon inline-items">
+                    <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
+
+                    <span><%= cate_card[i].replynum %></span>
+                  </a>
 
                 </div>
 
@@ -428,7 +402,7 @@
           </div>
         </div>
        <% } %>
-          <input type="submit" name="" value="카테고리 선택" class="btn btn-primary btn-lg full-width" id="categorySumbit" style="cursor:pointer;">
+          <input type="submit" name="" value="카테고리 선택" class="btn btn-primary btn-lg full-width" id="categorySumbit" >
       </form>
 
 
