@@ -434,6 +434,16 @@ route.get('/auth/logout', function(req, res){
                                                                             +" from cate_choice"
                                                                             +" where m_no = ?)) as sotong;"
           connection.query(third_sql, [m_no], function(err, cate_card){
+            var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+            connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
               res.render('index' , {
                 user : req.user,
                 page : "./mainPage.ejs",
@@ -441,16 +451,17 @@ route.get('/auth/logout', function(req, res){
                 cate_choice : cate_choice,
                 cate_box : cate_box,
                 cate_card : cate_card,
+                noti_list : noti_list,
                 message : req.flash('message')
               });
-
             });
           });
         });
-          connection.release();
-        });
       });
-    }
+      connection.release();
+    });
+  });
+  }
 
       else {
           res.render('index-login' , {
@@ -678,7 +689,18 @@ route.get('/profile/:mypage', function(req, res){
 
         if(err) console.log("해당 사용자 프로필 select 에러 : ", err);
         else{
-            res.render('index', {user: req.user, page : "./mypage.ejs", result : result[0]} );
+          var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+          connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+            res.render('index', {user: req.user, noti_list : noti_list, page : "./mypage.ejs", result : result[0]} );
+          });
         }
       });
     }

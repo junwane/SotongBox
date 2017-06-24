@@ -86,90 +86,29 @@
             </div>
 
             <div class="mCustomScrollbar" data-mcs-theme="dark">
-              <ul class="notification-list">
-                <li>
-                  <div class="author-thumb">
-                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                  </div>
-                  <div class="notification-event" style="margin-left: 10px;">
-                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                  </div>
+              <ul class="notification-list notice">
 
-                  <div class="more">
-                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                  </div>
-                </li>
+                <% for(var i = 0 ; i < noti_list.length ; i++){ if(i == 6) break; %>
+                  <li>
+                    <div class="author-thumb">
+                      <img src="<%= noti_list[i].m_img %>" alt="author">
+                    </div>
+                    <div class="notification-event" style="margin-left: 10px;">
+                      <div>
+                        <a href="#" class="h6 notification-friend"><%= noti_list[i].m_nickname %></a>님이
+                        <a href="#" class="h6 notification-friend"><%= noti_list[i].noti_value1 %></a>에
+                        <a href="#" class="h6 notification-friend"><%= noti_list[i].noti_value2 %></a>를
+                        <%= noti_list[i].msg_content %>
 
-                <li>
-                  <div class="author-thumb">
-                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                  </div>
-                  <div class="notification-event" style="margin-left: 10px;">
-                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                  </div>
+                      </div>
+                      <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18"><%= noti_list[i].noti_date %></time></span>
+                    </div>
 
-                  <div class="more">
-                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                  </div>
-                </li>
-
-                <li>
-                  <div class="author-thumb">
-                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                  </div>
-                  <div class="notification-event" style="margin-left: 10px;">
-                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                  </div>
-
-                  <div class="more">
-                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                  </div>
-                </li>
-
-                <li>
-                  <div class="author-thumb">
-                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                  </div>
-                  <div class="notification-event" style="margin-left: 10px;">
-                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                  </div>
-
-                  <div class="more">
-                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                  </div>
-                </li>
-
-                <li>
-                  <div class="author-thumb">
-                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                  </div>
-                  <div class="notification-event" style="margin-left: 10px;">
-                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                  </div>
-
-                  <div class="more">
-                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                  </div>
-                </li>
-
-                <li>
-                  <div class="author-thumb">
-                    <img src="/static/images/avatar62-sm.jpg" alt="author">
-                  </div>
-                  <div class="notification-event" style="margin-left: 10px;">
-                    <div><a href="#" class="h6 notification-friend">백설공주</a> 님이 댓글에 남겼습니다</div>
-                    <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
-                  </div>
-
-                  <div class="more">
-                    <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
-                  </div>
-                </li>
+                    <div class="more">
+                      <svg class="olymp-little-delete"><use xlink:href="/static/icons/icons.svg#olymp-little-delete"></use></svg>
+                    </div>
+                  </li>
+                <% } %>
 
               </ul>
             </div>
@@ -335,6 +274,27 @@
     <script src="/static/js/kim/kim.js"></script>
     <script>
       var socket = io();
+
+      socket.on('clientNewCard', function(data){
+        var element = "<li>"+
+                        "<div class='author-thumb'>"+
+                          "<img src="+data.m_img+" alt='author'>"+
+                        "</div>"+
+                        "<div class='notification-event' style='margin-left: 10px;'>"+
+                          "<div>"+
+                            "<a href='#' class='h6 notification-friend'>"+data.m_nickname+"</a>님이"+
+                            "<a href='#' class='h6 notification-friend'>"+data.sb_name+"</a>에"+
+                            "<a href='#' class='h6 notification-friend'>"+data.sc_title+"</a>를"+
+                            "게시하였습니다"+
+                          "</div>"+
+                          "<span class='notification-date'><time class='entry-date updated' datetime='2004-07-24T18:18'>"+data.time+"</time></span>"+
+                        "</div>"+
+                        "<div class='more'>"+
+                          "<svg class='olymp-little-delete'><use xlink:href='/static/icons/icons.svg#olymp-little-delete'></use></svg>"+
+                        "</div>"+
+                      "</li>";
+        $('.notice').prepend(element);
+      });
     </script>
     <!-- Go to www.addthis.com/dashboard to customize your tools -->
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-594c1fd50c5ffeca"></script>

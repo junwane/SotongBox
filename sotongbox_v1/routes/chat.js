@@ -19,13 +19,23 @@ module.exports = function(passport, io) {
 
         var second_sql = "select m.m_nickname as m_nickname, m.m_img as m_img, max(n.note_date) as note_date, m_no from member m,( select note_send as my, note_accept as you, note_date from note where note_send = '"+m_no+"' union select	note_accept as my, note_send as you, note_date from note where note_accept = '"+m_no+"') n where n.you = m.m_no group by m.m_nickname order by note_date desc";
         connection.query(second_sql, function(err, rows2) {
-
-
-          res.render('index', {
-            page: './chat.ejs',
-            user: req.user,
-            rows: rows,
-            rows2: rows2
+          var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+          connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+            res.render('index', {
+              page: './chat.ejs',
+              user: req.user,
+              rows: rows,
+              rows2: rows2,
+              noti_list : noti_list
+            });
           });
         });
       });

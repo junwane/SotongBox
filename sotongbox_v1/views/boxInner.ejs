@@ -153,7 +153,7 @@
     <div class="newBox-ui-block-content">
       <div class="form-group label-floating is-empty">
         <label class="control-label">소통카드 제목</label>
-        <input name="cardname" class="form-control" type="text" placeholder="">
+        <input name="cardname" id = "sc_title" class="form-control" type="text" placeholder="">
         <span class="material-input"></span>
       </div>
     <input id="randomImg" type="hidden" name="unsplash" value="">
@@ -189,8 +189,13 @@
         <span class="material-input"></span>
       </div>
     </div>
+
+    <input type="hidden" id = "m_img" value="<%= user.m_img %>" />
+    <input type="hidden" id = "m_nickname" value="<%= user.m_nickname %>" />
+    <input type="hidden" name = 'boxName' id = "sb_name" value="<%= result[0].sb_name %>" />
+
     <div class="row ui-block-content">
-      <input type="submit" class="btn btn-primary btn-md full-width" onclick="submitContents(this)" value="소통카드 만들기" />
+      <input type="submit" class="btn btn-primary btn-md full-width" id = "newCard" onclick="submitContents(this)" value="소통카드 만들기" />
     </div>
   </div>
 </form>
@@ -253,3 +258,18 @@
   </div>
 
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="/static/js/semantic.min.js"></script>
+<script>
+  var socket = io();
+  $('#newCard').on('click', function(){
+    var m_img = $('#m_img').val();
+    var m_nickname = $('#m_nickname').val();
+    var sb_name = $('#sb_name').val();
+    var sc_title = $('#sc_title').val();
+
+    socket.emit('serverNewCard', { m_img : m_img, m_nickname : m_nickname, sb_name : sb_name, sc_title : sc_title })
+  });
+</script>

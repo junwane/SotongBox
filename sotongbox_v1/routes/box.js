@@ -16,6 +16,7 @@ module.exports = function(multer, passport,io) {
   var upload = multer({
     storage: _storage
   })
+  var usernickname = '';
 
   /* GET home page. */
   router.get('/Inner/:id', function(req, res, next) {
@@ -66,13 +67,25 @@ module.exports = function(multer, passport,io) {
                 connection.query(sql3, [sb_no], function(err, scresults) {
                   if (err) console.log('해당 상자 카드 리스트 select 에러 : ', err);
                   else{
-                    res.render('index', {
-                      result: result,
-                      check: check,
-                      scresults: scresults,
-                      page: './boxInner.ejs',
-                      user: req.user,
-                      sb_no: sb_no
+                    var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+                    connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+                      res.render('index', {
+                        result: result,
+                        check: check,
+                        scresults: scresults,
+                        noti_list : noti_list,
+                        page: './boxInner.ejs',
+                        user: req.user,
+                        sb_no: sb_no
+                      });
                     });
                   }
                 });
@@ -86,6 +99,7 @@ module.exports = function(multer, passport,io) {
   });
 
   router.get('/', function(req, res, next) {
+    usernickname = req.user.m_nickname;
     pool.getConnection(function(err, connection) {
       if (err) console.error("커넥션 객체 얻어오기 에러 : ", err);
       else {
@@ -104,12 +118,23 @@ module.exports = function(multer, passport,io) {
           " group by sb_no" +
           " order by sb_register desc;"
         connection.query(sql, [req.user.m_no], function(err, results) {
-          res.render('index', {
-            results: results,
-            page: './box.ejs',
-            user: req.user
+          var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+          connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+            res.render('index', {
+              results: results,
+              noti_list : noti_list,
+              page: './box.ejs',
+              user: req.user
+            });
           });
-
           connection.release();
         });
       }
@@ -321,7 +346,8 @@ module.exports = function(multer, passport,io) {
     var sc_title = req.body.cardname;
     var sc_content = req.body.ir1;
     var sc_ti_name = req.body.tag;
-    var sc_thumbnail = req.body.unsplash;
+    var sb_name = req.body.boxName;
+    var ndate = new Date();
 
     var tagArray = sc_ti_name.split('#');
     tagArray.splice(0, 1);
@@ -337,7 +363,7 @@ module.exports = function(multer, passport,io) {
 
         var second_sql = "INSERT INTO sotongcard(sc_no, m_no, sb_no, sc_title, sc_content, sc_thumbnail) VALUES (?,?,?,?,?,?);";
         connection.query(second_sql, [sc_no, m_no, sb_no, sc_title, sc_content, sc_thumbnail], function(err, result) {
-          console.log("두번째 쿼리 에러", err);
+          if(err) console.log("두번째 쿼리 에러", err);
 
           for (i = 0; i < tagArray.length; i++) {
             var third_sql = "INSERT INTO sc_taginfo(sc_no,sc_ti_name) VALUES(?,?);";
@@ -345,10 +371,57 @@ module.exports = function(multer, passport,io) {
               if(err) console.log("세번째 쿼리 에러", err);
             });
           }
-          res.redirect('./Inner/' + sb_no);
+
+          var sql3 = "select m_no from sb_subscribe where sb_no = ? and sb_s_check = 1 and m_no != ?";
+          connection.query(sql3, [sb_no, m_no], function(err, notiList){
+            if(err) console.log('알림 보낼 리스트 select 에러 : ', err);
+            else{
+              var boxAdmin = "select m_no from sotongbox where sb_no = ?";
+              connection.query(boxAdmin, [sb_no], function(err, boxAdmin){
+                if(err) console.log('상자 관리자 select 에러 : ', err);
+                if(boxAdmin[0].m_no != req.user.m_no){
+                  var sql4 = "insert into notice(msg_no, noti_send, noti_accept, noti_date, noti_value1, noti_value2) values(1,?,?,?,?,?)";
+                  connection.query(sql4, [m_no, boxAdmin[0].m_no, ndate, sb_name, sc_title], function(err, adminNotiResult){
+                    if(err) console.log('상자 관리자 알림 에러 : ', err);
+                  });
+                }
+              });
+              for( var i = 0 ; i < notiList.length ; i++){
+                var sql5 = "insert into notice(msg_no, noti_send, noti_accept, noti_date, noti_value1, noti_value2) values(1,?,?,?,?,?)";
+                connection.query(sql5, [ m_no, notiList[i].m_no, ndate, sb_name, sc_title], function(err, notiResult){
+                  if(err) console.log('알림 등록 에러 : ', err);
+                });
+              }
+              res.redirect('./Inner/' + sb_no);
+            }
+          });
         });
         connection.release();
       });
+    });
+  });
+
+  var socket_ids = [];
+
+  function registerUser(socket, nickname) {
+    if(socket.nickname != undefined) delete socket_ids[socket.nickname];
+
+    socket_ids[nickname] = socket.id
+    socket.nickname = nickname;
+  }
+
+  io.sockets.on('connection', function(socket){
+    registerUser(socket, usernickname);
+    console.log("시바알", socket_ids);
+
+    socket.on('serverNewCard', function(data){
+      var m_img       = data.m_img;
+      var m_nickname  = data.m_nickname;
+      var sb_name     = data.sb_name;
+      var sc_title    = data.sc_title;
+      var time        = nowDate();
+
+      socket.broadcast.emit('clientNewCard', { m_img : m_img, m_nickname : m_nickname, sb_name : sb_name, sc_title : sc_title, time : time });
     });
   });
 
@@ -416,14 +489,26 @@ module.exports = function(multer, passport,io) {
                         connection.query(sql5, [sc_no], function(err, tag) {
                           if (err) console.log('카드 태그 정보 select 에러 ', err);
                           else {
-                            res.render('index', {
-                              scresult: scresult,
-                              nice: nice,
-                              reply: reply,
-                              replyNum: replyNum,
-                              tag: tag,
-                              page: './cardInner.ejs',
-                              user: req.user
+                            var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+                            connection.query(noti_sql, [req.uesr.m_no], function(err, noti_list){
+                              res.render('index', {
+                                scresult: scresult,
+                                nice: nice,
+                                reply: reply,
+                                replyNum: replyNum,
+                                tag: tag,
+                                noti_list : noti_list,
+                                page: './cardInner.ejs',
+                                user: req.user
+                              });
                             });
                           }
                         });

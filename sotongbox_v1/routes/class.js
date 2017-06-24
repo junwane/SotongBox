@@ -38,13 +38,23 @@ module.exports = function(multer, passport, io) {
         "group by c_no " +
         "order by c_no desc;";
       connection.query(sql, function(err, result) {
-
-        res.render('index', {
-          user: req.user,
-          page: './classPage.ejs',
-          result: result
+        var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+        connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+          res.render('index', {
+            user: req.user,
+            page: './classPage.ejs',
+            result: result,
+            noti_list : noti_list
+          });
         });
-
         connection.release();
       });
     });
@@ -124,13 +134,25 @@ module.exports = function(multer, passport, io) {
               rows3[0].b_index = str_index;
             }
 
-            res.render('index', {
-              user: req.user,
-              rows: rows,
-              rows2: rows2,
-              rows3: rows3,
-              class_page: './class/courseIntro.ejs',
-              page: './classInner.ejs'
+            var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+            connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+              res.render('index', {
+                user: req.user,
+                rows: rows,
+                rows2: rows2,
+                rows3: rows3,
+                noti_list : noti_list,
+                class_page: './class/courseIntro.ejs',
+                page: './classInner.ejs'
+              });
             });
           });
         });
@@ -153,13 +175,24 @@ module.exports = function(multer, passport, io) {
 
         var second_sql = "select * from member where m_no = '" + m_no + "' ";
         connection.query(second_sql, function(err, rows2) {
-
-          res.render('index', {
-            user: req.user,
-            rows: rows,
-            rows2: rows2,
-            class_page: './class/question.ejs',
-            page: './classInner.ejs'
+          var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+          connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+            res.render('index', {
+              user: req.user,
+              rows: rows,
+              rows2: rows2,
+              noti_list : noti_list,
+              class_page: './class/question.ejs',
+              page: './classInner.ejs'
+            });
           });
         });
       });
@@ -205,16 +238,29 @@ module.exports = function(multer, passport, io) {
                     rows4[i].b_r_register = time;
 
                   }
-                  res.render('index', {
-                    user: req.user,
-                    rows: rows,
-                    n_m_no: n_m_no,
-                    rows2: rows2,
-                    rows3: rows3,
-                    rows4: rows4,
-                    rows5: rows5,
-                    class_page: './class/courseList.ejs',
-                    page: './classInner.ejs'
+
+                  var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+                  connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+                    res.render('index', {
+                      user: req.user,
+                      rows: rows,
+                      n_m_no: n_m_no,
+                      rows2: rows2,
+                      rows3: rows3,
+                      rows4: rows4,
+                      rows5: rows5,
+                      noti_list : noti_list,
+                      class_page: './class/courseList.ejs',
+                      page: './classInner.ejs'
+                    });
                   });
                 });
               });
@@ -264,23 +310,31 @@ module.exports = function(multer, passport, io) {
 
                 }
 
-
-                res.render('index', {
-                  user: req.user,
-                  rows: rows,
-                  n_m_no: n_m_no,
-                  rows2: rows2,
-                  rows3: rows3,
-                  rows4: rows4,
-                  rows5: rows5,
-                  class_page: './class/courseList.ejs',
-                  page: './classInner.ejs'
+                var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+                connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+                  res.render('index', {
+                    user: req.user,
+                    rows: rows,
+                    n_m_no: n_m_no,
+                    rows2: rows2,
+                    rows3: rows3,
+                    rows4: rows4,
+                    rows5: rows5,
+                    noti_list : noti_list,
+                    class_page: './class/courseList.ejs',
+                    page: './classInner.ejs'
+                  });
                 });
               });
-
             });
-
-
           });
         });
       });
@@ -382,13 +436,24 @@ module.exports = function(multer, passport, io) {
 
         var second_sql = "select * from member where m_no = '" + m_no + "' ";
         connection.query(second_sql, function(err, rows2) {
-
-          res.render('index', {
-            user: req.user,
-            rows: rows,
-            rows2: rows2,
-            class_page: './class/question.ejs',
-            page: './classInner.ejs'
+          var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+          connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+            res.render('index', {
+              user: req.user,
+              rows: rows,
+              rows2: rows2,
+              noti_list : noti_list,
+              class_page: './class/question.ejs',
+              page: './classInner.ejs'
+            });
           });
         });
       });
@@ -432,18 +497,27 @@ module.exports = function(multer, passport, io) {
             if (err) {
               console.log(err);
             } else {
-              console.log(row);
-              res.render('index', {
-                user: req.user,
-                rows: rows,
-                rows2: rows2,
-                row: row,
-                class_page: './class/courseEvaluation.ejs',
-                page: './classInner.ejs'
+              var noti_sql = "select m.m_img as m_img,"+
+                                           "m.m_nickname as m_nickname,"+
+                                           "n.noti_value1 as noti_value1,"+
+                                           "n.noti_value2 as noti_value2,"+
+                                           "DATE_FORMAT(n.noti_date, '%y%m%d') as noti_date,"+
+                                           "n.noti_check as noti_check,"+
+                                           "msg.msg_content as msg_content"+
+                                    " from member m, notice n, message msg"+
+                                    " where n.noti_accept = ? and m.m_no = n.noti_send and n.msg_no = msg.msg_no";
+              connection.query(noti_sql, [req.user.m_no], function(err, noti_list){
+                res.render('index', {
+                  user: req.user,
+                  rows: rows,
+                  rows2: rows2,
+                  row: row,
+                  noti_list : noti_list,
+                  class_page: './class/courseEvaluation.ejs',
+                  page: './classInner.ejs'
+                });
               });
             }
-
-
           });
         });
         connection.release();
