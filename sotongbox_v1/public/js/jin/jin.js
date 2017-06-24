@@ -234,147 +234,149 @@ $('#keyword').focus(function() {
   });
 });
 
-// $('.classcheck').change(function() {
-//   var check1 = $("#classcategory option:selected").val();
-//   var check2 = $("#classlist option:selected").val();
-//
-//   $.ajax({
-//     url: "http://localhost:4000/class/Inner/choice",
-//     type: "post",
-//     dataType: "json",
-//     data: {
-//       check1 : check1,
-//       check2 : check2
-//     },
-//     success: function(result) {
-//         $('.ajax_class').remove();
-//         var element = "";
-//         for(var i=0; i<result.length; i++) {
-//
-//           element =   '<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6 ajax_class">
-//             '<div class="ui-block">
-//               '<div class="friend-item fav-page">
-//                 '<div class="friend-header-thumb">
-//                   '<a href="/class/Inner/<%= result[i].c_no%>"><img src="<%=result[i].c_img%>" alt="friend" width="318px" height="122px"></a>
-//                 '</div>
-//
-//                 '<div class="friend-item-content" style="height:320px;">
-//
-//                   '<div class="more">
-//                     '<svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg>
-//                     '<ul class="more-dropdown">
-//                       '<li>
-//                         '<a href="#">Report Profile</a>
-//                       '</li>
-//                       '<li>
-//                         '<a href="#">Block Profile</a>
-//                       '</li>
-//                       '<li>
-//                         '<a href="#">Turn Off Notifications</a>
-//                       '</li>
-//                     '</ul>
-//                   '</div>
-//                   '<div class="friend-avatar">
-//                     '<div class="author-thumb">
-//                       '<img src="<%=result[i].m_img%>" alt="author" width="92px" height="92px">
-//                     '</div>
-//                     '<div class="author-content">
-//                       '<a href="/profile/<%=result[i].username%>" class="h5 author-name"><%=result[i].c_title%></a>
-//                       '<div class="country"></div>
-//                     '</div>
-//                   '</div>
-//
-//                   '<div class="swiper-container">
-//
-//                       '<div class="swiper-slide">
-//                         '<div class="friend-count" data-swiper-parallax="-500">
-//                           '<a href="#" class="friend-count-item">
-//                             '<div class="h6"><%=result[i].coursecount%></div>
-//                             '<div class="title">강의 수</div>
-//                           '</a>
-//                           '<a href="#" class="friend-count-item">
-//                             '<div class="h6"><%=result[i].studentcount%></div>
-//                             '<div class="title">수강생 수</div>
-//                           '</a>
-//                           '<a href="#" class="friend-count-item">
-//                             '<div class="h6"><%=result[i].replycount%></div>
-//                             '<div class="title">수강평 수</div>
-//                           '</a>
-//                         '</div>
-//
-//                         '<div class="row">
-//                           '<div class="col-xl-11 col-lg-6 col-md-6 col-sm-6 col-xs-6">
-//
-//                           '</div>
-//                         '</div>
-//                       '</div>
-//
-//                       '<div class="swiper-slide">
-//                         '<p class="friend-about" data-swiper-parallax="-500">
-//                         '</p>
-//                       '</div>
-//                       '<%if(result[i].replycount==0){%>
-//                       '<p class="star_rating" >
-//                         '<a >★</a>
-//                         '<a >★</a>
-//                         '<a >★</a>
-//                         '<a >★</a>
-//                         '<a >★</a>
-//                       '</p>
-//                       '<%}else if(result[i].star==1){%>
-//                         '<p class="star_rating" >
-//                           '<a class="on">★</a>
-//                           '<a >★</a>
-//                           '<a >★</a>
-//                           '<a >★</a>
-//                           '<a >★</a>
-//                         '</p>
-//                       '<%}else if(result[i].star==2){%>
-//                         '<p class="star_rating" >
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a >★</a>
-//                           '<a >★</a>
-//                           '<a >★</a>
-//                         '</p>
-//                       '<%}else if(result[i].star==3){%>
-//                         '<p class="star_rating" >
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a >★</a>
-//                           '<a >★</a>
-//                         '</p>
-//                       '<%}else if(result[i].star==4){%>
-//                         '<p class="star_rating" >
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a >★</a>
-//                         '</p>
-//                       '<%}else if(result[i].star==5){%>
-//                         '<p class="star_rating" >
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                           '<a class="on">★</a>
-//                         '</p>
-//                       '<%}%>
-//                   '</div>
-//                 '</div>
-//               '</div>
-//             '</div>
-//           '</div>
-//
-//
-//             $(".class_parents").append(element);
-//         }
-//
-//     },
-//     error: function(err) {
-//       window.alert("실패");
-//     }
-//   });
-// });
+$('.classcheck').change(function() {
+  var check1 = $("#classcategory option:selected").val();
+  var check2 = $("#classlist option:selected").val();
+
+  $.ajax({
+    url: "http://localhost:4000/class/Inner/choice",
+    type: "post",
+    dataType: "json",
+    data: {
+      check1 : check1,
+      check2 : check2
+    },
+    success: function(result) {
+        $('.ajax_class').remove();
+        var element = "";
+        for(var i=0; i<result.length; i++) {
+
+          element =  '<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6 ajax_class">'+
+            '<div class="ui-block">'+
+              '<div class="friend-item fav-page">'+
+                '<div class="friend-header-thumb">'+
+                  '<a href="/class/Inner/'+result[i].c_no+'"><img src="'+result[i].c_img+'" alt="friend" width="318px" height="122px"></a>'+
+                '</div>'+
+
+                '<div class="friend-item-content" style="height:320px;">'+
+
+                  '<div class="more">'+
+                    '<svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg>'+
+                    '<ul class="more-dropdown">'+
+                      '<li>'+
+                        '<a href="#">Report Profile</a>'+
+                      '</li>'+
+                      '<li>'+
+                        '<a href="#">Block Profile</a>'+
+                      '</li>'+
+                      '<li>'+
+                        '<a href="#">Turn Off Notifications</a>'+
+                      '</li>'+
+                    '</ul>'+
+                  '</div>'+
+                  '<div class="friend-avatar">'+
+                    '<div class="author-thumb">'+
+                      '<img src="'+result[i].m_img+'" alt="author" width="92px" height="92px">'+
+                    '</div>'+
+                    '<div class="author-content">'+
+                      '<a href="/profile/<%=result[i].username%>" class="h5 author-name">'+result[i].c_title+'</a>'+
+                      '<div class="country"></div>'+
+                    '</div>'+
+                  '</div>'+
+
+                  '<div class="swiper-container">'+
+
+                      '<div class="swiper-slide">'+
+                        '<div class="friend-count" data-swiper-parallax="-500">'+
+                          '<a href="#" class="friend-count-item">'+
+                            '<div class="h6">'+result[i].coursecount+'</div>'+
+                            '<div class="title">강의 수</div>'+
+                          '</a>'+
+                          '<a href="#" class="friend-count-item">'+
+                            '<div class="h6">'+result[i].studentcount+'</div>'+
+                            '<div class="title">수강생 수</div>'+
+                          '</a>'+
+                          '<a href="#" class="friend-count-item">'+
+                            '<div class="h6">'+result[i].replycount+'</div>'+
+                            '<div class="title">수강평 수</div>'+
+                          '</a>'+
+                        '</div>'+
+
+                        '<div class="row">'+
+                          '<div class="col-xl-11 col-lg-6 col-md-6 col-sm-6 col-xs-6">'+
+
+                          '</div>'+
+                        '</div>'+
+                      '</div>'+
+
+                      '<div class="swiper-slide">'+
+                        '<p class="friend-about" data-swiper-parallax="-500">'+
+                        '</p>'+
+                      '</div>'
+                      if(result[i].star==0||result[i].star==null){
+                      element = element + '<p class="star_rating" >'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '</p>';
+                      }else if(result[i].star==1){
+                      element = element + '<p class="star_rating" >'+
+                                 '<a class="on">★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '</p>';
+                      }else if(result[i].star==2){
+                      element = element + '<p class="star_rating" >'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '</p>';
+                      }else if(result[i].star==3){
+                      element = element + '<p class="star_rating" >'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a >★</a>'+
+                                 '<a >★</a>'+
+                                 '</p>';
+                      }else if(result[i].star==4){
+                      element = element + '<p class="star_rating" >'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a >★</a>'+
+                                 '</p>';
+                      }else if(result[i].star==5){
+                      element = element + '<p class="star_rating" >'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '<a class="on">★</a>'+
+                                 '</p>';
+                      }
+              element = element + '</div>'+
+                         '</div>'+
+                         '</div>'+
+                         '</div>'+
+                         '</div>';
+
+
+            $('.class_parents').after(element);
+
+
+        }
+
+    },
+    error: function(err) {
+      window.alert("실패");
+    }
+  });
+});

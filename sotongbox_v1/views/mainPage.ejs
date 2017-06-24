@@ -20,13 +20,21 @@
 <!-- ... end Top Header -->
 
 <div class="container">
+  <% if(!cate_choice) { %>
+
+  <% } else { %>
+    <% for(var i=0; i< cate_choice.length ; i++) { %>
+      <input type="hidden" name="cate_m_no[]" class="cate_choice_m" value="<%= cate_choice[i].m_no %>">
+    <% } %>
+  <input type="hidden" name="user" id="cateUser" value="<%=user.m_no%>">
+<% } %>
 
     <div class="row">
 
         <div class="col-xl-9">
             <div class="row">
                 <div class="ui-block-title">
-                    <h6 class="title">인기 소통상자</h6>
+                    <h6 class="title">인기 소통상자 </h6>
 
                     <div class="more">
                         <a href="#" class="h6">전체보기 ></a>
@@ -34,127 +42,49 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-4">
-                    <div class="ui-block video-item">
-                        <div class="video-player">
-                            <img src="/static/images/3.jpg" alt="photo">
-                        </div>
 
-                        <div class="ui-block-content video-content">
-                            <a href="#" class="h6">빅히스토리</a>
+                <% for(var i=0 ; i < cate_box.length ; i++){ %>
+                  <div class="col-xl-4">
+                      <div class="ui-block video-item">
+                          <div class="video-player">
+                              <img src="<%= cate_box[i].sb_img %>" alt="photo">
+                          </div>
 
-                            <ul class="widget w-friend-pages-added notification-list friend-requests">
-                                <li class="inline-items">
-                                    <div class="author-thumb">
-                                        <img src="/static/images/avatar41-sm.jpg" alt="author">
-                                    </div>
-                                    <div class="notification-event">
-                                        <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                        <span class="chat-message-item">레벨1</span>
-                                    </div>
-                                </li>
-                            </ul>
+                          <div class="ui-block-content video-content">
+                              <a href="#" class="h6"><%= cate_box[i].sb_name %></a>
 
-                        </div>
+                              <ul class="widget w-friend-pages-added notification-list friend-requests">
+                                  <li class="inline-items">
+                                      <div class="author-thumb">
+                                          <img src="<%= cate_box[i].sb_img %>" alt="author" width="40px" height="40px">
+                                      </div>
+                                      <div class="notification-event">
+                                          <a href="#" class="h6 notification-friend"><%= cate_box[i].m_nickname %></a>
+                                          <span class="chat-message-item">레벨<%= cate_box[i].m_level %></span>
+                                      </div>
+                                  </li>
+                              </ul>
 
-                        <div class="ui-block-content video-content">
+                          </div>
 
-                            <div class="comments-shared">
-                                <a href="#" class="post-add-icon inline-items">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <span>17</span>
-                                </a>
+                          <div class="ui-block-content video-content">
 
-                                <a href="#" class="post-add-icon inline-items">
-                                    <i class="fa fa-smile-o" aria-hidden="true"></i>
-                                    <span>24</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                              <div class="comments-shared">
+                                  <a href="#" class="post-add-icon inline-items">
+                                      <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                      <span><%= cate_box[i].sc_num %></span>
+                                  </a>
 
-                <div class="col-xl-4">
-                    <div class="ui-block video-item">
-                        <div class="video-player">
-                            <img src="/static/images/2.jpg" alt="photo">
-                        </div>
+                                  <a href="#" class="post-add-icon inline-items">
+                                      <i class="fa fa-smile-o" aria-hidden="true"></i>
+                                      <span><%= cate_box[i].subscribenum %></span>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                <% } %>
 
-                        <div class="ui-block-content video-content">
-                            <a href="#" class="h6">빅히스토리</a>
-
-                            <ul class="widget w-friend-pages-added notification-list friend-requests">
-                                <li class="inline-items">
-                                    <div class="author-thumb">
-                                        <img src="/static/images/avatar41-sm.jpg" alt="author">
-                                    </div>
-                                    <div class="notification-event">
-                                        <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                        <span class="chat-message-item">레벨1</span>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </div>
-
-                        <div class="ui-block-content video-content">
-
-                            <div class="comments-shared">
-                                <a href="#" class="post-add-icon inline-items">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <span>17</span>
-                                </a>
-
-                                <a href="#" class="post-add-icon inline-items">
-                                    <i class="fa fa-smile-o" aria-hidden="true"></i>
-                                    <span>24</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="col-xl-4">
-                    <div class="ui-block video-item">
-                        <div class="video-player">
-                            <img src="/static/images/1.jpg" alt="photo">
-                        </div>
-
-                        <div class="ui-block-content video-content">
-                            <a href="#" class="h6">빅히스토리</a>
-
-                            <ul class="widget w-friend-pages-added notification-list friend-requests">
-                                <li class="inline-items">
-                                    <div class="author-thumb">
-                                        <img src="/static/images/avatar41-sm.jpg" alt="author">
-                                    </div>
-                                    <div class="notification-event">
-                                        <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                        <span class="chat-message-item">레벨1</span>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </div>
-
-                        <div class="ui-block-content video-content">
-
-                            <div class="comments-shared">
-                                <a href="#" class="post-add-icon inline-items">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <span>17</span>
-                                </a>
-
-                                <a href="#" class="post-add-icon inline-items">
-                                    <i class="fa fa-smile-o" aria-hidden="true"></i>
-                                    <span>24</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -346,31 +276,31 @@
 
     </div>
 
+
+
     <div class="row">
 
+      <% for(var i=0; i < cate_card.length ; i++){ %>
         <div class="col-xl-4">
             <div class="ui-block video-item">
 
-                <div class="ribbon">
-                    <img src="/static/images/clip_png/hot.png">
-                </div>
 
                 <div class="video-player">
-                    <img src="/static/images/1.jpg" alt="photo">
+                    <img src="<%= cate_card[i].sc_thumbnail %>" alt="photo">
                 </div>
 
                 <div class="ui-block-content2 video-content">
-                    <a href="#" class="title">빅히스토리</a>
-                    <time class="published">외국인에게 프리젠테이션을 하는 경우, 듣는 사람들이 사용하는 언어를 사용하는 것이 일반적이다. 그런데 해 본 사람들은 잘 알겠지만… 프리젠터 입장에서는 꽤 어려운 일이다. 앞으로는 프리젠테이션시 이런 언어 ..</time>
+                    <a href="#" class="title"><%= cate_card[i].sc_title %></a>
+                    <time class="published"><%- cate_card[i].sc_content %></time>
 
                     <ul class="widget w-friend-pages-added notification-list friend-requests">
                         <li class="inline-items">
                             <div class="author-thumb">
-                                <img src="/static/images/avatar41-sm.jpg" alt="author">
+                                <img src="<%= cate_card[i].m_img %>" alt="author" width="40px" height="40px">
                             </div>
                             <div class="notification-event">
-                                <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                <span class="chat-message-item">레벨1</span>
+                                <a href="#" class="h6 notification-friend"><%= cate_card[i].m_nickname %></a>
+                                <span class="chat-message-item">레벨<%= cate_card[i].m_level %></span>
                             </div>
                         </li>
                     </ul>
@@ -436,442 +366,11 @@
                 </div>
 
             </div>
+
         </div>
+      <% } %>
 
-        <div class="col-xl-4">
-            <div class="ui-block video-item">
 
-                <div class="ribbon">
-                    <img src="/static/images/clip_png/new.png">
-                </div>
-
-                <div class="video-player">
-                    <img src="/static/images/2.jpg" alt="photo">
-                </div>
-
-                <div class="ui-block-content2 video-content">
-                    <a href="#" class="title">빅히스토리</a>
-                    <time class="published">외국인에게 프리젠테이션을 하는 경우, 듣는 사람들이 사용하는 언어를 사용하는 것이 일반적이다. 그런데 해 본 사람들은 잘 알겠지만… 프리젠터 입장에서는 꽤 어려운 일이다. 앞으로는 프리젠테이션시 이런 언어 ..</time>
-
-                    <ul class="widget w-friend-pages-added notification-list friend-requests">
-                        <li class="inline-items">
-                            <div class="author-thumb">
-                                <img src="/static/images/avatar41-sm.jpg" alt="author">
-                            </div>
-                            <div class="notification-event">
-                                <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                <span class="chat-message-item">레벨1</span>
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="post-additional-info inline-items">
-
-                    <a href="#" class="post-add-icon inline-items">
-                        <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
-                        <span>15</span>
-                    </a>
-
-                    <ul class="friends-harmonic">
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic5.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic10.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic7.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic8.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic2.jpg" alt="friend">
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="names-people-likes">
-                        <a href="#">꿈꾸는 과학자</a>외
-                        <br>20명이 좋아함
-                    </div>
-
-
-                </div>
-
-                <div class="control-block-button post-control-button">
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
-                        <div class="ripple-container"></div></a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
-                    </a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
-                    </a>
-
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-xl-4">
-            <div class="ui-block video-item">
-
-                <div class="video-player">
-                    <img src="/static/images/3.jpg" alt="photo">
-                </div>
-
-                <div class="ui-block-content2 video-content">
-                    <a href="#" class="title">빅히스토리</a>
-                    <time class="published">외국인에게 프리젠테이션을 하는 경우, 듣는 사람들이 사용하는 언어를 사용하는 것이 일반적이다. 그런데 해 본 사람들은 잘 알겠지만… 프리젠터 입장에서는 꽤 어려운 일이다. 앞으로는 프리젠테이션시 이런 언어 ..</time>
-
-                    <ul class="widget w-friend-pages-added notification-list friend-requests">
-                        <li class="inline-items">
-                            <div class="author-thumb">
-                                <img src="/static/images/avatar41-sm.jpg" alt="author">
-                            </div>
-                            <div class="notification-event">
-                                <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                <span class="chat-message-item">레벨1</span>
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="post-additional-info inline-items">
-
-                    <a href="#" class="post-add-icon inline-items">
-                        <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
-                        <span>15</span>
-                    </a>
-
-                    <ul class="friends-harmonic">
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic5.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic10.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic7.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic8.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic2.jpg" alt="friend">
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="names-people-likes">
-                        <a href="#">꿈꾸는 과학자</a>외
-                        <br>20명이 좋아함
-                    </div>
-
-                </div>
-
-                <div class="control-block-button post-control-button">
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
-                        <div class="ripple-container"></div></a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
-                    </a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
-                    </a>
-
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-xl-4">
-            <div class="ui-block video-item">
-
-                <div class="video-player">
-                    <img src="/static/images/2.jpg" alt="photo">
-                </div>
-
-                <div class="ui-block-content2 video-content">
-                    <a href="#" class="title">빅히스토리</a>
-                    <time class="published">외국인에게 프리젠테이션을 하는 경우, 듣는 사람들이 사용하는 언어를 사용하는 것이 일반적이다. 그런데 해 본 사람들은 잘 알겠지만… 프리젠터 입장에서는 꽤 어려운 일이다. 앞으로는 프리젠테이션시 이런 언어 ..</time>
-
-                    <ul class="widget w-friend-pages-added notification-list friend-requests">
-                        <li class="inline-items">
-                            <div class="author-thumb">
-                                <img src="/static/images/avatar41-sm.jpg" alt="author">
-                            </div>
-                            <div class="notification-event">
-                                <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                <span class="chat-message-item">레벨1</span>
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="post-additional-info inline-items">
-
-                    <a href="#" class="post-add-icon inline-items">
-                        <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
-                        <span>15</span>
-                    </a>
-
-                    <ul class="friends-harmonic">
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic5.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic10.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic7.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic8.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic2.jpg" alt="friend">
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="names-people-likes">
-                        <a href="#">꿈꾸는 과학자</a>외
-                        <br>20명이 좋아함
-                    </div>
-
-                </div>
-
-                <div class="control-block-button post-control-button">
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
-                        <div class="ripple-container"></div></a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
-                    </a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
-                    </a>
-
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-xl-4">
-            <div class="ui-block video-item">
-
-                <div class="video-player">
-                    <img src="/static/images/1.jpg" alt="photo">
-                </div>
-
-                <div class="ui-block-content2 video-content">
-                    <a href="#" class="title">빅히스토리</a>
-                    <time class="published">외국인에게 프리젠테이션을 하는 경우, 듣는 사람들이 사용하는 언어를 사용하는 것이 일반적이다. 그런데 해 본 사람들은 잘 알겠지만… 프리젠터 입장에서는 꽤 어려운 일이다. 앞으로는 프리젠테이션시 이런 언어 ..</time>
-
-                    <ul class="widget w-friend-pages-added notification-list friend-requests">
-                        <li class="inline-items">
-                            <div class="author-thumb">
-                                <img src="/static/images/avatar41-sm.jpg" alt="author">
-                            </div>
-                            <div class="notification-event">
-                                <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                <span class="chat-message-item">레벨1</span>
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="post-additional-info inline-items">
-
-                    <a href="#" class="post-add-icon inline-items">
-                        <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
-                        <span>15</span>
-                    </a>
-
-                    <ul class="friends-harmonic">
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic5.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic10.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic7.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic8.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic2.jpg" alt="friend">
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="names-people-likes">
-                        <a href="#">꿈꾸는 과학자</a>외
-                        <br>20명이 좋아함
-                    </div>
-
-                </div>
-
-                <div class="control-block-button post-control-button">
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
-                        <div class="ripple-container"></div></a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
-                    </a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
-                    </a>
-
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-xl-4">
-            <div class="ui-block video-item">
-
-                <div class="video-player">
-                    <img src="/static/images/2.jpg" alt="photo">
-                </div>
-
-                <div class="ui-block-content2 video-content">
-                    <a href="#" class="title">빅히스토리</a>
-                    <time class="published">외국인에게 프리젠테이션을 하는 경우, 듣는 사람들이 사용하는 언어를 사용하는 것이 일반적이다. 그런데 해 본 사람들은 잘 알겠지만… 프리젠터 입장에서는 꽤 어려운 일이다. 앞으로는 프리젠테이션시 이런 언어 ..</time>
-
-                    <ul class="widget w-friend-pages-added notification-list friend-requests">
-                        <li class="inline-items">
-                            <div class="author-thumb">
-                                <img src="/static/images/avatar41-sm.jpg" alt="author">
-                            </div>
-                            <div class="notification-event">
-                                <a href="#" class="h6 notification-friend">꿈꾸는 과학자</a>
-                                <span class="chat-message-item">레벨1</span>
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="post-additional-info inline-items">
-
-                    <a href="#" class="post-add-icon inline-items">
-                        <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
-                        <span>15</span>
-                    </a>
-
-                    <ul class="friends-harmonic">
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic5.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic10.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic7.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic8.jpg" alt="friend">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="/static/images/friend-harmonic2.jpg" alt="friend">
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="names-people-likes">
-                        <a href="#">꿈꾸는 과학자</a>외
-                        <br>20명이 좋아함
-                    </div>
-
-                </div>
-
-                <div class="control-block-button post-control-button">
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
-                        <div class="ripple-container"></div></a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
-                    </a>
-
-                    <a href="#" class="btn btn-control">
-                        <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
-                    </a>
-
-                </div>
-
-            </div>
-        </div>
 
     </div>
 
@@ -896,3 +395,53 @@
     </div>
 
 </div>
+
+<!-- 카테고리 선택 팝업 -->
+<input type="hidden" name="check" id="cate_selectedCheck" value="1">
+<div class="ui-block window-popup tae-js-open-popup create-category" data-popup-target=".create-category" id="catePopup">
+    <a href="" class="icon-close tae-js-close-popup">
+        <svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
+    </a>
+
+    <div class="ui-block-title bg-primary">
+        <h6 class="align-center">
+            <img src="/static/images/logo_w.png">
+        </h6>
+    </div>
+
+    <div class="ui-block-content">
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="home" role="tabpanel" aria-expanded="true">
+
+      <form class="" action="/" method="post">
+
+        <% for(var i=0; i < result.length ; i++){ %>
+        <div class="choose-photo-item" data-mh="choose-item">
+          <div class="radio">
+            <label class="custom-radio">
+              <img src="<%=result[i].cate_img %>" alt="photo" width="247px" height="166px">
+              <h6 style="text-align:center;"><%=result[i].cate_name%></h6>
+              <input type="checkbox" name="options" class="categories" value="<%=result[i].cate_no%>">
+
+            </label>
+          </div>
+        </div>
+       <% } %>
+          <input type="submit" name="" value="카테고리 선택" class="btn btn-primary btn-lg full-width" id="categorySumbit" style="cursor:pointer;">
+      </form>
+
+
+
+
+      </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+<!-- 카테고리 선택 팝업 -->

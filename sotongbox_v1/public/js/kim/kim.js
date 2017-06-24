@@ -388,44 +388,70 @@ var CRUMINA = {};
 
     //카테고리선택 팝업
 
-
-    //카테고리 선택한 사용자가 없고 카테고리 선택한 사용자의 카테고리 넘버도 없고 체크가 0이면
-    if(!$("#cate_choice_m").val() && !$("#cate_no").val() && $("#cate_selectedCheck").val() === '0'){
       $(document).ready(function(){
 
+        var currentUser = $("#cateUser").val();
+        var categorySelectedUser = $(".cate_choice_m");
+        var check = $("#cate_selectedCheck").val();
 
-              $(".create-category").addClass('open');
-              $(".create-category").css('top', 70);
-              // console.log(offset.top - (current_popup.innerHeight() / 2));
+        categorySelectedUser.each(function(index, elem){
+          console.log( $(elem).val() );
+        });
 
-              $body.addClass("overlay-enable");
+        console.log(currentUser);
+        console.log(categorySelectedUser.length);
 
-              $body.click(function(event){
-                event.stopImmediatePropagation();
+        var a = "no";
 
-              });
+        if(categorySelectedUser.length===0 && check == "1"){
+           a = "no";
+        }else if(categorySelectedUser.length===0  && check == null){
+           a = "yes";
+        }
+
+        for(var i=0; i < categorySelectedUser.length ; i++){
+          if(categorySelectedUser[i].value === currentUser){
+            a = "yes";
+            break;
+          } else {
+            a = "no";
+          }
+        }
 
 
 
+        console.log(a);
+
+        if( a === "no"){
+          $(".create-category").addClass('open');
+          $(".create-category").css('top', 70);
+          // console.log(offset.top - (current_popup.innerHeight() / 2));
+
+          $body.addClass("overlay-enable");
+
+          $body.click(function(event){
+            event.stopImmediatePropagation();
+          });
+        }
 
 
-              $("#categorySumbit").on("click", function(){
+        $("#categorySumbit").on("click", function(){
 
-                var checkedCount = $(".categories:checked");
-                  if(checkedCount.length < 3){
-                    // $("#categoryCheck").html("최소 3개 이상 선택하시오.");
-                    alert("최소 3개 이상 선택해주세요.");
-                    return false;
-                  } else {
-                    $("#cate_selectedCheck").val('1');
+          var checkedCount = $(".categories:checked");
+            if(checkedCount.length < 3){
+              // $("#categoryCheck").html("최소 3개 이상 선택하시오.");
+              alert("최소 3개 이상 선택해주세요.");
+              return false;
+            } else {
+              check.val("1");
 
-                  }
+            }
 
-                });
+          });
 
 
       });
-    }
+
 
 
 

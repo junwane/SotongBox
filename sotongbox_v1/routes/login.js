@@ -355,6 +355,7 @@ route.get('/auth/logout', function(req, res){
 
   });
 
+
   //회원가입 팝업
   route.get("/addRegister/:id", function(req, res){
     var id = req.params.id;
@@ -393,17 +394,108 @@ route.get('/auth/logout', function(req, res){
 
   route.get('/', function(req, res){
 
+
     if(req.user){
-      var username = req.user.username;
-      var usernickname = req.user.m_nickname;
+      global.username = req.user.username;
+      global.usernickname = req.user.m_nickname;
     }
-    res.render('login/home.ejs' , {user : req.user, page : "./mainPage.ejs", message : req.flash('message')});
+
+
+    if(req.user){
+      var m_no = req.user.m_no;
+
+      pool.getConnection(function(err, connection){
+        var sql = "select cate_no, cate_name, cate_img"
+                 +" from category";
+        connection.query(sql, function(err, result){
+
+          var first_sql = "select m_no from cate_choice";
+          connection.query(first_sql, function(err, cate_choice){
+            console.log(cate_choice);
+
+          var second_sql = "select *,"
+                            +"(select m_nickname from member where m_no = b.m_no) as m_nickname,"
+                            +"(select m_img from member where m_no = b.m_no) as m_img,"
+                            +"(select m_level from member where m_no = b.m_no) as m_level,"
+                            +"(select count(sc_no) from sotongcard where sb_no = b.sb_no and m_no = b.m_no) as sc_num,"
+                            +"(select count(*) from sb_subscribe where sb_no = b.sb_no and sb_s_check = 1) as subscribenum"
+                        +" from sotongbox b"
+                        +" where sb_open = '전체공개' and cate_no in(select cate_no from cate_choice where m_no = ?);"
+          connection.query(second_sql, [m_no], function(err, cate_box){
+            console.log(cate_box);
+
+          var third_sql = "select *"
+                            +" from (select sc_no, b.m_no, b.sb_no, sc_title, sc_content, sc_register, sc_modify, sc_thumbnail,"
+                                   +" (select m_nickname from member where m_no = b.m_no) as m_nickname,"
+                                   +" (select m_img from member where m_no = b.m_no) as m_img,"
+                                   +" (select m_level from member where m_no = b.m_no) as m_level"
+                                   +" from sotongbox a, sotongcard b"
+                                   +" where a.sb_no = b.sb_no and a.sb_open = '전체공개' and a.cate_no in(select cate_no "
+                                                                            +" from cate_choice"
+                                                                            +" where m_no = ?)) as sotong;"
+          connection.query(third_sql, [m_no], function(err, cate_card){
+              res.render('index' , {
+                user : req.user,
+                page : "./mainPage.ejs",
+                result : result,
+                cate_choice : cate_choice,
+                cate_box : cate_box,
+                cate_card : cate_card,
+                message : req.flash('message')
+              });
+
+            });
+          });
+        });
+          connection.release();
+        });
+      });
+    }
+
+      else {
+          res.render('index-login' , {
+            user : req.user,
+            message : req.flash('message')
+          });
+        }
+
+});
+
+
+  route.post('/', function(req, res){
+
+    //중첩 배열을 이용하면 다중 인서트 가능 [[ ]] == ()
+    var inserts = [];
+
+    var cate_no = req.body.options;
+    console.log("확인" + cate_no);
+    var m_no = req.user.m_no;
+
+    for(var i=0; i< cate_no.length ; i++){
+      var data = [
+        cate_no[i], m_no
+      ];
+
+      inserts.push(data);
+    }
+    console.log(inserts);
+
+    pool.getConnection(function(err, connection){
+        var first_sql = 'insert into cate_choice(cate_no, m_no) values ?';
+        connection.query(first_sql, [inserts], function(err, result){
+          res.redirect('/');
+          connection.release();
+        });
+    });
+
+
   });
 
   io.on('connection', function(socket) {
-    console.log('유저 소켓 연결 소켓아이디 : ', socket.id);
+
+  console.log('유저 소켓 연결: ', global.usernickname);
   socket.on('disconnect', function() {
-    console.log('유저 소켓 연결 해제 소켓아이디 : ', socket.id);
+    console.log('유저 소켓 연결 해제: ', global.usernickname);
   });
 });
 

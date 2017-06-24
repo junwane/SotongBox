@@ -57,7 +57,8 @@
       </div>
 
     </div>
-    <p class="class_parents">
+    <div class="class_parents">
+    </div>
     <% for(var i = 0 ; i < result.length ; i++){ %>
       <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6 ajax_class">
         <div class="ui-block">
@@ -179,7 +180,7 @@
         </div>
       </div>
       <% } %>
-    </p>
+
 
   </div>
 </div>
@@ -201,10 +202,10 @@
         <div class="form-group label-floating is-empty">
           <label class="control-label">카테고리</label>
           <select name="cate_no" class="selectpicker form-control">
-            			       <option value="1">융합교육</option>
-            			       <option value="2">코딩교육</option>
+                            <option value="1">융합교육</option>
+                            <option value="2">코딩교육</option>
                          <option value="3">웹디자인</option>
-            		    </select>
+                      </select>
         </div>
       </div>
       <label class="control-label">클래스 제목</label>

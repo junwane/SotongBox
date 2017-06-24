@@ -36,11 +36,8 @@ module.exports = function(multer, passport, io) {
         "(select sum(b.b_title)div(replycount) from board b, b_write w where b.b_no = w.b_no and w.c_no = c.c_no and w.b_me_no='bm0001') as star " +
         "from class as c " +
         "group by c_no " +
-        "order by c_register desc;";
+        "order by c_no desc;";
       connection.query(sql, function(err, result) {
-        console.log("에러", err);
-
-        console.log("씨이발", result);
 
         res.render('index', {
           user: req.user,
@@ -402,59 +399,58 @@ module.exports = function(multer, passport, io) {
   //수강평 게시판
   route.get('/Inner/:id/courseEvaluation', function(req, res) {
 
-      var c_no = req.params.id;
-      var comments = 5;
+    var c_no = req.params.id;
+    var comments = 5;
 
-      pool.getConnection(function(err, connection) {
+    pool.getConnection(function(err, connection) {
 
-        var first_sql = "select m_no, c_no, b_me_no,"
-                      +" (select m_nickname from member where m_no = b.m_no) as m_nickname,"
-                      +" (select m_img from member where m_no = b.m_no) as m_img,"
-                      +" (select b_no from board where b_no = b.b_no) as b_no,"
-                      +" (select b_title from board where b_no = b.b_no) as b_title,"
-                      +" (select b_content from board where b_no = b.b_no) as b_content,"
-                      +" (select date_format(b_register, '%y-%m-%d %H:%i:%s') from board where b_no = b.b_no) as b_register,"
-                      +" (select count(bo.b_title) from board bo, b_write b, class c  where b.c_no = c.c_no and bo.b_no = b.b_no and b.c_no = ? ) as commentNum,"
-                      +" (select round(sum(b_title) / commentNum) from board bo, b_write b, class c where b.c_no = c.c_no and bo.b_no = b.b_no and b.c_no = ?) as starGrade"
-                      +" from b_write b"
-                      +" where b_me_no = 'bm0001'"
-                      +" and m_no = "
-        +" (select m_no"
-        +" from member"
-        +" where m_no = b.m_no and c_no = ?)"
-        +" order by (select date_format(b_register, '%y-%m-%d %H:%i:%s') from board where b_no = b.b_no)"
-        connection.query(first_sql, [c_no,c_no,c_no],function(err, row){
+      var first_sql = "select m_no, c_no, b_me_no," +
+        " (select m_nickname from member where m_no = b.m_no) as m_nickname," +
+        " (select m_img from member where m_no = b.m_no) as m_img," +
+        " (select b_no from board where b_no = b.b_no) as b_no," +
+        " (select b_title from board where b_no = b.b_no) as b_title," +
+        " (select b_content from board where b_no = b.b_no) as b_content," +
+        " (select date_format(b_register, '%y-%m-%d %H:%i:%s') from board where b_no = b.b_no) as b_register," +
+        " (select count(b.b_me_no) from b_write b where b.b_me_no = 'bm0001' and b.c_no = ? ) as commentNum," +
+        " (select round(sum(b_title) / commentNum) from board bo, b_write b, class c where b.c_no = c.c_no and bo.b_no = b.b_no and b.c_no = ?) as starGrade" +
+        " from b_write b" +
+        " where b_me_no = 'bm0001'" +
+        " and m_no = " +
+        " (select m_no" +
+        " from member" +
+        " where m_no = b.m_no and c_no = ?)" +
+        " order by (select date_format(b_register, '%y-%m-%d %H:%i:%s') from board where b_no = b.b_no)"
+      connection.query(first_sql, [c_no, c_no, c_no], function(err, row) {
 
-          var second_sql = "select * from class where c_no = '" + c_no + "' ";
-          connection.query(second_sql, function(err, rows) {
+        var second_sql = "select * from class where c_no = '" + c_no + "' ";
+        connection.query(second_sql, function(err, rows) {
 
-
+          var m_no = rows[0].m_no;
 
           var third_sql = "select * from member where m_no = ?";
-          connection.query(third_sql, [req.user.m_no], function(err, rows2) {
-            if(err){
+          connection.query(third_sql, [m_no], function(err, rows2) {
+            if (err) {
               console.log(err);
-            }
-            else {
+            } else {
               console.log(row);
               res.render('index', {
                 user: req.user,
                 rows: rows,
-                rows2 : rows,
-                row : row,
+                rows2: rows2,
+                row: row,
                 class_page: './class/courseEvaluation.ejs',
                 page: './classInner.ejs'
               });
             }
 
 
+          });
         });
-      });
         connection.release();
-    });
+      });
 
+    });
   });
-});
 
   //수강평 비동기
   route.post('/Inner/:id/courseEvaluation', function(req, res) {
@@ -464,7 +460,7 @@ module.exports = function(multer, passport, io) {
     var starNum = String(req.body.num);
 
 
-    pool.getConnection(function(err, connection){
+    pool.getConnection(function(err, connection) {
       var sql = "select count(*) as cnt from board where DATE_FORMAT(b_register, '%y%m%d') = ?";
       connection.query(sql, [date], function(err, result) {
         var cnt = "" + result[0].cnt;
@@ -475,44 +471,44 @@ module.exports = function(multer, passport, io) {
         console.log("게시글번호" + b_no);
 
         var sql1 = "insert into board(b_no, b_title, b_content, b_register, b_modify) values(?,?,?,now(),now())";
-        connection.query(sql1, [b_no, starNum, b_content], function(err, result){
+        connection.query(sql1, [b_no, starNum, b_content], function(err, result) {
           console.log("인서트1" + result);
         });
 
         var sql2 = "select b_me_no from b_menu where b_me_no = 'bm0001'";
-        connection.query(sql2, function(err, results){
+        connection.query(sql2, function(err, results) {
           console.log(results[0]);
           var b_me_no = results[0].b_me_no;
 
           var sql3 = "insert into b_write(m_no, c_no, b_me_no, b_no) values(?,?,?,?)";
-          connection.query(sql3, [req.user.m_no, c_no, b_me_no, b_no], function(err, b_write){
+          connection.query(sql3, [req.user.m_no, c_no, b_me_no, b_no], function(err, b_write) {
             console.log("인서트2" + b_write);
+
+            var sql4 = "select b_no, b_title, b_content," +
+              "(select count(b.b_me_no) from b_write b where b.b_me_no = 'bm0001' and b.c_no = '" + c_no + "' ) as title_count," +
+              "(select round(sum(a.b_title)div(title_count)) from board a, b_write b where b.c_no = '"+c_no+"' and b.b_me_no = 'bm0001' and a.b_no = b.b_no ) as starGrade," +
+              "(select DATE_FORMAT(b_register, '%y-%m-%d %H:%i:%s')) as b_register, b_modify," +
+              "(select m_img from member where m_no =?) as m_img," +
+              "(select m_nickname from member where m_no=?) as m_nickname" +
+              " from board, class c;"
+            connection.query(sql4, [req.user.m_no, req.user.m_no], function(err, reply) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log(reply);
+                res.json(reply);
+              }
+            });
+
+            connection.release();
           });
         });
 
-        var sql4 = "select b_no, b_title, b_content,"
-                 + "(select count(b_title) from board) as title_count,"
-                 + "(select round(sum(b_title) / title_count) from board) as starGrade,"
-                 + "(select DATE_FORMAT(b_register, '%y-%m-%d %H:%i:%s')) as b_register, b_modify,"
-                 + "(select m_img from member where m_no =?) as m_img,"
-                 + "(select m_nickname from member where m_no=?) as m_nickname"
-                 + " from board;"
-        connection.query(sql4, [req.user.m_no, req.user.m_no], function(err, reply){
-          if(err){
-            console.log(err);
-          } else {
-            console.log(reply);
-            res.json(reply);
-          }
-        });
-
-
-
-        connection.release();
+      });
     });
-  });
 
-});
+
+  });
   route.post('/Inner/choice', function(req, res) {
     var m_no = req.user.m_no;
     var check1 = req.body.check1;
@@ -537,15 +533,15 @@ module.exports = function(multer, passport, io) {
 
       if (check1 == 'allclass') {
         if (check2 == 'newclass') {
-          sql += "group by c_no order by c_register desc;";
+          sql += "group by c_no order by c_no desc;";
         } else if (check2 = 'highstar') {
-          sql += "group by c_no order by star desc;";
+          sql += "group by c_no order by star;";
         }
       } else if (check1 == 'myclass') {
         if (check2 == 'newclass') {
-          sql += "where m_no = '" + m_no + "' group by c_no order by c_register desc;";
+          sql += "where m_no = '" + m_no + "' group by c_no order by c_no;";
         } else if (check2 = 'highstar') {
-          sql += "where m_no = '" + m_no + "' group by c_no order by star desc;";
+          sql += "where m_no = '" + m_no + "' group by c_no order by star;";
         }
       }
       connection.query(sql, function(err, ajax_result) {
