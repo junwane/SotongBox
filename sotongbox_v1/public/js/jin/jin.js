@@ -234,6 +234,89 @@ $('#keyword').focus(function() {
   });
 });
 
+$('.cardcheck').change(function() {
+  var check1 = $("#cardcategory option:selected").val();
+  var check2 = $("#cardlist option:selected").val();
+
+  $.ajax({
+    url: "http://localhost:4000/card/choice",
+    type: "post",
+    dataType: "json",
+    data: {
+      check1: check1,
+      check2: check2
+    },
+    success: function(data) {
+      $('.ajax_card').remove();
+      var element = "";
+      for (var i = 0; i < data.length; i++) {
+
+        element = '<div class="col-xl-4 ajax_card">' +
+          '<div class="ui-block video-item">' +
+
+          '<div class="video-player maincardlistimg" id = "'+data[i].sc_no+'">' +
+          '<img src="'+data[i].sc_thumbnail+'" alt="photo" style="height:260px;">' +
+          '</div>' +
+
+          '<div class="ui-block-content2 video-content">' +
+          '<a href="/box/cardInner/'+data[i].sc_no+'" class="title author-name fn">'+data[i].sc_title+'</a>' +
+          '<time class="published">'+data[i].sc_content+'</time>' +
+
+          '<ul class="widget w-friend-pages-added notification-list friend-requests">' +
+          '<li class="inline-items">' +
+          '<div class="author-thumb">' +
+          '<img src="'+data[i].m_img+'" alt="author" width="40px" height="40px">' +
+          '</div>' +
+          '<div class="notification-event">' +
+          '<a href="#" class="h6 notification-friend">'+data[i].m_nickname+'</a>' +
+          '<span class="chat-message-item">레벨'+data[i].m_level+'</span>' +
+          '</div>' +
+          '</li>' +
+          '</ul>' +
+
+          '</div>' +
+
+          '<div class="post-additional-info inline-items">' +
+
+          '<a href="#" class="post-add-icon inline-items">' +
+          '<svg class="olymp-add-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>' +
+
+          '<span>'+data[i].niceNum+'</span>' +
+          '</a>' +
+
+          '<a href="#" class="post-add-icon inline-items">' +
+          '<svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>' +
+
+          '<span>'+data[i].replynum+'</span>' +
+          '</a>' +
+
+          '</div>' +
+
+          '<div class="control-block-button post-control-button">' +
+          '<a href="#" class="btn btn-control">' +
+          '<svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>' +
+          '<div class="ripple-container"></div>' +
+          '</a>' +
+
+          '<a href="#" class="btn btn-control">' +
+          '<svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>' +
+          '</a>' +
+
+          '</div>' +
+
+          '</div>' +
+          '</div>'
+
+
+        $('.card_parents').after(element);
+      }
+    },
+    error: function(err) {
+      window.alert("실패");
+    }
+  });
+});
+
 $('.classcheck').change(function() {
   var check1 = $("#classcategory option:selected").val();
   var check2 = $("#classlist option:selected").val();
@@ -243,136 +326,136 @@ $('.classcheck').change(function() {
     type: "post",
     dataType: "json",
     data: {
-      check1 : check1,
-      check2 : check2
+      check1: check1,
+      check2: check2
     },
     success: function(result) {
-        $('.ajax_class').remove();
-        var element = "";
-        for(var i=0; i<result.length; i++) {
+      $('.ajax_class').remove();
+      var element = "";
+      for (var i = 0; i < result.length; i++) {
 
-          element =  '<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6 ajax_class">'+
-            '<div class="ui-block">'+
-              '<div class="friend-item fav-page">'+
-                '<div class="friend-header-thumb">'+
-                  '<a href="/class/Inner/'+result[i].c_no+'"><img src="'+result[i].c_img+'" alt="friend" width="318px" height="122px"></a>'+
-                '</div>'+
+        element = '<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6 ajax_class">' +
+          '<div class="ui-block">' +
+          '<div class="friend-item fav-page">' +
+          '<div class="friend-header-thumb">' +
+          '<a href="/class/Inner/' + result[i].c_no + '"><img src="' + result[i].c_img + '" alt="friend" width="318px" height="122px"></a>' +
+          '</div>' +
 
-                '<div class="friend-item-content" style="height:320px;">'+
+          '<div class="friend-item-content" style="height:320px;">' +
 
-                  '<div class="more">'+
-                    '<svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg>'+
-                    '<ul class="more-dropdown">'+
-                      '<li>'+
-                        '<a href="#">Report Profile</a>'+
-                      '</li>'+
-                      '<li>'+
-                        '<a href="#">Block Profile</a>'+
-                      '</li>'+
-                      '<li>'+
-                        '<a href="#">Turn Off Notifications</a>'+
-                      '</li>'+
-                    '</ul>'+
-                  '</div>'+
-                  '<div class="friend-avatar">'+
-                    '<div class="author-thumb">'+
-                      '<img src="'+result[i].m_img+'" alt="author" width="92px" height="92px">'+
-                    '</div>'+
-                    '<div class="author-content">'+
-                      '<a href="/profile/<%=result[i].username%>" class="h5 author-name">'+result[i].c_title+'</a>'+
-                      '<div class="country"></div>'+
-                    '</div>'+
-                  '</div>'+
+          '<div class="more">' +
+          '<svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg>' +
+          '<ul class="more-dropdown">' +
+          '<li>' +
+          '<a href="#">Report Profile</a>' +
+          '</li>' +
+          '<li>' +
+          '<a href="#">Block Profile</a>' +
+          '</li>' +
+          '<li>' +
+          '<a href="#">Turn Off Notifications</a>' +
+          '</li>' +
+          '</ul>' +
+          '</div>' +
+          '<div class="friend-avatar">' +
+          '<div class="author-thumb">' +
+          '<img src="' + result[i].m_img + '" alt="author" width="92px" height="92px">' +
+          '</div>' +
+          '<div class="author-content">' +
+          '<a href="/profile/<%=result[i].username%>" class="h5 author-name">' + result[i].c_title + '</a>' +
+          '<div class="country"></div>' +
+          '</div>' +
+          '</div>' +
 
-                  '<div class="swiper-container">'+
+          '<div class="swiper-container">' +
 
-                      '<div class="swiper-slide">'+
-                        '<div class="friend-count" data-swiper-parallax="-500">'+
-                          '<a href="#" class="friend-count-item">'+
-                            '<div class="h6">'+result[i].coursecount+'</div>'+
-                            '<div class="title">강의 수</div>'+
-                          '</a>'+
-                          '<a href="#" class="friend-count-item">'+
-                            '<div class="h6">'+result[i].studentcount+'</div>'+
-                            '<div class="title">수강생 수</div>'+
-                          '</a>'+
-                          '<a href="#" class="friend-count-item">'+
-                            '<div class="h6">'+result[i].replycount+'</div>'+
-                            '<div class="title">수강평 수</div>'+
-                          '</a>'+
-                        '</div>'+
+          '<div class="swiper-slide">' +
+          '<div class="friend-count" data-swiper-parallax="-500">' +
+          '<a href="#" class="friend-count-item">' +
+          '<div class="h6">' + result[i].coursecount + '</div>' +
+          '<div class="title">강의 수</div>' +
+          '</a>' +
+          '<a href="#" class="friend-count-item">' +
+          '<div class="h6">' + result[i].studentcount + '</div>' +
+          '<div class="title">수강생 수</div>' +
+          '</a>' +
+          '<a href="#" class="friend-count-item">' +
+          '<div class="h6">' + result[i].replycount + '</div>' +
+          '<div class="title">수강평 수</div>' +
+          '</a>' +
+          '</div>' +
 
-                        '<div class="row">'+
-                          '<div class="col-xl-11 col-lg-6 col-md-6 col-sm-6 col-xs-6">'+
+          '<div class="row">' +
+          '<div class="col-xl-11 col-lg-6 col-md-6 col-sm-6 col-xs-6">' +
 
-                          '</div>'+
-                        '</div>'+
-                      '</div>'+
+          '</div>' +
+          '</div>' +
+          '</div>' +
 
-                      '<div class="swiper-slide">'+
-                        '<p class="friend-about" data-swiper-parallax="-500">'+
-                        '</p>'+
-                      '</div>'
-                      if(result[i].star==0||result[i].star==null){
-                      element = element + '<p class="star_rating" >'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '</p>';
-                      }else if(result[i].star==1){
-                      element = element + '<p class="star_rating" >'+
-                                 '<a class="on">★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '</p>';
-                      }else if(result[i].star==2){
-                      element = element + '<p class="star_rating" >'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '</p>';
-                      }else if(result[i].star==3){
-                      element = element + '<p class="star_rating" >'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a >★</a>'+
-                                 '<a >★</a>'+
-                                 '</p>';
-                      }else if(result[i].star==4){
-                      element = element + '<p class="star_rating" >'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a >★</a>'+
-                                 '</p>';
-                      }else if(result[i].star==5){
-                      element = element + '<p class="star_rating" >'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '<a class="on">★</a>'+
-                                 '</p>';
-                      }
-              element = element + '</div>'+
-                         '</div>'+
-                         '</div>'+
-                         '</div>'+
-                         '</div>';
-
-
-            $('.class_parents').after(element);
-
-
+          '<div class="swiper-slide">' +
+          '<p class="friend-about" data-swiper-parallax="-500">' +
+          '</p>' +
+          '</div>'
+        if (result[i].star == 0 || result[i].star == null) {
+          element = element + '<p class="star_rating" >' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '</p>';
+        } else if (result[i].star == 1) {
+          element = element + '<p class="star_rating" >' +
+            '<a class="on">★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '</p>';
+        } else if (result[i].star == 2) {
+          element = element + '<p class="star_rating" >' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '</p>';
+        } else if (result[i].star == 3) {
+          element = element + '<p class="star_rating" >' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a >★</a>' +
+            '<a >★</a>' +
+            '</p>';
+        } else if (result[i].star == 4) {
+          element = element + '<p class="star_rating" >' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a >★</a>' +
+            '</p>';
+        } else if (result[i].star == 5) {
+          element = element + '<p class="star_rating" >' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '<a class="on">★</a>' +
+            '</p>';
         }
+        element = element + '</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+
+
+        $('.class_parents').after(element);
+
+
+      }
 
     },
     error: function(err) {

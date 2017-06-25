@@ -1,0 +1,126 @@
+<header class="header header-responsive" id="site-header-responsive">
+
+  <div class="header-content-wrapper">
+    <a href="#" class="link-find-friend">소통카드</a>
+    <a href="#" class="link-find-friend">소통상자</a>
+  </div>
+
+  <!-- Tab panes -->
+
+  <!-- ... end  Tab panes -->
+
+</header>
+
+<div class="header-spacer"></div>
+
+<!-- ... end Responsive Header -->
+
+<div class="container">
+  <div class="jin-ui-block responsive-flex" style="margin-top:20px;">
+    <div class="ui-block-title checkbox clicked row">
+      <select id="cardcategory" name="category" class="selectpicker form-control col-sm-2 cardcheck">
+         <option value="allcard">모든 소통카드</option>
+         <option value="mycard">내 소통카드</option>
+    </select>
+      <select id="cardlist" name="list" class="selectpicker form-control col-sm-2 cardcheck">
+         <option value="newcard">최신순</option>
+         <option value="nicecard">좋아요순</option>
+         <option value="replycard">댓글순</option>
+    </select>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <h2 class="presentation-margin">소통카드 목록</h2>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    </div>
+    <div class="class_parents">
+    </div>
+
+
+  </div>
+</div>
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-xl-12">
+      <div class="ui-block-title">
+        <h6 class="title"></h6>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="card_parents">
+    </div>
+
+    <% for(var i = 0 ; i < rows.length ; i ++){ %>
+      <div class="col-xl-4 ajax_card">
+        <div class="ui-block video-item">
+
+          <div class="video-player maincardlistimg" id = "<%= rows[i].sc_no %>">
+            <img src="<%= rows[i].sc_thumbnail %>" alt="photo" style="height:260px;">
+          </div>
+
+          <div class="ui-block-content2 video-content">
+            <a href="/box/cardInner/<%= rows[i].sc_no %>" class="title author-name fn"><%= rows[i].sc_title %></a>
+            <time class="published"><%- rows[i].sc_content %></time>
+
+            <ul class="widget w-friend-pages-added notification-list friend-requests">
+              <li class="inline-items">
+                <div class="author-thumb">
+                  <img src="<%= rows[i].m_img %>" alt="author" width="40px" height="40px">
+                </div>
+                <div class="notification-event">
+                  <a href="#" class="h6 notification-friend"><%= rows[i].m_nickname %></a>
+                  <span class="chat-message-item">레벨<%= rows[i].m_level %></span>
+                </div>
+              </li>
+            </ul>
+
+          </div>
+
+          <div class="post-additional-info inline-items">
+
+            <a href="#" class="post-add-icon inline-items">
+              <svg class="olymp-add-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
+
+              <span><%= rows[i].niceNum %></span>
+            </a>
+
+            <a href="#" class="post-add-icon inline-items">
+              <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
+
+              <span><%= rows[i].replynum %></span>
+            </a>
+
+          </div>
+
+          <div class="control-block-button post-control-button">
+
+            <a href="#" class="btn btn-control">
+              <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
+              <div class="ripple-container"></div>
+            </a>
+
+            <a href="#" class="btn btn-control">
+              <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+    <% } %>
+
+
+  </div>
+
+
+  </div>
