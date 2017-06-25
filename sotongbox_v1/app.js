@@ -56,6 +56,7 @@ app.use('/users', users);
 var passport = require('./config/mysql/passport')(app);
 var box = require('./routes/box')(multer,passport,io);
 var chat = require('./routes/chat')(passport,io);
+var rank = require('./routes/rank')(passport,io);
 var card = require('./routes/card')(passport,io);
 app.use('/box', box);
 app.use('/chat', chat);
@@ -64,6 +65,8 @@ var login = require('./routes/login')(passport,io);
 app.use('/', login);
 var Class = require('./routes/class')(multer,passport,io);
 app.use('/class', Class);
+app.use('/rank', rank);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

@@ -46,7 +46,7 @@
                 <% for(var i=0 ; i < cate_box.length ; i++){ %>
                   <div class="col-xl-4">
                       <div class="ui-block video-item">
-                          <div class="video-player mainBoxImage" id="<%= cate_box[i].sb_no %>">
+                          <div class="video-player">
                               <img src="<%= cate_box[i].sb_img %>" alt="photo">
                           </div>
 
@@ -56,10 +56,10 @@
                               <ul class="widget w-friend-pages-added notification-list friend-requests">
                                   <li class="inline-items">
                                       <div class="author-thumb">
-                                          <img src="<%= cate_box[i].m_img %>" alt="author" width="40px" height="40px">
+                                          <img src="<%= cate_box[i].sb_img %>" alt="author" width="40px" height="40px">
                                       </div>
                                       <div class="notification-event">
-                                          <a href="/profile/<%= cate_box[i].username %>" class="h6 notification-friend"><%= cate_box[i].m_nickname %></a>
+                                          <a href="#" class="h6 notification-friend"><%= cate_box[i].m_nickname %></a>
                                           <span class="chat-message-item">레벨<%= cate_box[i].m_level %></span>
                                       </div>
                                   </li>
@@ -93,19 +93,19 @@
                 <div class="ui-block-title">
                     <h6 class="title">랭크</h6>
 
-                    <div class="more">
-                        <div class="more">
+                    <div class="more parentRankMenu">
+                        <div class="more rankMenu">
                             주간 <i class="fa fa-sort-desc" aria-hidden="true"></i>
                         </div>
                         <ul class="more-dropdown">
                             <li>
-                                <a href="#">주간</a>
+                                <a id = "week">주간</a>
                             </li>
                             <li>
-                                <a href="#">일간</a>
+                                <a id = "day">일간</a>
                             </li>
                             <li>
-                                <a href="#">월간</a>
+                                <a id = "month">월간</a>
                             </li>
                         </ul>
                     </div>
@@ -114,119 +114,13 @@
             </div>
 
             <div class="row">
-
                 <div class="col-xl-12">
-
                     <div class="ui-block">
-                        <ol class="widget w-playlist">
+                        <ol class="widget w-playlist m_ranking">
 
-                            <li class="js-open-popup" >
-                                <div class="playlist-thumb">
-                                    <img src="/static/images/playlist6.jpg" alt="thumb-composition">
-                                </div>
-
-                                <div class="composition">
-                                    <a href="#" class="composition-name">꿈꾸는과학자</a>
-                                    <a href="#" class="composition-author">레벨1</a>
-                                </div>
-
-                                <div class="composition-time">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <time class="published">32,160p</time>
-                                </div>
-
-                            </li>
-
-                            <li class="js-open-popup" >
-                                <div class="playlist-thumb">
-                                    <img src="/static/images/playlist6.jpg" alt="thumb-composition">
-                                </div>
-
-                                <div class="composition">
-                                    <a href="#" class="composition-name">꿈꾸는과학자</a>
-                                    <a href="#" class="composition-author">레벨1</a>
-                                </div>
-
-                                <div class="composition-time">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <time class="published" datetime="2017-03-24T18:18">32,160p</time>
-                                </div>
-
-                            </li>
-
-                            <li class="js-open-popup" >
-                                <div class="playlist-thumb">
-                                    <img src="/static/images/playlist6.jpg" alt="thumb-composition">
-                                </div>
-
-                                <div class="composition">
-                                    <a href="#" class="composition-name">꿈꾸는과학자</a>
-                                    <a href="#" class="composition-author">레벨1</a>
-                                </div>
-
-                                <div class="composition-time">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <time class="published" datetime="2017-03-24T18:18">32,160p</time>
-                                </div>
-
-                            </li>
-
-
-                            <li class="js-open-popup" >
-                                <div class="playlist-thumb">
-                                    <img src="/static/images/playlist6.jpg" alt="thumb-composition">
-                                </div>
-
-                                <div class="composition">
-                                    <a href="#" class="composition-name">꿈꾸는과학자</a>
-                                    <a href="#" class="composition-author">레벨1</a>
-                                </div>
-
-                                <div class="composition-time">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <time class="published" datetime="2017-03-24T18:18">32,160p</time>
-                                </div>
-
-                            </li>
-
-                            <li class="js-open-popup" >
-                                <div class="playlist-thumb">
-                                    <img src="/static/images/playlist6.jpg" alt="thumb-composition">
-                                </div>
-
-                                <div class="composition">
-                                    <a href="#" class="composition-name">꿈꾸는과학자</a>
-                                    <a href="#" class="composition-author">레벨1</a>
-                                </div>
-
-                                <div class="composition-time">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <time class="published" datetime="2017-03-24T18:18">32,160p</time>
-                                </div>
-
-                            </li>
-
-                            <li class="js-open-popup" >
-                                <div class="playlist-thumb">
-                                    <img src="/static/images/playlist6.jpg" alt="thumb-composition">
-                                </div>
-
-                                <div class="composition">
-                                    <a href="#" class="composition-name">꿈꾸는과학자</a>
-                                    <a href="#" class="composition-author">레벨1</a>
-                                </div>
-
-                                <div class="composition-time">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <time class="published" datetime="2017-03-24T18:18">32,160p</time>
-                                </div>
-
-                            </li>
                         </ol>
-
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -285,12 +179,12 @@
             <div class="ui-block video-item">
 
 
-                <div class="video-player mainCardImage" id="<%= cate_card[i].sc_no %>">
-                      <img src="<%= cate_card[i].sc_thumbnail %>" alt="photo">
+                <div class="video-player">
+                    <img src="<%= cate_card[i].sc_thumbnail %>" alt="photo">
                 </div>
 
                 <div class="ui-block-content2 video-content">
-                    <a href="/box/cardInner/<%=cate_card[i].sc_no %>" class="title"><%= cate_card[i].sc_title %></a>
+                    <a href="#" class="title"><%= cate_card[i].sc_title %></a>
                     <time class="published"><%- cate_card[i].sc_content %></time>
 
                     <ul class="widget w-friend-pages-added notification-list friend-requests">
@@ -299,7 +193,7 @@
                                 <img src="<%= cate_card[i].m_img %>" alt="author" width="40px" height="40px">
                             </div>
                             <div class="notification-event">
-                                <a href="/profile/<%= cate_card[i].username %>" class="h6 notification-friend"><%= cate_card[i].m_nickname %></a>
+                                <a href="#" class="h6 notification-friend"><%= cate_card[i].m_nickname %></a>
                                 <span class="chat-message-item">레벨<%= cate_card[i].m_level %></span>
                             </div>
                         </li>
@@ -309,17 +203,43 @@
 
                 <div class="post-additional-info inline-items">
 
-                  <a href="#" class="post-add-icon inline-items">
-                    <svg class="olymp-add-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
+                    <a href="#" class="post-add-icon inline-items">
+                        <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
+                        <span>15</span>
+                    </a>
 
-                    <span><%= cate_card[i].sc_nice %></span>
-                  </a>
+                    <ul class="friends-harmonic">
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic5.jpg" alt="friend">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic10.jpg" alt="friend">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic7.jpg" alt="friend">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic8.jpg" alt="friend">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic2.jpg" alt="friend">
+                            </a>
+                        </li>
+                    </ul>
 
-                  <a href="#" class="post-add-icon inline-items">
-                    <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
-
-                    <span><%= cate_card[i].replynum %></span>
-                  </a>
+                    <div class="names-people-likes">
+                        <a href="#">꿈꾸는 과학자</a>외
+                        <br>20명이 좋아
+                    </div>
 
                 </div>
 
@@ -328,6 +248,10 @@
                     <a href="#" class="btn btn-control">
                         <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
                         <div class="ripple-container"></div></a>
+
+                    <a href="#" class="btn btn-control">
+                        <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
+                    </a>
 
                     <a href="#" class="btn btn-control">
                         <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
@@ -398,7 +322,7 @@
           </div>
         </div>
        <% } %>
-          <input type="submit" name="" value="카테고리 선택" class="btn btn-primary btn-lg full-width" id="categorySumbit" >
+          <input type="submit" name="" value="카테고리 선택" class="btn btn-primary btn-lg full-width" id="categorySumbit" style="cursor:pointer;">
       </form>
 
 
