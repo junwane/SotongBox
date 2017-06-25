@@ -33,7 +33,7 @@ module.exports = function(multer, passport, io) {
         "(select count(b_me_no) from b_write where b_me_no='bm0000' and c_no = c.c_no ) as coursecount, " +
         "(select count(c_no) from c_course where c_no = c.c_no) as studentcount, " +
         "(select count(b_me_no) from b_write where b_me_no='bm0001' and c_no = c.c_no ) as replycount, " +
-        "(select sum(b.b_title)div(replycount) from board b, b_write w where b.b_no = w.b_no and w.c_no = c.c_no and w.b_me_no='bm0001') as star " +
+        "(select round(sum(b.b_title) /replycount ) from board b, b_write w where b.b_no = w.b_no and w.c_no = c.c_no and w.b_me_no='bm0001') as star " +
         "from class as c " +
         "group by c_no " +
         "order by c_no desc;";
@@ -560,7 +560,7 @@ module.exports = function(multer, passport, io) {
 
             var sql4 = "select b_no, b_title, b_content," +
               "(select count(b.b_me_no) from b_write b where b.b_me_no = 'bm0001' and b.c_no = '" + c_no + "' ) as title_count," +
-              "(select round(sum(a.b_title)div(title_count)) from board a, b_write b where b.c_no = '"+c_no+"' and b.b_me_no = 'bm0001' and a.b_no = b.b_no ) as starGrade," +
+              "(select round(sum(a.b_title) / title_count) from board a, b_write b where b.c_no = '"+c_no+"' and b.b_me_no = 'bm0001' and a.b_no = b.b_no ) as starGrade," +
               "(select DATE_FORMAT(b_register, '%y-%m-%d %H:%i:%s')) as b_register, b_modify," +
               "(select m_img from member where m_no =?) as m_img," +
               "(select m_nickname from member where m_no=?) as m_nickname" +
