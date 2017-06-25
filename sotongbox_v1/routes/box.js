@@ -339,18 +339,28 @@ module.exports = function(multer, passport,io) {
   });
 
 
-  router.post('/newCard', function(req, res, next) {
+  router.post('/newCard', upload.single('userfile'), function(req, res, next) {
+
+    console.log("리퀘스트 바디@@@",req.file);
+
     var m_no = req.user.m_no;
     var sb_no = req.body.sb_no;
-    var sc_thumbnail = req.body.unsplash;
     var sc_title = req.body.cardname;
     var sc_content = req.body.ir1;
     var sc_ti_name = req.body.tag;
     var sb_name = req.body.boxName;
     var ndate = new Date();
 
+
+
     var tagArray = sc_ti_name.split('#');
     tagArray.splice(0, 1);
+
+    if (req.file) {
+      var sc_thumbnail = String("/static/images/userUploadImages/" + req.file.filename);
+    } else {
+      var sc_thumbnail = req.body.unsplash;
+    }
 
     pool.getConnection(function(err, connection) {
       if (err) console.error("커넥션 객체 얻어오기 에러 : ", err);
@@ -437,6 +447,7 @@ module.exports = function(multer, passport,io) {
           'DATE_FORMAT(sc.sc_register, "%Y-%m-%d")as sc_register,' +
           'sc.sc_title as sc_title,' +
           'sc.sc_content as sc_content,' +
+          'sc.sc_thumbnail as sc_thumbnail,'+
           'co.nicenum as niceNum,' +
           'co.sharenum as shareNum' +
           ' from sotongcard as sc,' +

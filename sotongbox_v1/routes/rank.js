@@ -8,6 +8,7 @@ module.exports = function(passport,io){
     pool.getConnection(function(err, connection){
       var sql = "select m.m_nickname as m_nickname,"+
                         " m.m_level as m_level,"+
+                        " m.m_img as m_img,"+
                         "sum(p1.p_point) as point, "+
                         "(select count(*)+1"+
                         " from point as p2 "+
@@ -30,6 +31,7 @@ module.exports = function(passport,io){
     pool.getConnection(function(err, connection){
       var sql = "select m.m_nickname as m_nickname,"+
                        " m.m_level as m_level,"+
+                       " m.m_img as m_img,"+
                        "p1.wpoint as wpoint,"+
                        "(select count(*)+1"+
                        " from (select m_no, sum(p_point) as wpoint"+
@@ -59,6 +61,7 @@ module.exports = function(passport,io){
     pool.getConnection(function(err, connection){
       var sql = "select m.m_nickname,"+
                        " m.m_level as m_level,"+
+                       " m.m_img as m_img,"+
                        "p1.mpoint,"+
                        "(select count(*) + 1"+
                        " from (select m_no, p_date, sum(p_point) as mpoint"+

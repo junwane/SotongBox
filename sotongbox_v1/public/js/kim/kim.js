@@ -561,7 +561,7 @@ var CRUMINA = {};
         var email = $("#emailVal").val();
         var resultEmail = $("#resultEmail");
         $.ajax({
-          url : "http://localhost:3003/emailConfirm",
+          url : "/emailConfirm",
           type : "post",
           dataType : "json",
           data : {email:email},

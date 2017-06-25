@@ -31,7 +31,7 @@ $(document).ready(function(){
         for(var i = 0 ; i < data.length ; i++){
           element_2  += "<li class='js-open-popup rankList' >"+
                               "<div class='playlist-thumb'>"+
-                                  "<img src="+data[i].m_img+" alt='thumb-composition'>"+
+                                  "<img src='"+data[i].m_img+"' alt='thumb-composition' class='avatar' width='50px' height='50px'>"+
                               "</div>"+
                               "<div class='composition'>"+
                                   "<a href='#' class='composition-name'>"+data[i].m_nickname+"</a>"+
@@ -71,7 +71,7 @@ $(document).ready(function(){
         for(var i = 0 ; i < data.length ; i++){
           element_2  += "<li class='js-open-popup rankList' >"+
                               "<div class='playlist-thumb'>"+
-                                  "<img src="+data[i].m_img+" alt='thumb-composition'>"+
+                                  "<img src="+data[i].m_img+" alt='thumb-composition' class='avatar' width='50px' height='50px'>"+
                               "</div>"+
                               "<div class='composition'>"+
                                   "<a href='#' class='composition-name'>"+data[i].m_nickname+"</a>"+
@@ -112,7 +112,7 @@ $(document).ready(function(){
         for(var i = 0 ; i < data.length ; i++){
           element_2  += "<li class='js-open-popup rankList'>"+
                               "<div class='playlist-thumb'>"+
-                                  "<img src="+data[i].m_img+" alt='thumb-composition'>"+
+                                  "<img src="+data[i].m_img+" alt='thumb-composition' class='avatar' width='50px' height='50px'>"+
                               "</div>"+
                               "<div class='composition'>"+
                                   "<a href='#' class='composition-name'>"+data[i].m_nickname+"</a>"+
@@ -151,7 +151,7 @@ $(document).ready(function(){
         for(var i = 0 ; i < data.length ; i++){
           element_2  += "<li class='js-open-popup rankList' >"+
                               "<div class='playlist-thumb'>"+
-                                  "<img src="+data[i].m_img+" alt='thumb-composition'>"+
+                                  "<img src="+data[i].m_img+" alt='thumb-composition' class='avatar' width='50px' height='50px'>"+
                               "</div>"+
                               "<div class='composition'>"+
                                   "<a href='#' class='composition-name'>"+data[i].m_nickname+"</a>"+

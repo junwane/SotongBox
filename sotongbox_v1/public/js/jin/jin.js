@@ -33,7 +33,7 @@ $("#userSearch").on("click", function() {
   var username = document.getElementById("username").value;
 
   $.ajax({
-    url: "http://localhost:4000/chat/usersearch",
+    url: "/chat/usersearch",
     type: "post",
     dataType: "json",
     data: {
@@ -88,7 +88,7 @@ $("#courseMake").on("click", function() {
   var c_no = document.getElementById("c_no").value;
 
   $.ajax({
-    url: "http://localhost:4000/class/Inner/" + c_no + "/courseMake",
+    url: "/class/Inner/" + c_no + "/courseMake",
     type: "post",
     dataType: "json",
     data: {
@@ -144,7 +144,7 @@ $(".sendReply").on("click", function() {
 
 
   $.ajax({
-    url: "http://localhost:4000/class/Inner/reply",
+    url: "/class/Inner/reply",
     type: "post",
     dataType: "json",
     data: {
@@ -239,7 +239,7 @@ $('.cardcheck').change(function() {
   var check2 = $("#cardlist option:selected").val();
 
   $.ajax({
-    url: "http://localhost:4000/card/choice",
+    url: "/card/choice",
     type: "post",
     dataType: "json",
     data: {
@@ -322,7 +322,7 @@ $('.classcheck').change(function() {
   var check2 = $("#classlist option:selected").val();
 
   $.ajax({
-    url: "http://localhost:4000/class/Inner/choice",
+    url: "/class/Inner/choice",
     type: "post",
     dataType: "json",
     data: {

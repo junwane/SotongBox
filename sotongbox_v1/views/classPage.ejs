@@ -97,82 +97,88 @@
 
               <div class="swiper-container">
 
-                  <div class="swiper-slide">
-                    <div class="friend-count" data-swiper-parallax="-500">
-                      <a href="#" class="friend-count-item">
-                        <div class="h6"><%=result[i].coursecount%></div>
-                        <div class="title">강의 수</div>
-                      </a>
-                      <a href="#" class="friend-count-item">
-                        <div class="h6"><%=result[i].studentcount%></div>
-                        <div class="title">수강생 수</div>
-                      </a>
-                      <a href="#" class="friend-count-item">
-                        <div class="h6"><%=result[i].replycount%></div>
-                        <div class="title">수강평 수</div>
-                      </a>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-xl-11 col-lg-6 col-md-6 col-sm-6 col-xs-6">
-
+                <div class="swiper-slide">
+                  <div class="friend-count" data-swiper-parallax="-500">
+                    <a href="#" class="friend-count-item">
+                      <div class="h6">
+                        <%=result[i].coursecount%>
                       </div>
-                    </div>
+                      <div class="title">강의 수</div>
+                    </a>
+                    <a href="#" class="friend-count-item">
+                      <div class="h6">
+                        <%=result[i].studentcount%>
+                      </div>
+                      <div class="title">수강생 수</div>
+                    </a>
+                    <a href="#" class="friend-count-item">
+                      <div class="h6">
+                        <%=result[i].replycount%>
+                      </div>
+                      <div class="title">수강평 수</div>
+                    </a>
                   </div>
 
-                  <div class="swiper-slide">
-                    <p class="friend-about" data-swiper-parallax="-500">
-                    </p>
+                  <div class="row">
+                    <div class="col-xl-11 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                    </div>
                   </div>
-                  <%if(result[i].replycount==0){%>
-                  <p class="star_rating" >
-                    <a >★</a>
-                    <a >★</a>
-                    <a >★</a>
-                    <a >★</a>
-                    <a >★</a>
+                </div>
+
+                <div class="swiper-slide">
+                  <p class="friend-about" data-swiper-parallax="-500">
+                  </p>
+                </div>
+                <%if(result[i].replycount==0){%>
+                  <p class="star_rating">
+                    <a>★</a>
+                    <a>★</a>
+                    <a>★</a>
+                    <a>★</a>
+                    <a>★</a>
                   </p>
                   <%}else if(result[i].star==1){%>
-                    <p class="star_rating" >
+                    <p class="star_rating">
                       <a class="on">★</a>
-                      <a >★</a>
-                      <a >★</a>
-                      <a >★</a>
-                      <a >★</a>
+                      <a>★</a>
+                      <a>★</a>
+                      <a>★</a>
+                      <a>★</a>
                     </p>
-                  <%}else if(result[i].star==2){%>
-                    <p class="star_rating" >
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a >★</a>
-                      <a >★</a>
-                      <a >★</a>
-                    </p>
-                  <%}else if(result[i].star==3){%>
-                    <p class="star_rating" >
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a >★</a>
-                      <a >★</a>
-                    </p>
-                  <%}else if(result[i].star==4){%>
-                    <p class="star_rating" >
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a >★</a>
-                    </p>
-                  <%}else if(result[i].star==5){%>
-                    <p class="star_rating" >
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                      <a class="on">★</a>
-                    </p>
-                  <%}%>
+                    <%}else if(result[i].star==2){%>
+                      <p class="star_rating">
+                        <a class="on">★</a>
+                        <a class="on">★</a>
+                        <a>★</a>
+                        <a>★</a>
+                        <a>★</a>
+                      </p>
+                      <%}else if(result[i].star==3){%>
+                        <p class="star_rating">
+                          <a class="on">★</a>
+                          <a class="on">★</a>
+                          <a class="on">★</a>
+                          <a>★</a>
+                          <a>★</a>
+                        </p>
+                        <%}else if(result[i].star==4){%>
+                          <p class="star_rating">
+                            <a class="on">★</a>
+                            <a class="on">★</a>
+                            <a class="on">★</a>
+                            <a class="on">★</a>
+                            <a>★</a>
+                          </p>
+                          <%}else if(result[i].star==5){%>
+                            <p class="star_rating">
+                              <a class="on">★</a>
+                              <a class="on">★</a>
+                              <a class="on">★</a>
+                              <a class="on">★</a>
+                              <a class="on">★</a>
+                            </p>
+                            <%}%>
 
               </div>
             </div>
@@ -202,9 +208,15 @@
         <div class="form-group label-floating is-empty">
           <label class="control-label">카테고리</label>
           <select name="cate_no" class="selectpicker form-control">
-                            <option value="1">융합교육</option>
-                            <option value="2">코딩교육</option>
-                         <option value="3">웹디자인</option>
+            <option value="1">융합교육</option>
+            <option value="2">코딩교육</option>
+            <option value="3">웹디자인</option>
+            <option value="4">빅데이터</option>
+            <option value="5">전자기계</option>
+            <option value="6">우주공학</option>
+            <option value="7">IoT</option>
+            <option value="8">로봇/드론</option>
+            <option value="9">3D프린팅</option>
                       </select>
         </div>
       </div>

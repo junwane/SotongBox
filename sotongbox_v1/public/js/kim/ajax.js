@@ -16,7 +16,7 @@ for(var i=0;i<star.length;i++){
 }
 
  $.ajax({
-   url : "http://localhost:4000/class/Inner/"+c_no+'/courseEvaluation',
+   url : "/class/Inner/"+c_no+'/courseEvaluation',
    type : "post",
    dataType : "json",
    data : {comment:comment, num:num},
