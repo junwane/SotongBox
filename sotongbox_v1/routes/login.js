@@ -87,7 +87,7 @@ route.get('/auth/logout', function(req, res){
           to: req.body.username,
           subject: '[소통박스] 이메일 인증을 클릭하여 회원가입을 완료해주세요!',
           html :"<h1>안녕하세요! "+req.body.username+" 님!</h1>"+"<br>"
-          +"<a href='http://192.168.43.71:4000/auth/"+ req.body.username + "/"+ rand + "'>인증</a>" +
+          +"<a href='http://localhost:4000/auth/"+ req.body.username + "/"+ rand + "'>인증</a>" +
           "을 해주세요!"
         };
 
@@ -155,7 +155,7 @@ route.get('/auth/logout', function(req, res){
           subject: '[소통박스] 임시비밀번호가 발송되었습니다!',
           html :"<h1>안녕하세요! "+req.body.username+" 님!</h1>"+"<br>"
           + "임시비밀번호는 : <h1>"+ randPass +"</h1> 입니다!" +"<br>"
-          + "<a href='http://192.168.43.71:4000/pass/"+req.body.username+"'>임시 비밀번호로 수정</a>"
+          + "<a href='http://localhost:4000/pass/"+req.body.username+"'>임시 비밀번호로 수정</a>"
 
         };
 

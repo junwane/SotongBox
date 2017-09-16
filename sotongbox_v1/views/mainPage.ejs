@@ -1,13 +1,13 @@
 <header class="header header-responsive" id="site-header-responsive">
 
-  <div class="header-content-wrapper">
-    <a href="#" class="link-find-friend">소통카드</a>
-    <a href="#" class="link-find-friend">소통상자</a>
-  </div>
+    <div class="header-content-wrapper">
+        <a href="#" class="link-find-friend">소통카드</a>
+        <a href="#" class="link-find-friend">소통상자</a>
+    </div>
 
-  <!-- Tab panes -->
+    <!-- Tab panes -->
 
-  <!-- ... end  Tab panes -->
+    <!-- ... end  Tab panes -->
 
 </header>
 
@@ -22,281 +22,308 @@
 <div class="container">
   <% if(!cate_choice) { %>
 
-    <% } else { %>
-      <% for(var i=0; i< cate_choice.length ; i++) { %>
-        <input type="hidden" name="cate_m_no[]" class="cate_choice_m" value="<%= cate_choice[i].m_no %>">
-        <% } %>
-          <input type="hidden" name="user" id="cateUser" value="<%=user.m_no%>">
-          <% } %>
+  <% } else { %>
+    <% for(var i=0; i< cate_choice.length ; i++) { %>
+      <input type="hidden" name="cate_m_no[]" class="cate_choice_m" value="<%= cate_choice[i].m_no %>">
+    <% } %>
+  <input type="hidden" name="user" id="cateUser" value="<%=user.m_no%>">
+<% } %>
 
+    <div class="row">
+
+        <div class="col-xl-9">
             <div class="row">
-
-              <div class="col-xl-9">
-                <div class="row">
-                  <div class="ui-block-title">
+                <div class="ui-block-title">
                     <h6 class="title">인기 소통상자 </h6>
 
                     <div class="more">
-                      <a href="/box" class="h6">전체보기></a>
+                        <a href="#" class="h6">전체보기 ></a>
                     </div>
-                  </div>
                 </div>
-                <div class="row">
+            </div>
+            <div class="row">
 
-                  <% for(var i=0 ; i < cate_box.length ; i++){ %>
-                    <div class="col-xl-4">
+                <% for(var i=0 ; i < cate_box.length ; i++){ %>
+                  <div class="col-xl-4">
                       <div class="ui-block video-item">
-                        <div class="video-player mainBoxImage" id="<%= cate_box[i].sb_no %>">
-                          <img src="<%= cate_box[i].sb_img %>" alt="photo">
-                        </div>
-
-                        <div class="ui-block-content video-content">
-                          <a href="#" class="h6">
-                            <%= cate_box[i].sb_name %>
-                          </a>
-
-                          <ul class="widget w-friend-pages-added notification-list friend-requests">
-                            <li class="inline-items">
-                              <div class="author-thumb">
-                                <img src="<%= cate_box[i].m_img %>" alt="author" width="40px" height="40px">
-                              </div>
-                              <div class="notification-event">
-                                <a href="/profile/<%= cate_box[i].username %>" class="h6 notification-friend">
-                                  <%= cate_box[i].m_nickname %>
-                                </a>
-                                <span class="chat-message-item">레벨<%= cate_box[i].m_level %></span>
-                              </div>
-                            </li>
-                          </ul>
-
-                        </div>
-
-                        <div class="ui-block-content video-content">
-
-                          <div class="comments-shared">
-                            <a href="#" class="post-add-icon inline-items">
-                              <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                              <span><%= cate_box[i].sc_num %></span>
-                            </a>
-
-                            <a href="#" class="post-add-icon inline-items">
-                              <i class="fa fa-smile-o" aria-hidden="true"></i>
-                              <span><%= cate_box[i].subscribenum %></span>
-                            </a>
+                          <div class="video-player">
+                              <img src="<%= cate_box[i].sb_img %>" alt="photo">
                           </div>
-                        </div>
+
+                          <div class="ui-block-content video-content">
+                              <a href="#" class="h6"><%= cate_box[i].sb_name %></a>
+
+                              <ul class="widget w-friend-pages-added notification-list friend-requests">
+                                  <li class="inline-items">
+                                      <div class="author-thumb">
+                                          <img src="<%= cate_box[i].sb_img %>" alt="author" width="40px" height="40px">
+                                      </div>
+                                      <div class="notification-event">
+                                          <a href="#" class="h6 notification-friend"><%= cate_box[i].m_nickname %></a>
+                                          <span class="chat-message-item">레벨<%= cate_box[i].m_level %></span>
+                                      </div>
+                                  </li>
+                              </ul>
+
+                          </div>
+
+                          <div class="ui-block-content video-content">
+
+                              <div class="comments-shared">
+                                  <a href="#" class="post-add-icon inline-items">
+                                      <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                      <span><%= cate_box[i].sc_num %></span>
+                                  </a>
+
+                                  <a href="#" class="post-add-icon inline-items">
+                                      <i class="fa fa-smile-o" aria-hidden="true"></i>
+                                      <span><%= cate_box[i].subscribenum %></span>
+                                  </a>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                    <% } %>
+                  </div>
+                <% } %>
 
-                </div>
-              </div>
+            </div>
+        </div>
 
-              <div class="col-xl-3">
-                <div class="row">
-                  <div class="ui-block-title">
+        <div class="col-xl-3">
+            <div class="row">
+                <div class="ui-block-title">
                     <h6 class="title">랭크</h6>
 
                     <div class="more parentRankMenu">
-                      <div class="more rankMenu">
-                        주간 <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                      </div>
-                      <ul class="more-dropdown">
-                        <li>
-                          <a id="week">주간</a>
-                        </li>
-                        <li>
-                          <a id="day">일간</a>
-                        </li>
-                        <li>
-                          <a id="month">월간</a>
-                        </li>
-                      </ul>
+                        <div class="more rankMenu">
+                            주간 <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                        </div>
+                        <ul class="more-dropdown">
+                            <li>
+                                <a id = "week">주간</a>
+                            </li>
+                            <li>
+                                <a id = "day">일간</a>
+                            </li>
+                            <li>
+                                <a id = "month">월간</a>
+                            </li>
+                        </ul>
                     </div>
 
-                  </div>
                 </div>
-
-                <div class="row">
-                  <div class="col-xl-12">
-                    <div class="ui-block">
-                      <ol class="widget w-playlist m_ranking">
-
-                      </ol>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
             </div>
 
-            <hr/>
-
             <div class="row">
+                <div class="col-xl-12">
+                    <div class="ui-block">
+                        <ol class="widget w-playlist m_ranking">
 
-              <div class="col-xl-12">
-                <div class="ui-block-title">
-                  <h6 class="title">최신피드</h6>
-                  <div class="more">
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr/>
+
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div class="ui-block-title">
+                <h6 class="title">최신피드</h6>
+                <div class="more">
                     <div class="more">
-                      <a href="/card" style="color:black">모든소통카드></a>
+                        모든소통카드 <i class="fa fa-sort-desc" aria-hidden="true"></i>
                     </div>
                     <ul class="more-dropdown">
-                      <li>
-                        <a href="#">내 소통카드</a>
-                      </li>
-                      <li>
-                        <a href="#">융합교육</a>
-                      </li>
-                      <li>
-                        <a href="#">예술/창의</a>
-                      </li>
-                      <li>
-                        <a href="#">로봇/드론</a>
-                      </li>
-                      <li>
-                        <a href="#">IoT</a>
-                      </li>
-                      <li>
-                        <a href="#">코딩교육</a>
-                      </li>
-                      <li>
-                        <a href="#">3D프린팅</a>
-                      </li>
+                        <li>
+                            <a href="#">내 소통카드</a>
+                        </li>
+                        <li>
+                            <a href="#">융합교육</a>
+                        </li>
+                        <li>
+                            <a href="#">예술/창의</a>
+                        </li>
+                        <li>
+                            <a href="#">로봇/드론</a>
+                        </li>
+                        <li>
+                            <a href="#">IoT</a>
+                        </li>
+                        <li>
+                            <a href="#">코딩교육</a>
+                        </li>
+                        <li>
+                            <a href="#">3D프린팅</a>
+                        </li>
                     </ul>
-                  </div>
                 </div>
-
-
-
-              </div>
-
             </div>
 
 
 
-            <div class="row">
+        </div>
 
-              <% for(var i=0; i < cate_card.length ; i++){ %>
-                <div class="col-xl-4">
-                    <div class="ui-block video-item">
+    </div>
 
 
-                        <div class="video-player mainCardImage" id="<%= cate_card[i].sc_no %>">
-                              <img src="<%= cate_card[i].sc_thumbnail %>" alt="photo">
-                        </div>
 
-                        <div class="ui-block-content2 video-content">
-                            <a href="/box/cardInner/<%=cate_card[i].sc_no %>" class="title"><%= cate_card[i].sc_title %></a>
-                            <time class="published"><%- cate_card[i].sc_content %></time>
+    <div class="row">
 
-                            <ul class="widget w-friend-pages-added notification-list friend-requests">
-                                <li class="inline-items">
-                                    <div class="author-thumb">
-                                        <img src="<%= cate_card[i].m_img %>" alt="author" width="40px" height="40px">
-                                    </div>
-                                    <div class="notification-event">
-                                        <a href="/profile/<%= cate_card[i].username %>" class="h6 notification-friend"><%= cate_card[i].m_nickname %></a>
-                                        <span class="chat-message-item">레벨<%= cate_card[i].m_level %></span>
-                                    </div>
-                                </li>
-                            </ul>
+      <% for(var i=0; i < cate_card.length ; i++){ %>
+        <div class="col-xl-4">
+            <div class="ui-block video-item">
 
-                        </div>
 
-                        <div class="post-additional-info inline-items">
+                <div class="video-player">
+                    <img src="<%= cate_card[i].sc_thumbnail %>" alt="photo">
+                </div>
 
-                          <a href="#" class="post-add-icon inline-items">
-                            <svg class="olymp-add-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
+                <div class="ui-block-content2 video-content">
+                    <a href="#" class="title"><%= cate_card[i].sc_title %></a>
+                    <time class="published"><%- cate_card[i].sc_content %></time>
 
-                            <span><%= cate_card[i].sc_nice %></span>
-                          </a>
+                    <ul class="widget w-friend-pages-added notification-list friend-requests">
+                        <li class="inline-items">
+                            <div class="author-thumb">
+                                <img src="<%= cate_card[i].m_img %>" alt="author" width="40px" height="40px">
+                            </div>
+                            <div class="notification-event">
+                                <a href="#" class="h6 notification-friend"><%= cate_card[i].m_nickname %></a>
+                                <span class="chat-message-item">레벨<%= cate_card[i].m_level %></span>
+                            </div>
+                        </li>
+                    </ul>
 
-                          <a href="#" class="post-add-icon inline-items">
-                            <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
+                </div>
 
-                            <span><%= cate_card[i].replynum %></span>
-                          </a>
+                <div class="post-additional-info inline-items">
 
-                        </div>
+                    <a href="#" class="post-add-icon inline-items">
+                        <svg class="olymp-heart-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-heart-icon"></use></svg>
+                        <span>15</span>
+                    </a>
 
-                        <div class="control-block-button post-control-button">
-
-                            <a href="#" class="btn btn-control">
-                                <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
-                                <div class="ripple-container"></div></a>
-
-                            <a href="#" class="btn btn-control">
-                                <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
+                    <ul class="friends-harmonic">
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic5.jpg" alt="friend">
                             </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic10.jpg" alt="friend">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic7.jpg" alt="friend">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic8.jpg" alt="friend">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="/static/images/friend-harmonic2.jpg" alt="friend">
+                            </a>
+                        </li>
+                    </ul>
 
-                        </div>
-
+                    <div class="names-people-likes">
+                        <a href="#">꿈꾸는 과학자</a>외
+                        <br>20명이 좋아
                     </div>
 
                 </div>
-              <% } %>
 
+                <div class="control-block-button post-control-button">
+
+                    <a href="#" class="btn btn-control">
+                        <svg class="olymp-like-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-like-post-icon"></use></svg>
+                        <div class="ripple-container"></div></a>
+
+                    <a href="#" class="btn btn-control">
+                        <svg class="olymp-comments-post-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-comments-post-icon"></use></svg>
+                    </a>
+
+                    <a href="#" class="btn btn-control">
+                        <svg class="olymp-share-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/icons/icons.svg#olymp-share-icon"></use></svg>
+                    </a>
+
+                </div>
 
             </div>
+
+        </div>
+      <% } %>
+
+
+
+    </div>
 
 
 
 </div>
 
 <div class="ui-block window-popup create-photo-album search">
-  <a href="" class="icon-close js-close-popup">
-    <svg class="olymp-close-icon"><use xlink:href="/static/icons/icons.svg#olymp-close-icon"></use></svg>
-  </a>
+    <a href="" class="icon-close js-close-popup">
+        <svg class="olymp-close-icon"><use xlink:href="/static/icons/icons.svg#olymp-close-icon"></use></svg>
+    </a>
 
-  <div class="ui-block-content">
-    <div class="form-group with-button">
-      <input class="form-control" placeholder="" value="" type="text">
+    <div class="ui-block-content">
+        <div class="form-group with-button">
+            <input class="form-control" placeholder="" value="" type="text">
 
-      <button class="bg-grey">
+            <button class="bg-grey">
                 <i class="fa fa-search js-open-popup" data-popup-target=".search" aria-hidden="true" style="font-size: 18px;"></i>
             </button>
 
-      <span class="material-input"></span></div>
-  </div>
+            <span class="material-input"></span></div>
+    </div>
 
 </div>
 
 <!-- 카테고리 선택 팝업 -->
 <input type="hidden" name="check" id="cate_selectedCheck" value="1">
 <div class="ui-block window-popup tae-js-open-popup create-category" data-popup-target=".create-category" id="catePopup">
-  <a href="" class="icon-close tae-js-close-popup">
-    <svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
-  </a>
+    <a href="" class="icon-close tae-js-close-popup">
+        <svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
+    </a>
 
-  <div class="ui-block-title bg-primary">
-    <h6 class="align-center">
+    <div class="ui-block-title bg-primary">
+        <h6 class="align-center">
             <img src="/static/images/logo_w.png">
         </h6>
-  </div>
+    </div>
 
-  <div class="ui-block-content">
+    <div class="ui-block-content">
     <!-- Tab panes -->
     <div class="tab-content">
       <div class="tab-pane active" id="home" role="tabpanel" aria-expanded="true">
 
-        <form class="" action="/" method="post">
+      <form class="" action="/" method="post">
 
-          <% for(var i=0; i < result.length ; i++){ %>
-            <div class="choose-photo-item" data-mh="choose-item">
-              <div class="radio">
-                <label class="custom-radio">
+        <% for(var i=0; i < result.length ; i++){ %>
+        <div class="choose-photo-item" data-mh="choose-item">
+          <div class="radio">
+            <label class="custom-radio">
               <img src="<%=result[i].cate_img %>" alt="photo" width="247px" height="166px">
               <h6 style="text-align:center;"><%=result[i].cate_name%></h6>
               <input type="checkbox" name="options" class="categories" value="<%=result[i].cate_no%>">
 
             </label>
-              </div>
-            </div>
-            <% } %>
-              <input type="submit" name="" value="카테고리 선택" class="btn btn-primary btn-lg full-width" id="categorySumbit" style="cursor:pointer;">
-        </form>
+          </div>
+        </div>
+       <% } %>
+          <input type="submit" name="" value="카테고리 선택" class="btn btn-primary btn-lg full-width" id="categorySumbit" style="cursor:pointer;">
+      </form>
 
 
 
@@ -304,9 +331,9 @@
       </div>
 
 
+      </div>
     </div>
   </div>
-</div>
 
 
 
